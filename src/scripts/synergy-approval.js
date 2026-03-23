@@ -79,6 +79,74 @@ function renderSynergyRejectResult() {
     container.insertAdjacentHTML('beforeend', rejectHtml);
 }
 
+function renderSynergySettlementCard() {
+    const container = document.getElementById('synergy-dynamic-content');
+    if (!container) return;
+    if (document.getElementById('synergy-settlement-card')) return;
+
+    const settlementHtml = `
+        <div id="synergy-settlement-card" class="flex items-start fade-in">
+            <img src="https://ui-avatars.com/api/?name=AI&background=B54708&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+            <div class="ml-3 w-full">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">协同管控智能体</span>
+                    <span class="fs-tag-bot">BOT</span>
+                    <span class="text-xs text-[#8F959E] ml-2">${getNowClock()}</span>
+                </div>
+                <div class="fs-card border-[#FFE1A6]">
+                    <div class="fs-card-header bg-[#FFF7E8] border-b border-[#FFE1A6]">
+                        <div class="flex items-center font-semibold text-[#B54708]">
+                            <i class="fa-solid fa-receipt mr-2"></i>🧾 跨组织协同效能与结算单 (自动生成)
+                        </div>
+                        <span class="inline-flex items-center text-[11px] px-2 py-0.5 rounded border border-[#FFE1A6] bg-white text-[#B54708]">自动核算</span>
+                    </div>
+                    <div class="fs-card-body space-y-4">
+                        <section class="border border-[#C5EACF] bg-[#E4F5E9] rounded-md p-3 flex items-center justify-between">
+                            <div class="text-[13px] text-[#1F2329]">SLA 履约分析：响应耗时 12 分钟</div>
+                            <span class="inline-flex items-center text-[12px] px-2 py-0.5 rounded border border-[#C5EACF] bg-white text-[#239C46]">
+                                <i class="fa-solid fa-circle-check mr-1"></i>评级：优秀
+                            </span>
+                        </section>
+
+                        <section class="border border-[#DEE0E3] bg-[#F8F9FA] rounded-md p-3">
+                            <div class="text-[12px] font-semibold text-[#646A73] mb-2 uppercase tracking-wide">资源消耗核算</div>
+                            <div class="grid grid-cols-[120px_1fr] gap-x-3 gap-y-2 text-[13px]">
+                                <div class="text-[#8F959E]">援助方</div>
+                                <div class="text-[#1F2329]">建设方 (网络与云环境实施组 - 李工)</div>
+                                <div class="text-[#8F959E]">资源折算</div>
+                                <div class="text-[#1F2329] font-semibold">1.5 人时 <span class="text-[#646A73] font-normal">(标准化基础算力)</span></div>
+                            </div>
+                        </section>
+
+                        <section class="border border-[#DEE0E3] rounded-md p-3 bg-white">
+                            <div class="text-[12px] font-semibold text-[#646A73] mb-2 uppercase tracking-wide">数字绩效流转</div>
+                            <div class="space-y-2 text-[13px]">
+                                <div class="flex items-center justify-between border border-[#C5EACF] bg-[#E4F5E9] rounded-md px-3 py-2">
+                                    <span class="text-[#1F2329]">[建设方] 本月协同贡献度</span>
+                                    <span class="font-semibold text-[#239C46]">+15 分</span>
+                                </div>
+                                <div class="flex items-center justify-between border border-[#FDC3C8] bg-[#FEECEE] rounded-md px-3 py-2">
+                                    <span class="text-[#1F2329]">[应用开发方] 本月协同配额扣减</span>
+                                    <span class="font-semibold text-[#D83931]">-15 分</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="fs-card-footer">
+                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+                            <i class="fa-solid fa-file-pdf mr-1.5"></i>下载不可篡改结算凭证 (PDF)
+                        </button>
+                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center">
+                            <i class="fa-solid fa-ranking-star mr-1.5 text-[#8F959E]"></i>查看项目全局 SLA 排行榜
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', settlementHtml);
+}
+
 function setSynergyCardClosed() {
     const statusTag = document.getElementById('synergy-ticket-status');
     if (statusTag) {
@@ -136,6 +204,10 @@ function approveSynergyPolicy() {
 
     setSynergyCardClosed();
     renderSynergyApprovalResult();
+    setTimeout(() => {
+        renderSynergySettlementCard();
+        window.scrollToBottom && window.scrollToBottom();
+    }, 1500);
     window.scrollToBottom && window.scrollToBottom();
 }
 
