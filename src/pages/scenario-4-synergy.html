@@ -3,159 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>场景四 - 协同层（二级群组）视角</title>
+    <title>场景四入口说明</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/base/variables.css">
-    <link rel="stylesheet" href="../styles/layout/im-shell.css">
-    <link rel="stylesheet" href="../styles/components/chat-elements.css">
-    <link rel="stylesheet" href="../styles/utilities/animations.css">
 </head>
-<body class="flex h-screen overflow-hidden">
-    <aside class="w-[68px] bg-[#1C1F2B] flex flex-col items-center py-4 z-20 shrink-0">
-        <div class="w-10 h-10 rounded-xl mb-6 overflow-hidden border border-slate-700">
-            <img src="https://ui-avatars.com/api/?name=DS&background=3370FF&color=fff&rounded=false&bold=true" alt="Logo">
-        </div>
-        <div class="flex flex-col space-y-2 w-full px-2">
-            <div class="w-full h-12 flex flex-col items-center justify-center text-white bg-white/10 rounded-lg cursor-pointer">
-                <i class="fa-solid fa-message text-[20px] mb-1"></i><span class="text-[10px]">消息</span>
-            </div>
-        </div>
-        <div class="mt-auto relative cursor-pointer">
-            <img src="https://i.pravatar.cc/150?img=11" class="w-9 h-9 rounded-full border border-slate-600">
-            <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#1C1F2B] rounded-full"></div>
-        </div>
-    </aside>
-
-    <aside class="w-[280px] bg-[#FFFFFF] border-r border-[#dee0e3] flex flex-col z-10 shrink-0">
-        <div class="h-16 flex items-center px-4 justify-between">
-            <h2 class="text-xl font-medium text-[#1F2329]">消息</h2>
-        </div>
-        <div class="px-4 mb-2">
-            <div class="bg-[#F2F3F5] rounded-md flex items-center px-3 py-1.5 border border-transparent">
-                <i class="fa-solid fa-search text-[#8F959E] text-sm"></i>
-                <input type="text" placeholder="搜索" class="bg-transparent border-none outline-none text-sm ml-2 w-full text-[#1F2329] placeholder-[#8F959E]">
-            </div>
-        </div>
-        <div class="flex-1 overflow-y-auto">
-            <div class="chat-room-item flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer">
-                <div class="w-12 h-12 bg-[#3370FF] rounded-lg flex items-center justify-center text-white font-bold text-sm">总控</div>
-                <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] text-[#1F2329] truncate">项目全域总控超级群组</span><span class="text-xs text-[#8F959E]">10:42</span></div>
-                    <p class="text-[13px] text-[#8F959E] truncate">全域管控智能体: 已生成深度归因报告...</p>
-                </div>
-            </div>
-
-            <div class="chat-room-item flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer">
-                <div class="w-12 h-12 bg-orange-400 rounded-lg flex items-center justify-center text-white font-bold text-sm">集成A</div>
-                <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] text-[#1F2329] truncate">子项目A-集成协同群组</span><span class="text-xs text-[#8F959E]">14:16</span></div>
-                    <p class="text-[13px] text-[#8F959E] truncate">执行辅助智能体: 工单已升级至协同层...</p>
-                </div>
-            </div>
-
-            <div class="chat-room-item active-room flex items-center px-4 py-3 bg-[#EAF2FF] cursor-pointer">
-                <div class="w-12 h-12 bg-[#7C3AED] rounded-lg flex items-center justify-center text-white text-lg">
-                    <i class="fa-solid fa-people-arrows"></i>
-                </div>
-                <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] font-medium text-[#1F2329] truncate">网络策略变更-临时协同群组</span><span class="text-xs text-[#8F959E]">14:20</span></div>
-                    <p class="text-[13px] text-[#3370FF] truncate">协同管控智能体: 【工单升级】待审批...</p>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <main class="flex-1 flex flex-col bg-[#F4F5F7] relative h-full">
-        <header class="h-16 bg-[#FFFFFF] border-b border-[#DEE0E3] flex items-center justify-between px-6 shrink-0 z-10">
-            <div>
-                <div class="flex items-center">
-                    <h1 class="text-[18px] font-medium text-[#1F2329] mr-2">网络策略变更-临时协同群组</h1>
-                    <span class="text-[#531DAB] bg-[#F3EDFF] border border-[#D8C8FF] text-[12px] px-2 py-0.5 rounded-sm flex items-center">
-                        <i class="fa-solid fa-diagram-project mr-1"></i>&lt;跨组织协同与审批节点&gt;
-                    </span>
-                </div>
-                <div class="text-[13px] text-[#8F959E] mt-0.5"><i class="fa-solid fa-user-group mr-1"></i>11 人 · 二级群组（跨参与方临时协同）</div>
-            </div>
-        </header>
-
-        <div class="flex-1 overflow-y-auto p-6 space-y-6 chat-fade-in" id="chat-container">
-            <div class="flex items-start fade-in">
-                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
-                <div class="ml-3 w-full">
-                    <div class="flex items-center mb-1">
-                        <span class="text-[13px] font-medium text-[#1F2329]">协同管控智能体</span>
-                        <span class="fs-tag-bot">BOT</span>
-                        <span class="text-xs text-[#8F959E] ml-2">14:20</span>
-                    </div>
-
-                    <div class="fs-card">
-                        <div class="fs-card-header bg-[#FFF7E8] border-b-[#FFE1A6]">
-                            <div class="flex items-center font-bold text-[#D83931]">
-                                <i class="fa-solid fa-arrow-up-right-dots mr-2"></i>【工单升级】由于涉及跨域安全策略，执行层网络放行工单 TCK-8080-NW 已自动升级至本群。
-                            </div>
-                            <span id="synergy-ticket-status" class="inline-flex items-center text-[12px] px-2 py-0.5 rounded border bg-[#FEECEE] border-[#FDC3C8] text-[#D83931]">
-                                <i class="fa-solid fa-hourglass-half mr-1"></i>待审批
-                            </span>
-                        </div>
-
-                        <div class="fs-card-body space-y-4">
-                            <section class="border border-[#DEE0E3] bg-[#F8F9FA] rounded p-3">
-                                <h3 class="text-[13px] font-semibold text-[#1F2329] mb-2">
-                                    <i class="fa-solid fa-code-compare text-[#3370FF] mr-1.5"></i>冲突分析
-                                </h3>
-                                <p class="text-[13px] text-[#646A73] leading-relaxed">
-                                    业主方安全基线要求默认封禁非白名单端口；应用方部署需求要求在联调窗口临时放行 8080 端口用于服务验收，当前策略存在直接冲突。
-                                </p>
-                            </section>
-
-                            <section class="border border-[#FFE1A6] bg-[#FFF7E8] rounded p-3">
-                                <h3 class="text-[13px] font-semibold text-[#1F2329] mb-2">
-                                    <i class="fa-solid fa-chart-line text-[#B54708] mr-1.5"></i>影响面评估
-                                </h3>
-                                <p class="text-[13px] text-[#646A73] leading-relaxed">
-                                    若本次变更不通过，执行层部署任务无法完成，预计将导致整体进度延期 2%，并影响后续跨组织联调排期。
-                                </p>
-                            </section>
-                        </div>
-
-                        <div class="fs-card-footer">
-                            <button id="btn-reject-policy" class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center">
-                                <i class="fa-solid fa-ban mr-1.5 text-[#8F959E]"></i>驳回并要求应用方整改
-                            </button>
-                            <button id="btn-approve-policy" class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
-                                <i class="fa-solid fa-key mr-1.5"></i>授权一键放行策略
-                                <span class="fs-tag-role-lead">业主方总监可见</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="synergy-dynamic-content" class="space-y-6"></div>
-        </div>
-
-        <div class="h-[120px] bg-[#FFFFFF] border-t border-[#DEE0E3] p-4 shrink-0 flex flex-col">
-            <div class="flex items-center space-x-4 text-[#8F959E] mb-2 px-2 text-lg">
-                <i class="fa-solid fa-font"></i>
-                <i class="fa-regular fa-face-smile"></i>
-                <i class="fa-solid fa-paperclip"></i>
-            </div>
-            <div class="flex-1 flex items-end">
-                <textarea class="w-full h-full resize-none border-none outline-none text-[14px] text-[#1F2329] placeholder-[#8F959E] px-2" placeholder="二级协同层仅支持审批意见记录，普通成员不可直接下发策略指令..." disabled></textarea>
-            </div>
-        </div>
+<body class="min-h-screen bg-[#F4F5F7] flex items-center justify-center p-6">
+    <main class="w-full max-w-xl bg-white border border-[#DEE0E3] rounded-xl shadow-sm p-6">
+        <h1 class="text-[20px] font-semibold text-[#1F2329] mb-3">场景四（协同层）已并入主视图</h1>
+        <p class="text-[14px] text-[#646A73] leading-6 mb-4">
+            为避免双份页面维护不一致，协同层（二级群组）能力统一在主页面维护。
+            请打开下方入口后，在左侧会话列表点击
+            <span class="font-medium text-[#1F2329]">“网络策略变更-临时协同群组”</span> 体验审批闭环。
+        </p>
+        <a href="./im-main.html?room=synergy-layer" class="inline-flex items-center px-4 py-2 rounded-md bg-[#3370FF] text-white text-[14px] hover:bg-[#245BDB]">
+            进入主视图（im-main）
+        </a>
     </main>
-
-    <script src="../scripts/state.js"></script>
-    <script src="../scripts/message-renderer.js"></script>
-    <script src="../scripts/synergy-approval.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            if (window.initSynergyApproval) {
-                window.initSynergyApproval();
-            }
-        });
-    </script>
 </body>
 </html>

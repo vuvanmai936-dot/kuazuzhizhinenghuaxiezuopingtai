@@ -24,8 +24,11 @@ function switchChatRoom(roomKey) {
 
     setTimeout(() => {
         applyRoomConfig(roomKey, chatTitle, chatStatusTag, chatMeta, chatInput);
+        window.AppState.currentRoom = roomKey;
         if (roomKey === 'execution-layer') {
             window.renderExecutionLayerMessages();
+        } else if (roomKey === 'risk-control') {
+            window.renderRiskControlMessages();
         } else if (roomKey === 'synergy-layer') {
             window.renderSynergyLayerMessages();
         } else {

@@ -1,5 +1,6 @@
 window.AppState = {
     globalControlMessages: '',
+    currentRoom: 'global-control',
     CHAT_SWITCH_ANIMATION_MS: 220,
     countdownTimer: null,
     slaDeadlineTs: Date.now() + 2 * 60 * 60 * 1000,
@@ -22,6 +23,13 @@ window.AppState = {
             metaHTML: '<i class="fa-solid fa-user-group mr-1"></i>18 人 · 仅总控层高管可下达指令',
             inputPlaceholder: '输入 @ 唤起智能体，或者输入自然语言指令...'
         },
+        'risk-control': {
+            title: '风险管控专项群',
+            statusClass: 'text-[#166534] bg-[#ECFDF3] border border-[#BBF7D0] text-[12px] px-2 py-0.5 rounded-sm flex items-center',
+            statusHTML: '<i class="fa-solid fa-shield-halved mr-1"></i>&lt;可信数据空间·审计节点&gt;',
+            metaHTML: '<i class="fa-solid fa-user-group mr-1"></i>15 人 · 业主方安全总监与审计智能体联动',
+            inputPlaceholder: '输入 @数据安全智能体，发起可信存证调阅或整改审查...'
+        },
         'execution-layer': {
             title: '子项目A-集成协同群组',
             statusClass: 'text-[#B54708] bg-[#FFF7E8] border border-[#FFE1A6] text-[12px] px-2 py-0.5 rounded-sm flex items-center',
@@ -43,5 +51,35 @@ window.AppState = {
         approvedBy: '',
         approvedAt: '',
         closureMessage: ''
+    },
+    ticketStatus: 'pending',
+    ticketRejectReason: '',
+    ticketLastActionAt: '',
+    ticketResubmitMessage: '',
+    proactiveRisk: {
+        warningPushed: false,
+        supervisionIssued: false,
+        hiddenRiskCount: 0
     }
 };
+
+window.AppEvents = new EventTarget();
+
+function updateTicketStatus(nextStatus, payload) {
+    const safePayload = payload || {};
+    window.AppState.ticketStatus = nextStatus;
+    window.AppState.ticketRejectReason = safePayload.reason || window.AppState.ticketRejectReason || '';
+    window.AppState.ticketLastActionAt = safePayload.actionAt || window.AppState.ticketLastActionAt || '';
+    window.AppState.ticketResubmitMessage = safePayload.resubmitMessage || window.AppState.ticketResubmitMessage || '';
+
+    window.AppEvents.dispatchEvent(new CustomEvent('ticket-status-changed', {
+        detail: {
+            status: nextStatus,
+            reason: window.AppState.ticketRejectReason,
+            actionAt: window.AppState.ticketLastActionAt,
+            resubmitMessage: window.AppState.ticketResubmitMessage
+        }
+    }));
+}
+
+window.updateTicketStatus = updateTicketStatus;
