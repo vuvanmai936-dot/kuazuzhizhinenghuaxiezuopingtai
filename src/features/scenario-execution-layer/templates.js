@@ -1,5 +1,19 @@
 function getExecutionLayerMessageTemplate() {
     return `
+        <div class="flex items-start fade-in">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+            <div class="ml-3 w-full">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                    <span class="fs-tag-bot">BOT</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:13</span>
+                </div>
+                <div class="bg-[#EAF2FF] border border-[#D1E2FF] rounded-md px-4 py-3 text-[13px] text-[#1F2329]">
+                    <span class="text-[#3370FF]">@张三 (应用开发方-现场工程师)</span> 总控群反馈“子系统A接口联调停滞”，请先完成现场定位并回报阻断点。
+                </div>
+            </div>
+        </div>
+
         <div class="flex flex-col items-end fade-in">
             <div class="flex items-center mb-1">
                 <span class="text-xs text-[#8F959E] mr-2">14:15</span>
@@ -7,7 +21,7 @@ function getExecutionLayerMessageTemplate() {
             </div>
             <div class="flex items-start justify-end">
                 <div class="fs-msg-user mr-3 shadow-sm text-left">
-                    <span class="text-[#3370FF]">@执行辅助智能体</span> 云环境 8080 端口不通，网络策略被拦截了，导致最新版本的代码没法部署测试。请紧急支援。
+                    <span class="text-[#3370FF]">@执行辅助智能体</span> 现场定位完成：云环境 8080 端口不通，网络策略拦截导致部署测试卡死。请发起跨组织协同。
                 </div>
                 <img src="https://ui-avatars.com/api/?name=张三&background=E1EAFF&color=3370FF" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
             </div>
@@ -55,11 +69,11 @@ function getExecutionLayerMessageTemplate() {
                         <div class="bg-[#EAF2FF] border border-[#D1E2FF] rounded p-3 flex items-start">
                             <i class="fa-solid fa-clock-rotate-left text-[#3370FF] mt-0.5 mr-2"></i>
                             <div>
-                                <div class="text-[13px] font-bold text-[#3370FF] mb-1">已自动派发跨域协同工单</div>
+                                <div class="text-[13px] font-bold text-[#3370FF] mb-1">已完成异常定级，待升级审批</div>
                                 <div class="text-[12px] text-[#646A73] leading-relaxed">
-                                    已向 <span class="font-medium">建设方-李工</span> 推送网络策略放行指令。<br>
+                                    建议向二级协同层提交网络策略放行审批，责任方：<span class="font-medium">建设方-李工</span>。<br>
                                     <span class="flex items-center mt-1">
-                                        倒计时：<span class="text-[#F59E0B] font-bold bg-[#FFF7E8] px-1.5 rounded ml-1 pulse-orange border border-[#FCD34D] js-sla-countdown">01小时:59分:42秒</span>
+                                        预计 SLA：<span class="text-[#F59E0B] font-bold bg-[#FFF7E8] px-1.5 rounded ml-1 pulse-orange border border-[#FCD34D] js-sla-countdown">01小时:59分:42秒</span>
                                     </span>
                                 </div>
                                 <div class="text-[11px] text-[#8F959E] mt-2 border-t border-[#D1E2FF] pt-2">
@@ -69,10 +83,13 @@ function getExecutionLayerMessageTemplate() {
                         </div>
                     </div>
                     <div class="fs-card-footer">
+                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center" data-action="escalate-to-synergy">
+                            <i class="fa-solid fa-arrow-up-right-dots mr-1.5"></i>升级至临时协同群审批
+                        </button>
                         <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center" data-action="open-ticket-detail">
                             <i class="fa-solid fa-list-check mr-1.5 text-[#8F959E]"></i>查看工单详情
                         </button>
-                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center">
                             <i class="fa-solid fa-file-code mr-1.5"></i>补充现场错误日志
                             <span class="fs-tag-role-lead">组长权限</span>
                         </button>
@@ -117,11 +134,11 @@ function getScenarioTwoResultTemplate() {
                     <div class="fs-card-body space-y-4">
                         <div class="bg-[#EAF2FF] border border-[#D1E2FF] rounded p-3">
                             <div class="text-[13px] font-bold text-[#3370FF] mb-1.5"><i class="fa-solid fa-lightbulb mr-1.5"></i>智能体处置建议</div>
-                            <p class="text-[13px] text-[#1F2329] mb-2">已为您生成跨域调度指令，授权后我将自动拉取临时协同群组并下发工单。</p>
+                            <p class="text-[13px] text-[#1F2329] mb-2">已为您生成跨域调度指令，授权后将拉起子项目A执行群；如需跨组织策略审批，再升级至临时协同群。</p>
                         </div>
                     </div>
                     <div class="fs-card-footer">
-                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center" onclick="approveDispatch(this)">
                             <i class="fa-solid fa-check mr-1.5"></i>同意执行调度
                         </button>
                     </div>

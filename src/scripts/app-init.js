@@ -18,6 +18,53 @@ function bindRoomEvents() {
     }
 }
 
+function toClockLabel(isoString) {
+    if (!isoString) return '';
+    const date = new Date(isoString);
+    if (Number.isNaN(date.getTime())) return '';
+    const h = String(date.getHours()).padStart(2, '0');
+    const m = String(date.getMinutes()).padStart(2, '0');
+    return `${h}:${m}`;
+}
+
+function syncSynergyRoomVisibility() {
+    const synergyRoom = document.getElementById('room-synergy');
+    if (!synergyRoom) return;
+
+    if (window.AppState.synergyRoom.created) {
+        synergyRoom.classList.remove('hidden');
+        const timeEl = synergyRoom.querySelector('.text-xs');
+        const previewEl = synergyRoom.querySelector('p');
+        const clockLabel = toClockLabel(window.AppState.synergyRoom.createdAt);
+        if (timeEl && clockLabel) {
+            timeEl.textContent = clockLabel;
+        }
+        if (previewEl) {
+            previewEl.className = 'text-[13px] text-[#3370FF] truncate';
+            previewEl.textContent = '协同管控智能体: 已创建临时协同群并同步工单。';
+        }
+        return;
+    }
+
+    synergyRoom.classList.add('hidden');
+}
+
+function syncExecutionRoomVisibility() {
+    const executionRoom = document.getElementById('room-execution');
+    if (!executionRoom) return;
+
+    if (window.AppState.executionRoom.created) {
+        executionRoom.classList.remove('hidden');
+        const timeEl = executionRoom.querySelector('.text-xs');
+        const clockLabel = toClockLabel(window.AppState.executionRoom.createdAt);
+        if (timeEl && clockLabel) {
+            timeEl.textContent = clockLabel;
+        }
+        return;
+    }
+    executionRoom.classList.add('hidden');
+}
+
 function getBootRoomFromQuery() {
     const params = new URLSearchParams(window.location.search);
     const room = params.get('room');
@@ -41,7 +88,17 @@ function syncRoomPreviewByStatus(status) {
             executionPreview.textContent = '执行辅助智能体: 已挂载脱敏规则并重新提单。';
         } else {
             executionPreview.className = 'text-[13px] text-[#3370FF] truncate';
-            executionPreview.textContent = '执行辅助智能体: 已派发协同工单...';
+            if (window.AppState.proactiveRisk.status !== 'risk_detected' && !window.AppState.dispatchAuthorized) {
+                executionPreview.textContent = `主智能体: 主动巡检督办 ${window.AppState.proactiveRisk.supervisionCode} 处理中...`;
+            } else if (status === 'approved') {
+                executionPreview.textContent = '执行辅助智能体: 8080端口恢复，工单已闭环。';
+            } else if (window.AppState.synergyRoom.created) {
+                executionPreview.textContent = '执行辅助智能体: 已派发协同工单...';
+            } else if (window.AppState.dispatchAuthorized) {
+                executionPreview.textContent = '执行辅助智能体: 已接收总控调度，执行处理中...';
+            } else {
+                executionPreview.textContent = '执行辅助智能体: 已生成调度建议，待授权下发...';
+            }
         }
     }
 
@@ -62,12 +119,16 @@ function syncRoomPreviewByStatus(status) {
 document.addEventListener('DOMContentLoaded', () => {
     const chatContainer = document.getElementById('chat-container');
     window.AppState.globalControlMessages = chatContainer ? chatContainer.innerHTML : '';
+    syncExecutionRoomVisibility();
+    syncSynergyRoomVisibility();
     bindRoomEvents();
     window.initTicketDrawer();
     syncRoomPreviewByStatus(window.AppState.ticketStatus);
 
     window.AppEvents.addEventListener('ticket-status-changed', event => {
         const status = event.detail.status;
+        syncExecutionRoomVisibility();
+        syncSynergyRoomVisibility();
         syncRoomPreviewByStatus(status);
 
         if (window.AppState.currentRoom === 'execution-layer') {
@@ -77,6 +138,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.AppState.currentRoom === 'synergy-layer') {
             window.renderSynergyLayerMessages();
             window.scrollToBottom();
+        }
+    });
+
+    window.AppEvents.addEventListener('proactive-risk-status-changed', () => {
+        syncExecutionRoomVisibility();
+        syncSynergyRoomVisibility();
+        syncRoomPreviewByStatus(window.AppState.ticketStatus);
+        if (window.AppState.currentRoom === 'execution-layer') {
+            window.renderExecutionLayerMessages();
+            window.scrollToBottom();
+        }
+        if (window.AppState.currentRoom === 'risk-control') {
+            window.renderRiskControlMessages();
+            window.scrollToBottom();
+        }
+        if (window.AppState.currentRoom === 'global-control') {
+            const chatContainer = document.getElementById('chat-container');
+            if (chatContainer && window.triggerProactiveRiskWarning) {
+                chatContainer.innerHTML = window.AppState.globalControlMessages;
+                window.triggerProactiveRiskWarning();
+            }
         }
     });
 

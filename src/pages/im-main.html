@@ -63,14 +63,14 @@
                     <p class="text-[13px] text-[#8F959E] truncate">数据安全审计: 发现1起越权行为拦截</p>
                 </div>
             </div>
-            <div id="room-execution" class="chat-room-item flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="execution-layer">
+            <div id="room-execution" class="chat-room-item hidden flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="execution-layer">
                 <div class="w-12 h-12 bg-orange-400 rounded-lg flex items-center justify-center text-white font-bold text-sm">集成A</div>
                 <div class="ml-3 flex-1 overflow-hidden">
                     <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] text-[#1F2329] truncate">子项目A-集成协同群组</span><span class="text-xs text-[#8F959E]">周二</span></div>
-                    <p class="text-[13px] text-[#3370FF] truncate">执行辅助智能体: 已派发协同工单...</p>
+                    <p class="text-[13px] text-[#3370FF] truncate">执行辅助智能体: 已生成调度建议，待授权下发...</p>
                 </div>
             </div>
-            <div id="room-synergy" class="chat-room-item flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="synergy-layer">
+            <div id="room-synergy" class="chat-room-item hidden flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="synergy-layer">
                 <div class="w-12 h-12 bg-[#7C3AED] rounded-lg flex items-center justify-center text-white text-lg"><i class="fa-solid fa-people-arrows"></i></div>
                 <div class="ml-3 flex-1 overflow-hidden">
                     <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] text-[#1F2329] truncate">网络策略变更-临时协同群组</span><span class="text-xs text-[#8F959E]">14:20</span></div>
@@ -92,7 +92,7 @@
             <div class="flex space-x-4 text-[#8F959E] text-lg">
                 <i class="fa-solid fa-phone cursor-pointer hover:text-[#1F2329]"></i>
                 <i class="fa-solid fa-video cursor-pointer hover:text-[#1F2329]"></i>
-                <i class="fa-solid fa-tower-broadcast text-[#8F959E] cursor-pointer hover:text-[#3370FF] transition-colors p-1 rounded" id="trigger-proactive-alert" title="演示：触发智能体主动风控预警"></i>
+                <i class="fa-solid fa-tower-broadcast text-[#8F959E] bg-[#F2F3F5] cursor-pointer hover:bg-[#E4E6EA] transition-colors p-1.5 rounded flex items-center justify-center text-[15px] hidden" id="trigger-proactive-alert" title="支线：触发智能体主动风控"></i>
                 <i class="fa-solid fa-magnifying-glass cursor-pointer hover:text-[#1F2329]"></i>
                 <i class="fa-solid fa-ellipsis cursor-pointer hover:text-[#1F2329]"></i>
             </div>
@@ -137,8 +137,8 @@
                             </div>
                         </div>
                         <div class="fs-card-footer">
-                            <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center" onclick="triggerScenarioTwo()"><i class="fa-solid fa-microscope mr-1.5 text-[#8F959E]"></i>一键穿透归因</button>
-                            <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center"><i class="fa-solid fa-bolt mr-1.5"></i>下发宏观调度令</button>
+                            <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center" onclick="triggerScenarioTwo()"><i class="fa-solid fa-microscope mr-1.5"></i>一键穿透归因</button>
+                            <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center" onclick="showMacroToast(this)"><i class="fa-solid fa-bolt mr-1.5 text-[#8F959E]"></i>宏观督办（支线）</button>
                         </div>
                     </div>
                 </div>

@@ -56,11 +56,32 @@ window.AppState = {
     ticketRejectReason: '',
     ticketLastActionAt: '',
     ticketResubmitMessage: '',
+    dispatchAuthorized: false,
+    executionRoom: {
+        created: false,
+        createdAt: ''
+    },
     proactiveRisk: {
         warningPushed: false,
         supervisionIssued: false,
-        hiddenRiskCount: 0
-    }
+        hiddenRiskCount: 0,
+        status: 'risk_detected',
+        supervisionCode: 'SUP-20260323-001',
+        owner: '张三 (应用开发方-现场工程师)',
+        issuedAt: '',
+        dueAt: '2026-03-23 17:00',
+        mitigationPlan: '',
+        evidenceHash: '0x8f2a...3b9c',
+        reviewDecision: '',
+        closedAt: '',
+        closureSummary: ''
+    },
+    synergyRoom: {
+        created: false,
+        createdAt: '',
+        ticketCode: 'TCK-8080-NW'
+    },
+    resolutionBroadcasted: false
 };
 
 window.AppEvents = new EventTarget();
@@ -83,3 +104,27 @@ function updateTicketStatus(nextStatus, payload) {
 }
 
 window.updateTicketStatus = updateTicketStatus;
+
+function updateProactiveRiskStatus(nextStatus, payload) {
+    const state = window.AppState.proactiveRisk;
+    const safePayload = payload || {};
+    state.status = nextStatus;
+    state.issuedAt = safePayload.issuedAt || state.issuedAt;
+    state.mitigationPlan = safePayload.mitigationPlan || state.mitigationPlan;
+    state.reviewDecision = safePayload.reviewDecision || state.reviewDecision;
+    state.closureSummary = safePayload.closureSummary || state.closureSummary;
+    state.closedAt = safePayload.closedAt || state.closedAt;
+
+    window.AppEvents.dispatchEvent(new CustomEvent('proactive-risk-status-changed', {
+        detail: {
+            status: state.status,
+            issuedAt: state.issuedAt,
+            mitigationPlan: state.mitigationPlan,
+            reviewDecision: state.reviewDecision,
+            closureSummary: state.closureSummary,
+            closedAt: state.closedAt
+        }
+    }));
+}
+
+window.updateProactiveRiskStatus = updateProactiveRiskStatus;

@@ -2,7 +2,10 @@ function renderExecutionLayerMessages() {
     const chatContainer = document.getElementById('chat-container');
     chatContainer.innerHTML = window.ExecutionScenario.templates.getExecutionLayerMessageTemplate();
     renderExecutionReverseFlowCard();
+    renderProactiveExecutionThread(chatContainer);
     bindExecutionReworkAction();
+    bindExecutionEscalationAction();
+    bindExecutionResolutionReportAction();
     window.startSlaCountdown();
 }
 
@@ -67,6 +70,47 @@ function renderExecutionReverseFlowCard() {
         `;
         chatContainer.insertAdjacentHTML('beforeend', resubmittedCard);
     }
+
+    if (state.ticketStatus === 'approved') {
+        const approvedCard = `
+            <div class="flex items-start fade-in mt-6">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3 w-full">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">协同管控智能体</span>
+                        <span class="fs-tag-bot">BOT</span>
+                    </div>
+                    <div class="bg-[#E4F5E9] border border-[#C5EACF] rounded-md px-4 py-3 text-[13px] text-[#1F2329]">
+                        <div class="font-semibold text-[#239C46] mb-1">
+                            <i class="fa-solid fa-circle-check mr-1.5"></i>网络策略已放行，云环境 8080 端口恢复连通，工单 TCK-8080-NW 已闭环。
+                        </div>
+                        <div class="text-[12px] text-[#5A616A]">已同步通知 @张三 完成验证并回报全域管控智能体。</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-end fade-in mt-4">
+                <div class="flex items-center mb-1">
+                    <span class="text-xs text-[#8F959E] mr-2">14:36</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">张三 (应用开发方-现场工程师)</span>
+                </div>
+                <div class="flex items-start justify-end">
+                    <div class="fs-msg-user mr-3 shadow-sm text-left">
+                        <span class="text-[#3370FF]">@全域管控智能体</span> 已复测通过，8080 端口恢复，联调任务继续推进。我的提报工单可关闭。
+                    </div>
+                    <img src="https://ui-avatars.com/api/?name=张三&background=E1EAFF&color=3370FF" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                </div>
+            </div>
+            <div class="flex items-start fade-in mt-4">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3">
+                    <button id="btn-report-global-resolution" class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+                        <i class="fa-solid fa-bullhorn mr-1.5"></i>回传总控群并播报结论
+                    </button>
+                </div>
+            </div>
+        `;
+        chatContainer.insertAdjacentHTML('beforeend', approvedCard);
+    }
 }
 
 function bindExecutionReworkAction() {
@@ -121,6 +165,14 @@ function renderSynergyLayerMessages() {
                                 若本次变更不通过，执行层部署任务无法完成，预计将导致整体进度延期 2%，并影响后续跨组织联调排期。
                             </p>
                         </section>
+                        <section class="border border-[#BBF7D0] bg-[#ECFDF3] rounded p-3">
+                            <h3 class="text-[13px] font-semibold text-[#166534] mb-2">
+                                <i class="fa-solid fa-shield-check mr-1.5"></i>数据安全审计依据
+                            </h3>
+                            <p class="text-[13px] text-[#1F2329] leading-relaxed">
+                                数据安全智能体已调阅“应用方越权调用底层数据”审计追踪日志，并附可信存证哈希供陈总监复核后放行策略。
+                            </p>
+                        </section>
                     </div>
 
                     <div class="fs-card-footer">
@@ -145,6 +197,37 @@ function renderSynergyLayerMessages() {
 
 function renderRiskControlMessages() {
     const chatContainer = document.getElementById('chat-container');
+    const riskState = window.AppState.proactiveRisk;
+    const hasProactiveThread = riskState.status !== 'risk_detected';
+    const proactiveReviewBlock = hasProactiveThread ? `
+        <div class="flex items-start fade-in mt-6">
+            <img src="https://ui-avatars.com/api/?name=AI&background=166534&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+            <div class="ml-3 w-full">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">数据安全智能体</span>
+                    <span class="fs-tag-bot">BOT</span>
+                    <span class="text-xs text-[#8F959E] ml-2">主动巡检复核</span>
+                </div>
+                <div class="fs-card border-[#BBF7D0]">
+                    <div class="fs-card-header bg-[#ECFDF3] border-b border-[#BBF7D0]">
+                        <div class="flex items-center font-semibold text-[#166534]">
+                            <i class="fa-solid fa-fingerprint mr-2"></i>主动巡检审计复核
+                        </div>
+                        <span class="text-[12px] text-[#166534]">督办单：${riskState.supervisionCode}</span>
+                    </div>
+                    <div class="fs-card-body space-y-3 text-[13px] text-[#1F2329]">
+                        <p>已生成“应用方越权调用底层数据”完整审计链，可信哈希：<span class="font-mono">${riskState.evidenceHash}</span></p>
+                        <p class="text-[#646A73]">待陈总监复核后授权是否继续推进。当前状态：${riskState.reviewDecision || '待授权'}。</p>
+                    </div>
+                    <div class="fs-card-footer">
+                        <button data-action="approve-proactive-review" class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+                            <i class="fa-solid fa-shield-heart mr-1.5"></i>第2步 请陈总监授权（允许继续）
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ` : '';
     chatContainer.innerHTML = `
         <div class="flex flex-col items-end fade-in">
             <div class="flex items-center mb-1">
@@ -206,6 +289,7 @@ function renderRiskControlMessages() {
                 </div>
             </div>
         </div>
+        ${proactiveReviewBlock}
     `;
 }
 
@@ -221,7 +305,7 @@ function triggerScenarioTwo() {
             </div>
             <div class="flex items-start justify-end">
                 <div class="fs-msg-user mr-3 shadow-sm">
-                    <span class="text-[#3370FF]">@主智能体</span> 查一下为什么子系统A接口联调停滞？到底是哪家公司、哪个环节卡住了？给我一个详细的归因报告和解决方案。
+                    <span class="text-[#3370FF]">@全域管控智能体</span> 查一下为什么子系统A接口联调停滞？到底是哪家公司、哪个环节卡住了？给我一个详细的归因报告和解决方案。
                 </div>
                 <img src="https://i.pravatar.cc/150?img=11" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
             </div>
@@ -247,6 +331,21 @@ function triggerScenarioTwo() {
 }
 
 function getProactiveRiskWarningTemplate() {
+    const riskState = window.AppState.proactiveRisk;
+    const statusLabelMap = {
+        risk_detected: '已发现风险',
+        supervision_issued: '督办已下发',
+        execution_acknowledged: '执行层已接单',
+        evidence_collected: '证据已齐备',
+        mitigated: '风险已缓解',
+        closed: '已归档'
+    };
+    const statusLabel = statusLabelMap[riskState.status] || '处理中';
+    const closeBtn = riskState.status === 'mitigated' ? `
+        <button data-action="close-proactive-risk" class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+            <i class="fa-solid fa-folder-check mr-1.5"></i>归档并播报闭环结论
+        </button>
+    ` : '';
     return `
         <div id="proactive-risk-card" class="flex items-start fade-in mt-6">
             <img src="https://ui-avatars.com/api/?name=AI&background=7C3AED&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
@@ -254,7 +353,7 @@ function getProactiveRiskWarningTemplate() {
                 <div class="flex items-center mb-1">
                     <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span>
                     <span class="fs-tag-bot">BOT</span>
-                    <span class="text-xs text-[#8F959E] ml-2">实时巡检</span>
+                    <span class="text-xs text-[#8F959E] ml-2">实时巡检 · ${statusLabel}</span>
                 </div>
                 <div class="fs-card border-[#D8C8FF]">
                     <div class="fs-card-header bg-[#F3EDFF] border-b border-[#D8C8FF]">
@@ -271,12 +370,13 @@ function getProactiveRiskWarningTemplate() {
                         </div>
                     </div>
                     <div class="fs-card-footer">
-                        <button data-action="issue-preventive-supervision" class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
-                            <i class="fa-solid fa-bullhorn mr-1.5"></i>一键下发预警督办单
+                        <button data-action="issue-preventive-supervision" class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center">
+                            <i class="fa-solid fa-bullhorn mr-1.5 text-[#8F959E]"></i>第1步 下发督办单（支线）
                         </button>
                         <button data-action="view-risk-insight-chart" class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center">
                             <i class="fa-solid fa-chart-column mr-1.5 text-[#8F959E]"></i>查看底层效能洞察图表
                         </button>
+                        ${closeBtn}
                     </div>
                 </div>
             </div>
@@ -285,6 +385,8 @@ function getProactiveRiskWarningTemplate() {
 }
 
 function getPreventiveSupervisionReplyTemplate() {
+    const riskState = window.AppState.proactiveRisk;
+    const issueTime = riskState.issuedAt || `2026-03-23 ${getNowClockLabel()}`;
     return `
         <div id="preventive-supervision-reply" class="flex items-start fade-in mt-6">
             <img src="https://ui-avatars.com/api/?name=AI&background=7C3AED&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
@@ -293,8 +395,53 @@ function getPreventiveSupervisionReplyTemplate() {
                     <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span>
                     <span class="fs-tag-bot">BOT</span>
                 </div>
-                <div class="bg-[#E4F5E9] border border-[#C5EACF] rounded-md px-4 py-3 text-[13px] text-[#1F2329]">
-                    <i class="fa-solid fa-circle-check text-[#239C46] mr-1.5"></i>✅ 指令已执行。已自动向应用开发方项目总监下发【红色督办单】，要求今日 17:00 前提交进度说明及补救计划。全局风险监控已将该项列入【重点跟踪名单】。
+                <div class="fs-card border-[#C5EACF]">
+                    <div class="fs-card-header bg-[#E4F5E9] border-b border-[#C5EACF]">
+                        <div class="flex items-center font-semibold text-[#239C46]">
+                            <i class="fa-solid fa-circle-check mr-1.5"></i>督办单已下发（主动巡检闭环）
+                        </div>
+                        <span class="text-[12px] text-[#239C46]">${riskState.supervisionCode}</span>
+                    </div>
+                    <div class="fs-card-body text-[13px] text-[#1F2329] space-y-2">
+                        <p>责任人：${riskState.owner}</p>
+                        <p>下发时间：${issueTime}，要求 ${riskState.dueAt} 前提交“进度说明 + 补救计划”。</p>
+                        <p class="text-[#646A73]">并行要求：数据安全智能体已发起可信存证哈希复核。</p>
+                    </div>
+                    <div class="fs-card-footer">
+                        <button data-action="open-proactive-execution" class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+                            <i class="fa-solid fa-people-arrows-left-right mr-1.5"></i>第1步 查看执行层接单回执
+                        </button>
+                        <button data-action="open-proactive-risk-review" class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center">
+                            <i class="fa-solid fa-shield-check mr-1.5 text-[#8F959E]"></i>查看安全审计复核
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function getProactiveClosureCardTemplate() {
+    const riskState = window.AppState.proactiveRisk;
+    return `
+        <div id="proactive-closure-card" class="flex items-start fade-in mt-6">
+            <img src="https://ui-avatars.com/api/?name=AI&background=239C46&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+            <div class="ml-3 w-full">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span>
+                    <span class="fs-tag-bot">BOT</span>
+                </div>
+                <div class="fs-card border-[#C5EACF]">
+                    <div class="fs-card-header bg-[#E4F5E9] border-b border-[#C5EACF]">
+                        <div class="flex items-center font-semibold text-[#239C46]"><i class="fa-solid fa-folder-check mr-1.5"></i>主动巡检闭环播报</div>
+                        <span class="text-[12px] text-[#239C46]">${riskState.supervisionCode}</span>
+                    </div>
+                    <div class="fs-card-body text-[13px] text-[#1F2329] space-y-2">
+                        <p>处理结论：${riskState.closureSummary || '风险已缓解，转入观察。'}</p>
+                        <p>整改耗时：12 分钟，责任人：${riskState.owner}</p>
+                        <p>证据摘要：可信哈希 ${riskState.evidenceHash}，安全复核：${riskState.reviewDecision || '允许继续'}。</p>
+                        <p class="text-[#646A73]">下一检查点：今日 17:30 二次巡检复核。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -309,10 +456,15 @@ function triggerProactiveRiskWarning() {
     }
 
     const chatContainer = document.getElementById('chat-container');
-    if (!chatContainer || document.getElementById('proactive-risk-card')) return;
+    if (!chatContainer) return;
 
     const dynamicContainer = document.getElementById('dynamic-content') || chatContainer;
-    dynamicContainer.insertAdjacentHTML('beforeend', getProactiveRiskWarningTemplate());
+    const existingCard = document.getElementById('proactive-risk-card');
+    if (existingCard) {
+        existingCard.outerHTML = getProactiveRiskWarningTemplate();
+    } else {
+        dynamicContainer.insertAdjacentHTML('beforeend', getProactiveRiskWarningTemplate());
+    }
     window.AppState.proactiveRisk.warningPushed = true;
     window.AppState.globalControlMessages = chatContainer.innerHTML;
     scrollToBottom();
@@ -339,6 +491,12 @@ function bindProactiveRiskActions() {
             setTimeout(() => {
                 window.AppState.proactiveRisk.supervisionIssued = true;
                 window.AppState.proactiveRisk.hiddenRiskCount += 1;
+                window.AppState.executionRoom.created = true;
+                window.AppState.executionRoom.createdAt = new Date().toISOString();
+                window.updateProactiveRiskStatus && window.updateProactiveRiskStatus('supervision_issued', {
+                    issuedAt: `2026-03-23 ${getNowClockLabel()}`
+                });
+                revealExecutionRoomFromDispatch();
                 const dynamicContainer = document.getElementById('dynamic-content') || document.getElementById('chat-container');
                 if (dynamicContainer && !document.getElementById('preventive-supervision-reply')) {
                     dynamicContainer.insertAdjacentHTML('beforeend', getPreventiveSupervisionReplyTemplate());
@@ -349,9 +507,311 @@ function bindProactiveRiskActions() {
                     scrollToBottom();
                 }
                 trigger.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i>督办单已下发';
+                setTimeout(() => {
+                    window.switchChatRoom && window.switchChatRoom('execution-layer');
+                }, 300);
             }, 1000);
         }
+
+        if (action === 'open-proactive-execution') {
+            window.updateProactiveRiskStatus && window.updateProactiveRiskStatus('execution_acknowledged', {
+                mitigationPlan: '张三已接单：15:30前提交补救计划，16:30前恢复联调节奏。'
+            });
+            window.switchChatRoom && window.switchChatRoom('execution-layer');
+            return;
+        }
+
+        if (action === 'open-proactive-risk-review') {
+            window.updateProactiveRiskStatus && window.updateProactiveRiskStatus('evidence_collected', {
+                reviewDecision: '审计证据完整，允许在监控条件下继续推进。'
+            });
+            window.switchChatRoom && window.switchChatRoom('risk-control');
+            return;
+        }
+
+        if (action === 'approve-proactive-review') {
+            window.updateProactiveRiskStatus && window.updateProactiveRiskStatus('mitigated', {
+                reviewDecision: '陈总监复核通过，允许继续执行并纳入观察。'
+            });
+            window.switchChatRoom && window.switchChatRoom('execution-layer');
+            return;
+        }
+
+        if (action === 'report-proactive-global') {
+            if (window.AppState.proactiveRisk.status !== 'closed') {
+                window.updateProactiveRiskStatus && window.updateProactiveRiskStatus('closed', {
+                    closureSummary: '风险已解除，里程碑延期概率从85%降至20%。',
+                    closedAt: `2026-03-23 ${getNowClockLabel()}`
+                });
+            }
+            const replyHtml = getProactiveClosureCardTemplate();
+            if (!window.AppState.globalControlMessages.includes('proactive-closure-card')) {
+                window.AppState.globalControlMessages += replyHtml;
+            }
+            window.switchChatRoom && window.switchChatRoom('global-control');
+            return;
+        }
+
+        if (action === 'close-proactive-risk') {
+            if (document.getElementById('proactive-closure-card')) return;
+            window.updateProactiveRiskStatus && window.updateProactiveRiskStatus('closed', {
+                closureSummary: '风险已解除，里程碑延期概率从85%降至20%。',
+                closedAt: `2026-03-23 ${getNowClockLabel()}`
+            });
+            const replyHtml = getProactiveClosureCardTemplate();
+            if (!window.AppState.globalControlMessages.includes('proactive-closure-card')) {
+                window.AppState.globalControlMessages += replyHtml;
+            }
+            window.switchChatRoom && window.switchChatRoom('global-control');
+            return;
+        }
     });
+}
+
+function renderProactiveExecutionThread(container) {
+    const riskState = window.AppState.proactiveRisk;
+    if (riskState.status === 'risk_detected') return;
+    if (document.getElementById('proactive-execution-thread')) return;
+
+    const escalateButton = riskState.status === 'supervision_issued' || riskState.status === 'execution_acknowledged' ? `
+            <div class="flex items-start fade-in">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3">
+                    <button data-action="open-proactive-risk-review" class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center">
+                        <i class="fa-solid fa-shield-check mr-1.5 text-[#8F959E]"></i>第2步 转风险群请陈总监授权
+                    </button>
+                </div>
+            </div>
+    ` : '';
+    const postApproveBlock = riskState.status === 'mitigated' || riskState.status === 'closed' ? `
+            <div class="flex items-start fade-in">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3 w-full">
+                    <div class="bg-[#E4F5E9] border border-[#C5EACF] rounded-md px-4 py-3 text-[13px] text-[#1F2329]">
+                        <i class="fa-solid fa-circle-check text-[#239C46] mr-1.5"></i>陈总监已授权放行，整改任务可继续推进，请张三持续回传进度。
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-end fade-in">
+                <div class="flex items-center mb-1">
+                    <span class="text-xs text-[#8F959E] mr-2">${getNowClockLabel()}</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">${riskState.owner}</span>
+                </div>
+                <div class="flex items-start justify-end">
+                    <div class="fs-msg-user mr-3 shadow-sm text-left">
+                        <span class="text-[#3370FF]">@全域管控智能体</span> 已收到授权，恢复联调节奏，后续按每30分钟回传执行进度。
+                    </div>
+                    <img src="https://ui-avatars.com/api/?name=张三&background=E1EAFF&color=3370FF" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                </div>
+            </div>
+            <div class="flex items-start fade-in">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3">
+                    <button data-action="report-proactive-global" class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+                        <i class="fa-solid fa-bullhorn mr-1.5"></i>第3步 回传总控群（主动巡检结论）
+                    </button>
+                </div>
+            </div>
+    ` : '';
+
+    const reply = `
+        <div id="proactive-execution-thread" class="space-y-4 mt-6">
+            <div class="flex items-start fade-in">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3 w-full">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span>
+                        <span class="fs-tag-bot">BOT</span>
+                    </div>
+                    <div class="bg-[#EAF2FF] border border-[#D1E2FF] rounded-md px-4 py-3 text-[13px] text-[#1F2329]">
+                        <span class="text-[#3370FF]">@${riskState.owner}</span> 全域管控智能体已下发主动巡检督办单 ${riskState.supervisionCode}，请在 ${riskState.dueAt} 前提交“进度说明 + 补救计划”。
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-end fade-in">
+                <div class="flex items-center mb-1">
+                    <span class="text-xs text-[#8F959E] mr-2">${getNowClockLabel()}</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">${riskState.owner}</span>
+                </div>
+                <div class="flex items-start justify-end">
+                    <div class="fs-msg-user mr-3 shadow-sm text-left">
+                        <span class="text-[#3370FF]">@全域管控智能体</span> 已接单，补救计划：${riskState.mitigationPlan || '15:30前完成进度说明，16:30前恢复联调节奏，并每30分钟回传一次进度。'}
+                    </div>
+                    <img src="https://ui-avatars.com/api/?name=张三&background=E1EAFF&color=3370FF" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                </div>
+            </div>
+            ${escalateButton}
+            ${postApproveBlock}
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', reply);
+}
+
+function showMacroToast(buttonEl) {
+    if (!buttonEl || buttonEl.disabled) return;
+    buttonEl.disabled = true;
+    buttonEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5"></i>下发中...';
+
+    setTimeout(() => {
+        buttonEl.classList.remove('fs-btn-primary');
+        buttonEl.classList.add('fs-btn-default', 'opacity-60', 'cursor-not-allowed');
+        buttonEl.innerHTML = '<i class="fa-solid fa-check mr-1.5"></i>已群发督办';
+    }, 800);
+}
+
+function getNowClockLabel() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    return `${h}:${m}`;
+}
+
+function revealSynergyRoomFromDispatch() {
+    const synergyRoom = document.getElementById('room-synergy');
+    if (!synergyRoom) return;
+
+    const clockLabel = getNowClockLabel();
+    const timeEl = synergyRoom.querySelector('.text-xs');
+    const previewEl = synergyRoom.querySelector('p');
+    if (timeEl) {
+        timeEl.textContent = clockLabel;
+    }
+    if (previewEl) {
+        previewEl.className = 'text-[13px] text-[#3370FF] truncate';
+        previewEl.textContent = '协同管控智能体: 已创建临时协同群并同步工单。';
+    }
+    synergyRoom.classList.remove('hidden');
+}
+
+function revealExecutionRoomFromDispatch() {
+    const executionRoom = document.getElementById('room-execution');
+    if (!executionRoom) return;
+
+    const clockLabel = getNowClockLabel();
+    const timeEl = executionRoom.querySelector('.text-xs');
+    const previewEl = executionRoom.querySelector('p');
+    if (timeEl) {
+        timeEl.textContent = clockLabel;
+    }
+    if (previewEl) {
+        previewEl.className = 'text-[13px] text-[#3370FF] truncate';
+        previewEl.textContent = '全域管控智能体: 已接收总控调度，正在@责任人定位问题...';
+    }
+    executionRoom.classList.remove('hidden');
+}
+
+function bindExecutionEscalationAction() {
+    const btn = document.querySelector('[data-action="escalate-to-synergy"]');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+        if (window.AppState.synergyRoom.created) return;
+
+        window.AppState.synergyRoom.created = true;
+        window.AppState.synergyRoom.createdAt = new Date().toISOString();
+        revealSynergyRoomFromDispatch();
+        window.updateTicketStatus('pending', {
+            actionAt: new Date().toISOString(),
+            reason: ''
+        });
+        btn.disabled = true;
+        btn.classList.remove('fs-btn-primary');
+        btn.classList.add('fs-btn-default', 'opacity-60', 'cursor-not-allowed');
+        btn.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i>已升级至临时协同群';
+        setTimeout(() => {
+            window.switchChatRoom && window.switchChatRoom('synergy-layer');
+        }, 300);
+    });
+}
+
+function getGlobalResolutionReplyHtml() {
+    return `
+        <div id="global-resolution-reply" class="flex items-start fade-in mt-6">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+            <div class="ml-3 w-full">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span>
+                    <span class="fs-tag-bot">BOT</span>
+                </div>
+                <div class="bg-[#E4F5E9] border border-[#C5EACF] rounded-md px-4 py-3 text-[13px] text-[#1F2329]">
+                    ✅ 王总监，问题已闭环：执行层反馈 8080 端口已放行，张三提报工单已关闭，接口联调恢复正常。
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function bindExecutionResolutionReportAction() {
+    const btn = document.getElementById('btn-report-global-resolution');
+    if (!btn) return;
+    btn.addEventListener('click', () => {
+        if (window.AppState.resolutionBroadcasted) return;
+        window.AppState.resolutionBroadcasted = true;
+        btn.disabled = true;
+        btn.classList.remove('fs-btn-primary');
+        btn.classList.add('fs-btn-default', 'opacity-60', 'cursor-not-allowed');
+        btn.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i>已回传总控群';
+        appendGlobalResolutionReply();
+        setTimeout(() => {
+            window.switchChatRoom && window.switchChatRoom('global-control');
+        }, 300);
+    });
+}
+
+function appendGlobalResolutionReply() {
+    const chatContainer = document.getElementById('chat-container');
+    if (!chatContainer) return;
+    const replyHtml = getGlobalResolutionReplyHtml();
+    if (window.AppState.currentRoom === 'global-control') {
+        const targetContainer = document.getElementById('dynamic-content') || chatContainer;
+        if (targetContainer && !document.getElementById('global-resolution-reply')) {
+            targetContainer.insertAdjacentHTML('beforeend', replyHtml);
+            window.AppState.globalControlMessages = chatContainer.innerHTML;
+        }
+    } else if (!window.AppState.globalControlMessages.includes('global-resolution-reply')) {
+        window.AppState.globalControlMessages += replyHtml;
+    }
+    window.scrollToBottom && window.scrollToBottom();
+}
+
+function approveDispatch(buttonEl) {
+    if (!buttonEl || buttonEl.disabled) return;
+    buttonEl.disabled = true;
+    buttonEl.classList.remove('fs-btn-primary');
+    buttonEl.classList.add('fs-btn-default', 'opacity-60', 'cursor-not-allowed');
+    buttonEl.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i>已授权调度';
+
+    if (document.getElementById('dispatch-approved-reply')) {
+        return;
+    }
+
+    window.AppState.dispatchAuthorized = true;
+    window.AppState.executionRoom.created = true;
+    window.AppState.executionRoom.createdAt = new Date().toISOString();
+    revealExecutionRoomFromDispatch();
+
+    const container = document.getElementById('dynamic-content') || document.getElementById('chat-container');
+    if (!container) return;
+
+    const replyHtml = `
+        <div id="dispatch-approved-reply" class="flex items-start fade-in mt-6">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+            <div class="ml-3 w-full">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span>
+                    <span class="fs-tag-bot">BOT</span>
+                </div>
+                <div class="bg-[#E4F5E9] border border-[#C5EACF] rounded-md px-4 py-3 text-[13px] text-[#1F2329]">
+                    ✅ <strong>调度指令已下发</strong>。已同步至「子项目A-集成协同群组」进入执行；若触发跨组织策略审批，将自动创建二级临时协同群。
+                </div>
+            </div>
+        </div>
+    `;
+    container.insertAdjacentHTML('beforeend', replyHtml);
+    scrollToBottom();
+
+    setTimeout(() => {
+        window.switchChatRoom && window.switchChatRoom('execution-layer');
+    }, 500);
 }
 
 function scrollToBottom() {
@@ -359,6 +819,7 @@ function scrollToBottom() {
     chatContainer.scrollTo({ top: chatContainer.scrollHeight, behavior: 'smooth' });
 }
 
+window.bindExecutionResolutionReportAction = bindExecutionResolutionReportAction;
 window.renderExecutionLayerMessages = renderExecutionLayerMessages;
 window.renderRiskControlMessages = renderRiskControlMessages;
 window.renderSynergyLayerMessages = renderSynergyLayerMessages;
@@ -366,3 +827,5 @@ window.triggerScenarioTwo = triggerScenarioTwo;
 window.scrollToBottom = scrollToBottom;
 window.triggerProactiveRiskWarning = triggerProactiveRiskWarning;
 window.bindProactiveRiskActions = bindProactiveRiskActions;
+window.showMacroToast = showMacroToast;
+window.approveDispatch = approveDispatch;

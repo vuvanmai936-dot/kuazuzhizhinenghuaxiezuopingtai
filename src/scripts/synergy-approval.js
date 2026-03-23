@@ -208,6 +208,9 @@ function approveSynergyPolicy() {
         renderSynergySettlementCard();
         window.scrollToBottom && window.scrollToBottom();
     }, 1500);
+    setTimeout(() => {
+        window.switchChatRoom && window.switchChatRoom('execution-layer');
+    }, 1200);
     window.scrollToBottom && window.scrollToBottom();
 }
 

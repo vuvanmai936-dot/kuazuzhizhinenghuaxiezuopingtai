@@ -8,12 +8,20 @@ function applyRoomConfig(roomKey, chatTitle, chatStatusTag, chatMeta, chatInput)
 }
 
 function switchChatRoom(roomKey) {
+    if (roomKey === 'execution-layer' && !window.AppState.executionRoom.created) {
+        return;
+    }
+    if (roomKey === 'synergy-layer' && !window.AppState.synergyRoom.created) {
+        return;
+    }
+
     const switchStart = performance.now();
     const chatContainer = document.getElementById('chat-container');
     const chatTitle = document.getElementById('chat-title');
     const chatStatusTag = document.getElementById('chat-status-tag');
     const chatMeta = document.getElementById('chat-meta');
     const chatInput = document.querySelector('textarea');
+    const proactiveAlertIcon = document.getElementById('trigger-proactive-alert');
 
     document.querySelectorAll('.chat-room-item').forEach(item => item.classList.remove('active-room'));
     const activeRoom = document.querySelector(`[data-room="${roomKey}"]`);
@@ -25,6 +33,13 @@ function switchChatRoom(roomKey) {
     setTimeout(() => {
         applyRoomConfig(roomKey, chatTitle, chatStatusTag, chatMeta, chatInput);
         window.AppState.currentRoom = roomKey;
+        if (proactiveAlertIcon) {
+            if (roomKey === 'global-control') {
+                proactiveAlertIcon.classList.remove('hidden');
+            } else {
+                proactiveAlertIcon.classList.add('hidden');
+            }
+        }
         if (roomKey === 'execution-layer') {
             window.renderExecutionLayerMessages();
         } else if (roomKey === 'risk-control') {
