@@ -1,0 +1,16 @@
+/* 骨架屏加载动画 */
+.typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #8F959E; border-radius: 50%; margin: 0 2px; animation: bounce 1.4s infinite ease-in-out both; }
+.typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+@keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+.fade-in { animation: fadeIn 0.4s ease-out forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.chat-fade-out { opacity: 0; transform: translateY(6px); transition: all 0.25s ease; }
+.chat-fade-in { opacity: 1; transform: translateY(0); transition: all 0.3s ease; }
+.pulse-orange { animation: pulse-orange 2s infinite; }
+@keyframes pulse-orange {
+    0% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+    70% { box-shadow: 0 0 0 4px rgba(245, 158, 11, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+}

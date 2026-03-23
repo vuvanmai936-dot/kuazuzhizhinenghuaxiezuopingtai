@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨组织协作原型入口已收敛</title>
+    <meta http-equiv="refresh" content="0; url=src/pages/im-main.html">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background: #f4f5f7;
+            color: #1f2329;
+        }
+        .card {
+            width: min(560px, 92vw);
+            background: #fff;
+            border: 1px solid #dee0e3;
+            border-radius: 10px;
+            padding: 18px 20px;
+        }
+        a { color: #3370ff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1 style="font-size:18px;margin:0 0 10px;">跨组织 IM 演示入口已统一</h1>
+        <p style="margin:0 0 8px;">当前文件仅保留跳转能力，不再维护多场景静态副本。</p>
+        <p style="margin:0;">请使用：<a href="src/pages/im-main.html">src/pages/im-main.html</a></p>
+    </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨组织智能化协作平台 - 飞书IM内嵌智能体原型</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 飞书风格基础变量与设定 */
+        body { font-family: "SF Pro Text", "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; background-color: #FFFFFF; color: #1F2329; }
+        
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #C2C7CC; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #99A0A8; }
+
+        /* 飞书卡片风格 */
+        .fs-card { background: #FFFFFF; border: 1px solid #DEE0E3; border-radius: 8px; max-width: 600px; box-shadow: 0 4px 8px -2px rgba(31, 35, 41, 0.04), 0 2px 4px -2px rgba(31, 35, 41, 0.04); }
+        .fs-card-header { padding: 12px 16px; border-bottom: 1px solid #DEE0E3; display: flex; align-items: center; justify-content: space-between; }
+        .fs-card-body { padding: 16px; }
+        .fs-card-footer { padding: 12px 16px; border-top: 1px solid #DEE0E3; background: #F8F9FA; display: flex; gap: 12px; justify-content: flex-end; }
+        
+        /* 按钮与标签 */
+        .fs-btn-primary { background-color: #3370FF; color: #FFF; border: 1px solid #3370FF; }
+        .fs-btn-primary:hover { background-color: #245BDB; }
+        .fs-btn-default { background-color: #FFFFFF; color: #1F2329; border: 1px solid #BBBEC4; }
+        .fs-btn-default:hover { background-color: #F2F3F5; }
+        
+        .fs-tag-bot { background: #E1EAFF; color: #3370FF; border: 1px solid #D1E2FF; font-size: 10px; padding: 0 4px; border-radius: 2px; margin-left: 6px; line-height: 16px; height: 18px; display: inline-flex; align-items: center; }
+        .fs-tag-red { background: #FEECEE; color: #D83931; border: 1px solid #FDC3C8; }
+        .fs-tag-green { background: #E4F5E9; color: #239C46; border: 1px solid #C5EACF; }
+
+        /* 用户发言气泡 */
+        .fs-msg-user { background-color: #D1E2FF; color: #1F2329; border-radius: 8px 0 8px 8px; padding: 10px 14px; font-size: 14px; line-height: 1.5; max-width: 70%; word-break: break-all; }
+        
+        /* 骨架屏加载动画 */
+        .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #8F959E; border-radius: 50%; margin: 0 2px; animation: bounce 1.4s infinite ease-in-out both; }
+        .typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+        .typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+        
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-fade-out { opacity: 0; transform: translateY(6px); transition: all 0.25s ease; }
+        .chat-fade-in { opacity: 1; transform: translateY(0); transition: all 0.3s ease; }
+        .chat-room-item.active-room { background: #EAF2FF; }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <aside class="w-[68px] bg-[#1C1F2B] flex flex-col items-center py-4 z-20 shrink-0">
+        <div class="w-10 h-10 rounded-xl mb-6 overflow-hidden border border-slate-700">
+            <img src="https://ui-avatars.com/api/?name=DS&background=3370FF&color=fff&rounded=false&bold=true" alt="Logo">
+        </div>
+        <div class="flex flex-col space-y-2 w-full px-2">
+            <div class="w-full h-12 flex flex-col items-center justify-center text-white bg-white/10 rounded-lg cursor-pointer">
+                <i class="fa-solid fa-message text-[20px] mb-1"></i>
+                <span class="text-[10px]">消息</span>
+            </div>
+            <div class="w-full h-12 flex flex-col items-center justify-center text-[#8F959E] hover:bg-white/5 rounded-lg cursor-pointer">
+                <i class="fa-regular fa-calendar text-[20px] mb-1"></i>
+                <span class="text-[10px]">日历</span>
+            </div>
+            <div class="w-full h-12 flex flex-col items-center justify-center text-[#8F959E] hover:bg-white/5 rounded-lg cursor-pointer">
+                <i class="fa-solid fa-folder-tree text-[20px] mb-1"></i>
+                <span class="text-[10px]">云文档</span>
+            </div>
+            <div class="w-full h-12 flex flex-col items-center justify-center text-[#8F959E] hover:bg-white/5 rounded-lg cursor-pointer">
+                <i class="fa-solid fa-table-cells-large text-[20px] mb-1"></i>
+                <span class="text-[10px]">工作台</span>
+            </div>
+        </div>
+        <div class="mt-auto relative cursor-pointer">
+            <img src="https://i.pravatar.cc/150?img=11" class="w-9 h-9 rounded-full border border-slate-600">
+            <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#1C1F2B] rounded-full"></div>
+        </div>
+    </aside>
+
+    <aside class="w-[280px] bg-[#FFFFFF] border-r border-[#dee0e3] flex flex-col z-10 shrink-0">
+        <div class="h-16 flex items-center px-4 justify-between">
+            <h2 class="text-xl font-medium text-[#1F2329]">消息</h2>
+            <div class="flex space-x-3 text-[#1F2329]">
+                <i class="fa-solid fa-plus cursor-pointer p-1 rounded hover:bg-gray-100"></i>
+            </div>
+        </div>
+        <div class="px-4 mb-2">
+            <div class="bg-[#F2F3F5] rounded-md flex items-center px-3 py-1.5 border border-transparent focus-within:border-[#3370FF] focus-within:bg-white transition-colors">
+                <i class="fa-solid fa-search text-[#8F959E] text-sm"></i>
+                <input type="text" placeholder="搜索" class="bg-transparent border-none outline-none text-sm ml-2 w-full text-[#1F2329] placeholder-[#8F959E]">
+            </div>
+        </div>
+        
+        <div class="flex-1 overflow-y-auto">
+            <div class="chat-room-item flex items-center px-4 py-3 bg-[#EAF2FF] cursor-pointer active-room" data-room="global-control">
+                <div class="relative">
+                    <div class="w-12 h-12 bg-[#3370FF] rounded-lg flex items-center justify-center text-white font-bold text-sm">总控</div>
+                </div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5">
+                        <span class="text-[15px] font-medium text-[#1F2329] truncate">项目全域总控超级群组</span>
+                        <span class="text-xs text-[#8F959E]">10:42</span>
+                    </div>
+                    <p class="text-[13px] text-[#8F959E] truncate">全域管控智能体: 已生成深度归因报告...</p>
+                </div>
+            </div>
+
+            <div class="chat-room-item flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="risk-control">
+                <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center text-white text-lg"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5">
+                        <span class="text-[15px] text-[#1F2329] truncate">风险管控专项群</span>
+                        <span class="text-xs text-[#8F959E]">昨天</span>
+                    </div>
+                    <p class="text-[13px] text-[#8F959E] truncate">数据安全审计: 发现1起越权行为拦截</p>
+                </div>
+            </div>
+            <div id="room-execution" class="chat-room-item flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="execution-layer">
+                <div class="w-12 h-12 bg-orange-400 rounded-lg flex items-center justify-center text-white font-bold text-sm">集成A</div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5">
+                        <span class="text-[15px] text-[#1F2329] truncate">子项目A-集成协同群组</span>
+                        <span class="text-xs text-[#8F959E]">周二</span>
+                    </div>
+                    <p class="text-[13px] text-[#8F959E] truncate">建设方-李工: 资源已到位，等待联调</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col bg-[#F4F5F7] relative h-full">
+        <header class="h-16 bg-[#FFFFFF] border-b border-[#DEE0E3] flex items-center justify-between px-6 shrink-0 z-10">
+            <div>
+                <div class="flex items-center">
+                    <h1 id="chat-title" class="text-[18px] font-medium text-[#1F2329] mr-2">项目全域总控超级群组</h1>
+                    <span id="chat-status-tag" class="text-[#D83931] bg-[#FEECEE] border border-[#FDC3C8] text-[12px] px-2 py-0.5 rounded-sm flex items-center"><i class="fa-solid fa-microphone-lines-slash mr-1"></i>全员禁言</span>
+                </div>
+                <div id="chat-meta" class="text-[13px] text-[#8F959E] mt-0.5"><i class="fa-solid fa-user-group mr-1"></i>18 人 · 仅总控层高管可下达指令</div>
+            </div>
+            <div class="flex space-x-4 text-[#8F959E] text-lg">
+                <i class="fa-solid fa-phone cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-solid fa-video cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-solid fa-magnifying-glass cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-solid fa-ellipsis cursor-pointer hover:text-[#1F2329]"></i>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 chat-fade-in" id="chat-container">
+            
+            <div class="flex flex-col items-end">
+                <div class="flex items-center mb-1">
+                    <span class="text-xs text-[#8F959E] mr-2">10:40</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">王总监 (业主方高层)</span>
+                </div>
+                <div class="flex items-start justify-end">
+                    <div class="fs-msg-user mr-3 shadow-sm">
+                        <span class="text-[#3370FF]">@主智能体</span> 请简报一下“可信数据空间二期项目”的整体健康度，按项目管理全生命周期阶段输出，并重点标出当前阶段的最大风险。
+                    </div>
+                    <img src="https://i.pravatar.cc/150?img=11" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                </div>
+            </div>
+
+            <div class="flex items-start">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3 w-full">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span>
+                        <span class="fs-tag-bot">BOT</span>
+                        <span class="text-xs text-[#8F959E] ml-2">10:41</span>
+                    </div>
+                    
+                    <div class="fs-card">
+                        <div class="fs-card-header bg-[#F8F9FA]">
+                            <div class="flex items-center font-medium text-[#1F2329]">
+                                <i class="fa-solid fa-chart-pie text-[#3370FF] mr-2"></i>实时全局项目监控摘要 (PMP模型)
+                            </div>
+                            <span class="text-xs text-[#8F959E]">数据自动采集测算</span>
+                        </div>
+                        <div class="fs-card-body space-y-4">
+                            <div class="bg-gray-50 p-3 rounded-md border border-gray-100">
+                                <div class="text-[13px] font-medium text-[#1F2329] mb-1.5">启动与规划阶段 (Initiating & Planning)</div>
+                                <div class="flex justify-between text-[13px] text-[#646A73]">
+                                    <span>计划基准复核: <span class="text-[#239C46] font-medium"><i class="fa-solid fa-check-circle mr-1"></i>健康 (100%)</span></span>
+                                    <span>关键路径偏差: 0天</span>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-3 gap-3">
+                                <div class="col-span-2 bg-[#EAF2FF] p-3 rounded-md border border-[#D1E2FF]">
+                                    <div class="text-[13px] font-medium text-[#3370FF] mb-2 flex items-center">
+                                        <div class="w-2 h-2 bg-[#3370FF] rounded-full mr-1.5 animate-pulse"></div>当前: 执行与监控 (Executing)
+                                    </div>
+                                    <div class="flex items-end justify-between">
+                                        <div>
+                                            <div class="text-2xl font-bold text-[#1F2329]">45.2<span class="text-sm font-normal text-[#8F959E]">%</span></div>
+                                            <div class="text-[12px] text-[#8F959E] mt-0.5">总体实际进度</div>
+                                        </div>
+                                        <div class="space-y-1">
+                                            <div class="text-[12px]"><span class="text-[#8F959E]">集成进度:</span> <span class="text-[#D83931]">轻微滞后 (2%)</span></div>
+                                            <div class="text-[12px]"><span class="text-[#8F959E]">数据合规:</span> <span class="text-[#D83931]">存在阻点</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-1 bg-[#FFF7E8] p-3 rounded-md border border-[#FFE1A6] flex flex-col justify-center">
+                                    <div class="text-[12px] font-medium text-[#1F2329] mb-1">收尾阶段预测</div>
+                                    <div class="text-[13px] text-[#D83931] font-bold">预期延期 3 天</div>
+                                    <div class="text-[11px] text-[#8F959E] mt-1">基于当前 EV 推算</div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div class="text-[13px] font-bold text-[#1F2329] mb-1.5"><i class="fa-solid fa-triangle-exclamation text-[#F54A45] mr-1.5"></i>当前最大风险点</div>
+                                <div class="p-2.5 fs-tag-red rounded-md text-[13px]">
+                                    <span class="font-bold">【数据共享阻断】</span> 子系统A接口联调停滞。监测到跨组织数据流转请求未通过脱敏合规校验。
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fs-card-footer">
+                            <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center" onclick="triggerScenarioTwo()">
+                                <i class="fa-solid fa-microscope mr-1.5 text-[#8F959E]"></i>一键穿透归因
+                            </button>
+                            <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+                                <i class="fa-solid fa-bolt mr-1.5"></i>下发宏观调度令
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dynamic-content"></div>
+
+        </div>
+
+        <div class="h-[120px] bg-[#FFFFFF] border-t border-[#DEE0E3] p-4 shrink-0 flex flex-col">
+            <div class="flex items-center space-x-4 text-[#8F959E] mb-2 px-2 text-lg">
+                <i class="fa-solid fa-font cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-regular fa-face-smile cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-solid fa-paperclip cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-regular fa-image cursor-pointer hover:text-[#1F2329]"></i>
+                <div class="w-px h-4 bg-[#DEE0E3]"></div>
+                <div class="flex items-center text-[13px] bg-[#F2F3F5] text-[#1F2329] px-2 py-0.5 rounded cursor-pointer hover:bg-[#E4E6EA]">
+                    <i class="fa-solid fa-robot mr-1 text-[#3370FF]"></i> 智能体快捷指令
+                </div>
+            </div>
+            <div class="flex-1 flex items-end">
+                <textarea class="w-full h-full resize-none border-none outline-none text-[14px] text-[#1F2329] placeholder-[#8F959E] px-2" placeholder="输入 @ 唤起智能体，或者输入自然语言指令..."></textarea>
+                <button class="w-8 h-8 rounded shrink-0 flex items-center justify-center bg-[#F2F3F5] text-[#BBBEC4] mb-1">
+                    <i class="fa-solid fa-paper-plane text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 总控层默认消息流模板，用于切回“项目全域总控超级群组”时恢复场景1/2基础内容
+        const globalControlMessages = document.getElementById('chat-container').innerHTML;
+        const CHAT_SWITCH_ANIMATION_MS = 220;
+
+        // 会话视图配置：集中维护各会话标题、状态标签、元信息与输入提示，降低模板维护成本
+        const roomViewConfig = {
+            'global-control': {
+                title: '项目全域总控超级群组',
+                statusClass: 'text-[#D83931] bg-[#FEECEE] border border-[#FDC3C8] text-[12px] px-2 py-0.5 rounded-sm flex items-center',
+                statusHTML: '<i class="fa-solid fa-microphone-lines-slash mr-1"></i>全员禁言',
+                metaHTML: '<i class="fa-solid fa-user-group mr-1"></i>18 人 · 仅总控层高管可下达指令',
+                inputPlaceholder: '输入 @ 唤起智能体，或者输入自然语言指令...'
+            },
+            'execution-layer': {
+                title: '子项目A-集成协同群组',
+                statusClass: 'text-[#B54708] bg-[#FFF7E8] border border-[#FFE1A6] text-[12px] px-2 py-0.5 rounded-sm flex items-center',
+                statusHTML: '<i class="fa-solid fa-screwdriver-wrench mr-1"></i>一线作业与异常上报节点',
+                metaHTML: '<i class="fa-solid fa-user-group mr-1"></i>42 人 · 执行层联调、异常上报与现场协同',
+                inputPlaceholder: '输入 @执行辅助智能体，快速发起异常上报与跨域协作...'
+            }
+        };
+
+        /**
+         * 应用会话配置到 Header 与输入区
+         * @param {string} roomKey - 会话唯一标识
+         * @param {HTMLElement} chatTitle - 标题节点
+         * @param {HTMLElement} chatStatusTag - 状态标签节点
+         * @param {HTMLElement} chatMeta - 元信息节点
+         * @param {HTMLTextAreaElement} chatInput - 输入框节点
+         */
+        function applyRoomConfig(roomKey, chatTitle, chatStatusTag, chatMeta, chatInput) {
+            const config = roomViewConfig[roomKey] || roomViewConfig['global-control'];
+            chatTitle.textContent = config.title;
+            chatStatusTag.className = config.statusClass;
+            chatStatusTag.innerHTML = config.statusHTML;
+            chatMeta.innerHTML = config.metaHTML;
+            chatInput.placeholder = config.inputPlaceholder;
+        }
+
+        /**
+         * 会话切换函数：根据 roomKey 平滑切换 Header、消息流与输入区占位文案
+         * @param {string} roomKey - 会话唯一标识，如 global-control / execution-layer
+         */
+        function switchChatRoom(roomKey) {
+            const switchStart = performance.now();
+            const chatContainer = document.getElementById('chat-container');
+            const chatTitle = document.getElementById('chat-title');
+            const chatStatusTag = document.getElementById('chat-status-tag');
+            const chatMeta = document.getElementById('chat-meta');
+            const chatInput = document.querySelector('textarea');
+
+            document.querySelectorAll('.chat-room-item').forEach(item => {
+                item.classList.remove('active-room');
+            });
+            const activeRoom = document.querySelector(`[data-room="${roomKey}"]`);
+            if (activeRoom) activeRoom.classList.add('active-room');
+
+            chatContainer.classList.remove('chat-fade-in');
+            chatContainer.classList.add('chat-fade-out');
+
+            setTimeout(() => {
+                applyRoomConfig(roomKey, chatTitle, chatStatusTag, chatMeta, chatInput);
+
+                if (roomKey === 'execution-layer') {
+                    renderExecutionLayerMessages();
+                } else {
+                    chatContainer.innerHTML = globalControlMessages;
+                }
+
+                chatContainer.classList.remove('chat-fade-out');
+                chatContainer.classList.add('chat-fade-in');
+                scrollToBottom();
+
+                const switchDuration = Math.round(performance.now() - switchStart);
+                // 验收辅助日志：用于确认执行层切换是否在 300ms 内完成
+                console.log(`[chat-switch] room=${roomKey}, duration=${switchDuration}ms, pass=${switchDuration <= 300}`);
+            }, CHAT_SWITCH_ANIMATION_MS);
+        }
+
+        // 场景三：执行层默认消息流与执行辅助智能体响应卡片
+        function renderExecutionLayerMessages() {
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.innerHTML = `
+                <div class="flex flex-col items-end">
+                    <div class="flex items-center mb-1">
+                        <span class="text-xs text-[#8F959E] mr-2">11:18</span>
+                        <span class="text-[13px] font-medium text-[#1F2329]">应用方-张三（基层实施工程师）</span>
+                    </div>
+                    <div class="flex items-start justify-end">
+                        <div class="fs-msg-user mr-3 shadow-sm">
+                            <span class="text-[#3370FF]">@执行辅助智能体</span> 云环境 8080 端口不通，网络策略被拦截，代码无法部署测试，请支援。
+                        </div>
+                        <img src="https://i.pravatar.cc/150?img=15" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                    </div>
+                </div>
+
+                <div class="flex items-start fade-in">
+                    <img src="https://ui-avatars.com/api/?name=EAI&background=F59E0B&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                    <div class="ml-3 w-full">
+                        <div class="flex items-center mb-1">
+                            <span class="text-[13px] font-medium text-[#1F2329]">执行辅助智能体</span>
+                            <span class="fs-tag-bot">BOT</span>
+                            <span class="text-xs text-[#8F959E] ml-2">11:18</span>
+                        </div>
+
+                        <div class="fs-card">
+                            <div class="fs-card-header bg-[#FFF7E8]">
+                                <div class="flex items-center font-medium text-[#1F2329]">
+                                    <i class="fa-solid fa-triangle-exclamation text-[#B54708] mr-2"></i>执行层异常协同响应卡
+                                </div>
+                                <span class="text-xs text-[#8F959E]">Adaptive Card</span>
+                            </div>
+                            <div class="fs-card-body space-y-3">
+                                <div class="p-3 rounded-md border border-[#FDC3C8] bg-[#FEECEE]">
+                                    <div class="text-[13px] font-semibold text-[#D83931] mb-1">【异常分级定性】</div>
+                                    <div class="text-[13px] text-[#1F2329]">已识别为：跨组织资源对接异常（较重）</div>
+                                </div>
+
+                                <div class="p-3 rounded-md border border-[#D1E2FF] bg-[#EAF2FF]">
+                                    <div class="text-[13px] font-semibold text-[#3370FF] mb-1">【横向匹配】</div>
+                                    <div class="text-[13px] text-[#1F2329]">已调用“跨域协同匹配智能体”，检索到该云环境负责对接人为：建设方-李工。</div>
+                                </div>
+
+                                <div class="p-3 rounded-md border border-[#DEE0E3] bg-[#F8F9FA]">
+                                    <div class="text-[13px] font-semibold text-[#1F2329] mb-1">【处置状态】</div>
+                                    <div class="text-[13px] text-[#1F2329]">
+                                        已自动为您向建设方发起协同工单（倒计时2小时）。若超时未响应，将自动向上熔断升级至二级协同层。
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="fs-card-footer">
+                                <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center">
+                                    <i class="fa-solid fa-file-lines mr-1.5 text-[#8F959E]"></i>查看工单详情
+                                </button>
+                                <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+                                    <i class="fa-solid fa-user-shield mr-1.5"></i>转人工提报 / 补充现场日志
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 交互逻辑：模拟点击“一键穿透归因”后，主智能体向下收集信息并回复的过程
+        function triggerScenarioTwo() {
+            const container = document.getElementById('dynamic-content');
+            
+            // 禁用按钮防止重复点击
+            const btns = document.querySelectorAll('button');
+            btns.forEach(btn => btn.style.pointerEvents = 'none');
+
+            // 1. 模拟用户发送追问消息
+            const userMsg = `
+                <div class="flex flex-col items-end fade-in mt-6">
+                    <div class="flex items-center justify-end mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">王总监 (业主方高层)</span>
+                    </div>
+                    <div class="flex items-start justify-end">
+                        <div class="fs-msg-user mr-3 shadow-sm">
+                            <span class="text-[#3370FF]">@主智能体</span> 查一下为什么子系统A接口联调停滞？到底是哪家公司、哪个环节卡住了？给我一个详细的归因报告和解决方案。
+                        </div>
+                        <img src="https://i.pravatar.cc/150?img=11" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', userMsg);
+            scrollToBottom();
+
+            // 2. 模拟智能体正在“跨组织查询”的 Loading 状态
+            setTimeout(() => {
+                const loadingMsgId = 'loading-' + Date.now();
+                const loadingMsg = `
+                    <div class="flex items-start mt-6 fade-in" id="${loadingMsgId}">
+                        <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                        <div class="ml-3">
+                            <div class="flex items-center mb-1">
+                                <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span><span class="fs-tag-bot">BOT</span>
+                            </div>
+                            <div class="bg-white border border-[#DEE0E3] rounded-md px-3 py-2 text-[13px] text-[#646A73] shadow-sm flex items-center">
+                                <div class="typing-indicator mr-2"><span></span><span></span><span></span></div>
+                                正在跨群组检索 [应用开发专项群] 与 [管理方数据审核群] 的日志流...
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', loadingMsg);
+                scrollToBottom();
+
+                // 3. 模拟 2 秒后出结果：穿透式归因报告
+                setTimeout(() => {
+                    document.getElementById(loadingMsgId).remove(); // 移除 loading
+                    
+                    const botCardMsg = `
+                        <div class="flex items-start mt-6 fade-in">
+                            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                            <div class="ml-3 w-full">
+                                <div class="flex items-center mb-1">
+                                    <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span><span class="fs-tag-bot">BOT</span>
+                                </div>
+                                
+                                <div class="fs-card">
+                                    <div class="fs-card-header bg-[#F8F9FA]">
+                                        <div class="flex items-center font-medium text-[#1F2329]">
+                                            <i class="fa-solid fa-magnifying-glass-chart text-[#3370FF] mr-2"></i>深度归因与穿透分析报告
+                                        </div>
+                                    </div>
+                                    <div class="fs-card-body space-y-4">
+                                        <div>
+                                            <div class="text-[12px] text-[#8F959E] mb-1">跨组织信息追溯链条：</div>
+                                            <div class="bg-gray-50 border border-gray-200 rounded p-3">
+                                                <div class="flex items-start">
+                                                    <i class="fa-solid fa-code-branch text-[#8F959E] mt-1 mr-2"></i>
+                                                    <div>
+                                                        <div class="text-[13px] font-medium text-[#1F2329]">应用开发方（公司 X）</div>
+                                                        <div class="text-[12px] text-[#646A73]">昨日 16:30 请求调用业主方底座核心数据进行接口联调。但提交的申请单<span class="text-[#D83931] font-bold">未附带标准脱敏规则</span>。</div>
+                                                    </div>
+                                                </div>
+                                                <div class="h-4 border-l-2 border-dashed border-[#DEE0E3] ml-1.5 my-1"></div>
+                                                <div class="flex items-start">
+                                                    <i class="fa-solid fa-shield-halved text-[#D83931] mt-1 mr-2"></i>
+                                                    <div>
+                                                        <div class="text-[13px] font-medium text-[#1F2329]">管理方（数据安全专员）</div>
+                                                        <div class="text-[12px] text-[#646A73]">合规系统自动拦截越权访问，审核状态标记为“拒绝”。导致下游集成测试无限期等待。</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="bg-[#EAF2FF] border border-[#D1E2FF] rounded p-3">
+                                            <div class="text-[13px] font-bold text-[#3370FF] mb-1.5"><i class="fa-solid fa-lightbulb mr-1.5"></i>智能体处置建议</div>
+                                            <p class="text-[13px] text-[#1F2329] mb-2">已为您生成跨域调度指令，授权后我将自动拉取临时协同群组并下发工单。</p>
+                                            <div class="bg-white px-2 py-1.5 rounded text-[12px] text-[#646A73] border border-[#DEE0E3]">
+                                                <span class="font-medium text-[#1F2329]">拟执行任务：</span>要求 <span class="fs-tag-bot m-0">应用开发方技术负责人</span> 与 <span class="fs-tag-bot m-0">管理方数据治理专员</span> 限期 2 小时内完成数据脱敏与接口对接。
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="fs-card-footer">
+                                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+                                            <i class="fa-solid fa-check mr-1.5"></i>同意执行调度
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', botCardMsg);
+                    scrollToBottom();
+                    
+                    // 恢复按钮点击
+                    btns.forEach(btn => btn.style.pointerEvents = 'auto');
+
+                }, 2000);
+            }, 500);
+        }
+
+        function scrollToBottom() {
+            const chatContainer = document.getElementById('chat-container');
+            chatContainer.scrollTo({
+                top: chatContainer.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+
+        // 会话列表事件绑定：点击“子项目A-集成协同群组”切换到执行层视角
+        document.getElementById('room-execution').addEventListener('click', () => {
+            switchChatRoom('execution-layer');
+        });
+        document.querySelector('[data-room="global-control"]').addEventListener('click', () => {
+            switchChatRoom('global-control');
+        });
+    </script>
+</body>
+</html>

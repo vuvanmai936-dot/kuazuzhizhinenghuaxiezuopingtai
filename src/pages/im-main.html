@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨组织智能化协作平台 - 飞书IM内嵌智能体原型</title>
+    <meta name="im-baseline-entry" content="src/pages/im-main.html">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../styles/base/variables.css">
+    <link rel="stylesheet" href="../styles/layout/im-shell.css">
+    <link rel="stylesheet" href="../styles/components/chat-elements.css">
+    <link rel="stylesheet" href="../styles/utilities/animations.css">
+</head>
+<body class="flex h-screen overflow-hidden">
+    <aside class="w-[68px] bg-[#1C1F2B] flex flex-col items-center py-4 z-20 shrink-0">
+        <div class="w-10 h-10 rounded-xl mb-6 overflow-hidden border border-slate-700">
+            <img src="https://ui-avatars.com/api/?name=DS&background=3370FF&color=fff&rounded=false&bold=true" alt="Logo">
+        </div>
+        <div class="flex flex-col space-y-2 w-full px-2">
+            <div class="w-full h-12 flex flex-col items-center justify-center text-white bg-white/10 rounded-lg cursor-pointer">
+                <i class="fa-solid fa-message text-[20px] mb-1"></i><span class="text-[10px]">消息</span>
+            </div>
+            <div class="w-full h-12 flex flex-col items-center justify-center text-[#8F959E] hover:bg-white/5 rounded-lg cursor-pointer">
+                <i class="fa-regular fa-calendar text-[20px] mb-1"></i><span class="text-[10px]">日历</span>
+            </div>
+            <div class="w-full h-12 flex flex-col items-center justify-center text-[#8F959E] hover:bg-white/5 rounded-lg cursor-pointer">
+                <i class="fa-solid fa-folder-tree text-[20px] mb-1"></i><span class="text-[10px]">云文档</span>
+            </div>
+            <div class="w-full h-12 flex flex-col items-center justify-center text-[#8F959E] hover:bg-white/5 rounded-lg cursor-pointer">
+                <i class="fa-solid fa-table-cells-large text-[20px] mb-1"></i><span class="text-[10px]">工作台</span>
+            </div>
+        </div>
+        <div class="mt-auto relative cursor-pointer">
+            <img src="https://i.pravatar.cc/150?img=11" class="w-9 h-9 rounded-full border border-slate-600">
+            <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#1C1F2B] rounded-full"></div>
+        </div>
+    </aside>
+
+    <aside class="w-[280px] bg-[#FFFFFF] border-r border-[#dee0e3] flex flex-col z-10 shrink-0">
+        <div class="h-16 flex items-center px-4 justify-between">
+            <h2 class="text-xl font-medium text-[#1F2329]">消息</h2>
+            <div class="flex space-x-3 text-[#1F2329]"><i class="fa-solid fa-plus cursor-pointer p-1 rounded hover:bg-gray-100"></i></div>
+        </div>
+        <div class="px-4 mb-2">
+            <div class="bg-[#F2F3F5] rounded-md flex items-center px-3 py-1.5 border border-transparent focus-within:border-[#3370FF] focus-within:bg-white transition-colors">
+                <i class="fa-solid fa-search text-[#8F959E] text-sm"></i>
+                <input type="text" placeholder="搜索" class="bg-transparent border-none outline-none text-sm ml-2 w-full text-[#1F2329] placeholder-[#8F959E]">
+            </div>
+        </div>
+        <div class="flex-1 overflow-y-auto">
+            <div class="chat-room-item flex items-center px-4 py-3 bg-[#EAF2FF] cursor-pointer active-room" data-room="global-control">
+                <div class="relative"><div class="w-12 h-12 bg-[#3370FF] rounded-lg flex items-center justify-center text-white font-bold text-sm">总控</div></div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] font-medium text-[#1F2329] truncate">项目全域总控超级群组</span><span class="text-xs text-[#8F959E]">10:42</span></div>
+                    <p class="text-[13px] text-[#8F959E] truncate">全域管控智能体: 已生成深度归因报告...</p>
+                </div>
+            </div>
+            <div class="chat-room-item flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="risk-control">
+                <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center text-white text-lg"><i class="fa-solid fa-shield-halved"></i></div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] text-[#1F2329] truncate">风险管控专项群</span><span class="text-xs text-[#8F959E]">昨天</span></div>
+                    <p class="text-[13px] text-[#8F959E] truncate">数据安全审计: 发现1起越权行为拦截</p>
+                </div>
+            </div>
+            <div id="room-execution" class="chat-room-item flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="execution-layer">
+                <div class="w-12 h-12 bg-orange-400 rounded-lg flex items-center justify-center text-white font-bold text-sm">集成A</div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] text-[#1F2329] truncate">子项目A-集成协同群组</span><span class="text-xs text-[#8F959E]">周二</span></div>
+                    <p class="text-[13px] text-[#3370FF] truncate">执行辅助智能体: 已派发协同工单...</p>
+                </div>
+            </div>
+            <div id="room-synergy" class="chat-room-item flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="synergy-layer">
+                <div class="w-12 h-12 bg-[#7C3AED] rounded-lg flex items-center justify-center text-white text-lg"><i class="fa-solid fa-people-arrows"></i></div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] text-[#1F2329] truncate">网络策略变更-临时协同群组</span><span class="text-xs text-[#8F959E]">14:20</span></div>
+                    <p class="text-[13px] text-[#3370FF] truncate">协同管控智能体: 【工单升级】待审批...</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col bg-[#F4F5F7] relative h-full">
+        <header class="h-16 bg-[#FFFFFF] border-b border-[#DEE0E3] flex items-center justify-between px-6 shrink-0 z-10">
+            <div>
+                <div class="flex items-center">
+                    <h1 id="chat-title" class="text-[18px] font-medium text-[#1F2329] mr-2">项目全域总控超级群组</h1>
+                    <span id="chat-status-tag" class="text-[#D83931] bg-[#FEECEE] border border-[#FDC3C8] text-[12px] px-2 py-0.5 rounded-sm flex items-center"><i class="fa-solid fa-microphone-lines-slash mr-1"></i>全员禁言</span>
+                </div>
+                <div id="chat-meta" class="text-[13px] text-[#8F959E] mt-0.5"><i class="fa-solid fa-user-group mr-1"></i>18 人 · 仅总控层高管可下达指令</div>
+            </div>
+            <div class="flex space-x-4 text-[#8F959E] text-lg">
+                <i class="fa-solid fa-phone cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-solid fa-video cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-solid fa-magnifying-glass cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-solid fa-ellipsis cursor-pointer hover:text-[#1F2329]"></i>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-6 space-y-6 chat-fade-in" id="chat-container">
+            <div class="flex flex-col items-end">
+                <div class="flex items-center mb-1">
+                    <span class="text-xs text-[#8F959E] mr-2">10:40</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">王总监 (业主方高层)</span>
+                </div>
+                <div class="flex items-start justify-end">
+                    <div class="fs-msg-user mr-3 shadow-sm"><span class="text-[#3370FF]">@主智能体</span> 请简报一下“可信数据空间二期项目”的整体健康度，按项目管理全生命周期阶段输出，并重点标出当前阶段的最大风险。</div>
+                    <img src="https://i.pravatar.cc/150?img=11" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                </div>
+            </div>
+
+            <div class="flex items-start">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3 w-full">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span>
+                        <span class="fs-tag-bot">BOT</span>
+                        <span class="text-xs text-[#8F959E] ml-2">10:41</span>
+                    </div>
+                    <div class="fs-card">
+                        <div class="fs-card-header bg-[#F8F9FA]">
+                            <div class="flex items-center font-medium text-[#1F2329]"><i class="fa-solid fa-chart-pie text-[#3370FF] mr-2"></i>实时全局项目监控摘要 (PMP模型)</div>
+                            <span class="text-xs text-[#8F959E]">数据自动采集测算</span>
+                        </div>
+                        <div class="fs-card-body space-y-4">
+                            <div class="bg-gray-50 p-3 rounded-md border border-gray-100">
+                                <div class="text-[13px] font-medium text-[#1F2329] mb-1.5">启动与规划阶段 (Initiating & Planning)</div>
+                                <div class="flex justify-between text-[13px] text-[#646A73]">
+                                    <span>计划基准复核: <span class="text-[#239C46] font-medium"><i class="fa-solid fa-check-circle mr-1"></i>健康 (100%)</span></span>
+                                    <span>关键路径偏差: 0天</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-[13px] font-bold text-[#1F2329] mb-1.5"><i class="fa-solid fa-triangle-exclamation text-[#F54A45] mr-1.5"></i>当前最大风险点</div>
+                                <div class="p-2.5 fs-tag-red rounded-md text-[13px]"><span class="font-bold">【数据共享阻断】</span> 子系统A接口联调停滞。监测到跨组织数据流转请求未通过脱敏合规校验。</div>
+                            </div>
+                        </div>
+                        <div class="fs-card-footer">
+                            <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center" onclick="triggerScenarioTwo()"><i class="fa-solid fa-microscope mr-1.5 text-[#8F959E]"></i>一键穿透归因</button>
+                            <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center"><i class="fa-solid fa-bolt mr-1.5"></i>下发宏观调度令</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="dynamic-content"></div>
+        </div>
+
+        <div class="h-[120px] bg-[#FFFFFF] border-t border-[#DEE0E3] p-4 shrink-0 flex flex-col">
+            <div class="flex items-center space-x-4 text-[#8F959E] mb-2 px-2 text-lg">
+                <i class="fa-solid fa-font cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-regular fa-face-smile cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-solid fa-paperclip cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-regular fa-image cursor-pointer hover:text-[#1F2329]"></i>
+                <div class="w-px h-4 bg-[#DEE0E3]"></div>
+                <div class="flex items-center text-[13px] bg-[#F2F3F5] text-[#1F2329] px-2 py-0.5 rounded cursor-pointer hover:bg-[#E4E6EA]"><i class="fa-solid fa-robot mr-1 text-[#3370FF]"></i> 智能体快捷指令</div>
+            </div>
+            <div class="flex-1 flex items-end">
+                <textarea class="w-full h-full resize-none border-none outline-none text-[14px] text-[#1F2329] placeholder-[#8F959E] px-2" placeholder="输入 @ 唤起智能体，或者输入自然语言指令..."></textarea>
+                <button class="w-8 h-8 rounded shrink-0 flex items-center justify-center bg-[#F2F3F5] text-[#BBBEC4] mb-1"><i class="fa-solid fa-paper-plane text-sm"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <script src="../scripts/state.js"></script>
+    <script src="../features/scenario-execution-layer/templates.js"></script>
+    <script src="../features/scenario-execution-layer/index.js"></script>
+    <script src="../scripts/message-renderer.js"></script>
+    <script src="../scripts/synergy-approval.js"></script>
+    <script src="../scripts/chat-room.js"></script>
+    <script src="../scripts/ticket-drawer.js"></script>
+    <script src="../scripts/app-init.js"></script>
+</body>
+</html>

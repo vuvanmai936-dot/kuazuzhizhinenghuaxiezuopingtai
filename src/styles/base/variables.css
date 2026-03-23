@@ -1,0 +1,12 @@
+/* 飞书风格基础变量与设定 */
+body {
+    font-family: "SF Pro Text", "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background-color: #FFFFFF;
+    color: #1F2329;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #C2C7CC; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #99A0A8; }
