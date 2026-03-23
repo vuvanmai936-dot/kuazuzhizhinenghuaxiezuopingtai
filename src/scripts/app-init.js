@@ -83,13 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.bindProactiveRiskActions) {
         window.bindProactiveRiskActions();
     }
-    const proactiveTrigger = document.getElementById('btn-trigger-proactive-risk');
-    if (proactiveTrigger) {
-        proactiveTrigger.addEventListener('click', () => {
-            if (window.triggerProactiveRiskWarning) {
-                window.triggerProactiveRiskWarning();
-            }
-        });
+    const proactiveTriggerBtn = document.getElementById('btn-trigger-proactive-risk');
+    const proactiveTriggerIcon = document.getElementById('trigger-proactive-alert');
+    const triggerProactiveRisk = () => {
+        if (window.triggerProactiveRiskWarning) {
+            window.triggerProactiveRiskWarning();
+        }
+    };
+    if (proactiveTriggerBtn) {
+        proactiveTriggerBtn.addEventListener('click', triggerProactiveRisk);
+    }
+    if (proactiveTriggerIcon) {
+        proactiveTriggerIcon.addEventListener('click', triggerProactiveRisk);
     }
 
     const bootRoom = getBootRoomFromQuery();
