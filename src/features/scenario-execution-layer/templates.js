@@ -5,95 +5,88 @@ function getExecutionLayerMessageTemplate() {
             <div class="ml-3 w-full">
                 <div class="flex items-center mb-1">
                     <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
-                    <span class="fs-tag-bot">BOT</span>
+                    <span class="wx-tag-bot">BOT</span>
                     <span class="text-xs text-[#8F959E] ml-2">14:13</span>
                 </div>
-                <div class="bg-[#EAF2FF] border border-[#D1E2FF] rounded-md px-4 py-3 text-[13px] text-[#1F2329]">
-                    <span class="text-[#3370FF]">@张三 (应用开发方-现场工程师)</span> 总控群反馈“子系统A接口联调停滞”，请先完成现场定位并回报阻断点。
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                    @魏强 @傅毅明 两位领导好，决策群的陶总非常关注咱们月底上线进度。想请教一下，目前省局的合规批复和中信集团审批，大概什么时间能下来？有没有需要决策层协调的卡点？
                 </div>
             </div>
         </div>
 
-        <div class="flex flex-col items-end fade-in">
-            <div class="flex items-center mb-1">
-                <span class="text-xs text-[#8F959E] mr-2">14:15</span>
-                <span class="text-[13px] font-medium text-[#1F2329]">张三 (应用开发方-现场工程师)</span>
-            </div>
-            <div class="flex items-start justify-end">
-                <div class="fs-msg-user mr-3 shadow-sm text-left">
-                    <span class="text-[#3370FF]">@执行辅助智能体</span> 现场定位完成：云环境 8080 端口不通，网络策略拦截导致部署测试卡死。请发起跨组织协同。
+        <div class="flex items-start fade-in">
+            <img src="https://i.pravatar.cc/150?u=weiqiang" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+            <div class="ml-3">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">魏强</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:15</span>
                 </div>
-                <img src="https://ui-avatars.com/api/?name=张三&background=E1EAFF&color=3370FF" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                    省局那边材料已经交上去了，正在排队走流程，没有大问题，估计这周五能拿到批文。
+                </div>
             </div>
         </div>
 
-        <div class="flex items-start fade-in" style="animation-delay: 0.3s;">
+        <div class="flex items-start fade-in">
+            <img src="https://i.pravatar.cc/150?u=fym" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+            <div class="ml-3">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">傅毅明</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:16</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                    集团这边有点卡壳。法务部对数据确权的几条细则有疑问，流程退回了。需要补充一份《联合运营权责声明》，不然月底肯定走不完。
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-start fade-in">
+            <img src="https://i.pravatar.cc/150?u=jp" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+            <div class="ml-3">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">鞠鹏</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:17</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                    这个声明的技术细节我可以提供，但最终得南钢和荣泽盖章才行。
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-start fade-in">
+            <img src="https://i.pravatar.cc/150?u=fym-doc" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+            <div class="ml-3">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">傅毅明</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:19</span>
+                </div>
+                <div class="wx-file-bubble">
+                    <div class="wx-file-row">
+                        <div class="min-w-0">
+                            <div class="wx-file-name">联合运营权责声明.docx</div>
+                            <div class="wx-file-size">75.9K</div>
+                        </div>
+                        <div class="w-10 h-10 rounded bg-[#2B579A] text-white text-[12px] flex items-center justify-center shrink-0">W</div>
+                    </div>
+                    <div class="wx-file-tag">微信电脑端</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-start fade-in" style="animation-delay: 0.2s;">
             <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
             <div class="ml-3 w-full">
                 <div class="flex items-center mb-1">
-                    <span class="text-[13px] font-medium text-[#1F2329]">执行辅助智能体</span>
-                    <span class="fs-tag-bot">BOT</span>
-                    <span class="text-xs text-[#8F959E] ml-2">14:16</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                    <span class="wx-tag-bot">BOT</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:18</span>
                 </div>
-                <div class="fs-card">
-                    <div class="fs-card-header bg-[#FFF7E8] border-b-[#FFE1A6]">
-                        <div class="flex items-center font-bold text-[#D83931]">
-                            <i class="fa-solid fa-satellite-dish mr-2"></i>异常上报响应 & 自动协同调度
-                        </div>
-                        <span class="text-xs text-[#8F959E]">工单号: TCK-8080-NW</span>
-                    </div>
-                    <div class="fs-card-body space-y-4">
-                        <div class="flex items-start">
-                            <div class="w-1.5 h-1.5 rounded-full bg-[#D83931] mt-1.5 mr-2"></div>
-                            <div>
-                                <span class="text-[13px] text-[#8F959E]">智能体定性评估：</span>
-                                <span class="text-[13px] font-bold text-[#1F2329]">跨组织资源对接异常 </span>
-                                <span class="text-[12px] bg-[#FEECEE] text-[#D83931] border border-[#FDC3C8] px-1.5 py-0.5 rounded ml-1">级别：较重</span>
-                            </div>
-                        </div>
-
-                        <div class="bg-gray-50 border border-gray-200 rounded p-3 relative overflow-hidden">
-                            <div class="absolute right-0 top-0 bottom-0 w-1 bg-[#3370FF]"></div>
-                            <div class="text-[12px] text-[#8F959E] mb-1"><i class="fa-solid fa-people-arrows mr-1"></i> 跨域协同匹配结果</div>
-                            <div class="flex items-center justify-between">
-                                <div class="text-[13px]">
-                                    判定责任方：<span class="font-bold text-[#1F2329]">建设方 (网络与云环境实施组)</span>
-                                </div>
-                                <div class="flex items-center bg-white border border-[#DEE0E3] px-2 py-1 rounded shadow-sm">
-                                    <img src="https://ui-avatars.com/api/?name=李工&background=F2F3F5" class="w-4 h-4 rounded-full mr-1.5">
-                                    <span class="text-[12px] font-medium text-[#1F2329]">已锁定对接人：李工</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-[#EAF2FF] border border-[#D1E2FF] rounded p-3 flex items-start">
-                            <i class="fa-solid fa-clock-rotate-left text-[#3370FF] mt-0.5 mr-2"></i>
-                            <div>
-                                <div class="text-[13px] font-bold text-[#3370FF] mb-1">已完成异常定级，待升级审批</div>
-                                <div class="text-[12px] text-[#646A73] leading-relaxed">
-                                    建议向二级协同层提交网络策略放行审批，责任方：<span class="font-medium">建设方-李工</span>。<br>
-                                    <span class="flex items-center mt-1">
-                                        预计 SLA：<span class="text-[#F59E0B] font-bold bg-[#FFF7E8] px-1.5 rounded ml-1 pulse-orange border border-[#FCD34D] js-sla-countdown">01小时:59分:42秒</span>
-                                    </span>
-                                </div>
-                                <div class="text-[11px] text-[#8F959E] mt-2 border-t border-[#D1E2FF] pt-2">
-                                    * 若倒计时结束未响应，风险管控智能体将自动 <span class="text-[#D83931]">向上熔断升级</span> 至二级协同层总监。
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="fs-card-footer">
-                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center" data-action="escalate-to-synergy">
-                            <i class="fa-solid fa-arrow-up-right-dots mr-1.5"></i>升级至临时协同群审批
-                        </button>
-                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center" data-action="open-ticket-detail">
-                            <i class="fa-solid fa-list-check mr-1.5 text-[#8F959E]"></i>查看工单详情
-                        </button>
-                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center">
-                            <i class="fa-solid fa-file-code mr-1.5"></i>补充现场错误日志
-                            <span class="fs-tag-role-lead">组长权限</span>
-                        </button>
-                    </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                    收到，情况已记录。我马上把这个风险和《权责声明》这个前置条件汇总回决策群，请陶总协调。
+                </div>
+                <div class="mt-3 flex flex-wrap gap-2">
+                    <button class="text-[#3370FF] border border-[#3370FF]/30 hover:bg-[#EAF2FF] px-3 py-1 rounded-full text-[13px] transition-colors" data-action="open-proactive-risk-review">去风险管控群发起授权</button>
+                    <button class="text-[#3370FF] border border-[#3370FF]/30 hover:bg-[#EAF2FF] px-3 py-1 rounded-full text-[13px] transition-colors" data-action="report-proactive-global">回决策群同步进展</button>
                 </div>
             </div>
         </div>
@@ -106,7 +99,7 @@ function getScenarioTwoLoadingTemplate(loadingMsgId) {
             <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
             <div class="ml-3">
                 <div class="flex items-center mb-1">
-                    <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span><span class="fs-tag-bot">BOT</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span><span class="wx-tag-bot">BOT</span>
                 </div>
                 <div class="bg-white border border-[#DEE0E3] rounded-md px-3 py-2 text-[13px] text-[#646A73] shadow-sm flex items-center">
                     <div class="typing-indicator mr-2"><span></span><span></span><span></span></div>
@@ -123,24 +116,12 @@ function getScenarioTwoResultTemplate() {
             <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
             <div class="ml-3 w-full">
                 <div class="flex items-center mb-1">
-                    <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span><span class="fs-tag-bot">BOT</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span><span class="wx-tag-bot">BOT</span>
                 </div>
-                <div class="fs-card">
-                    <div class="fs-card-header bg-[#F8F9FA]">
-                        <div class="flex items-center font-medium text-[#1F2329]">
-                            <i class="fa-solid fa-magnifying-glass-chart text-[#3370FF] mr-2"></i>深度归因与穿透分析报告
-                        </div>
-                    </div>
-                    <div class="fs-card-body space-y-4">
-                        <div class="bg-[#EAF2FF] border border-[#D1E2FF] rounded p-3">
-                            <div class="text-[13px] font-bold text-[#3370FF] mb-1.5"><i class="fa-solid fa-lightbulb mr-1.5"></i>智能体处置建议</div>
-                            <p class="text-[13px] text-[#1F2329] mb-2">已为您生成跨域调度指令，授权后将拉起子项目A执行群；如需跨组织策略审批，再升级至临时协同群。</p>
-                        </div>
-                    </div>
-                    <div class="fs-card-footer">
-                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center" onclick="approveDispatch(this)">
-                            <i class="fa-solid fa-check mr-1.5"></i>同意执行调度
-                        </button>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                    我刚把跨机构的链路又复核了一遍：系统开发本身问题不大，真正会影响上线的是外部审批。现在省局合规批复和集团法务审批都没完全落听，如果这两块还拖着，月底上线就会被动。建议先在推进群把信通院和中信咨询老师的时间点问清楚，我拿到回执后第一时间回决策群汇报，避免大家盲等。
+                    <div class="mt-3">
+                        <button class="text-[#3370FF] border border-[#3370FF]/30 hover:bg-[#EAF2FF] px-3 py-1 rounded-full text-[13px] transition-colors" onclick="approveDispatch(this)">同意执行调度</button>
                     </div>
                 </div>
             </div>

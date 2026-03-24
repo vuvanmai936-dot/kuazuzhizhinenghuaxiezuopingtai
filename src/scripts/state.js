@@ -17,10 +17,10 @@ window.AppState = {
     },
     roomViewConfig: {
         'global-control': {
-            title: '项目全域总控超级群组',
+            title: '可信数据空间项目决策群',
             statusClass: 'text-[#D83931] bg-[#FEECEE] border border-[#FDC3C8] text-[12px] px-2 py-0.5 rounded-sm flex items-center',
             statusHTML: '<i class="fa-solid fa-microphone-lines-slash mr-1"></i>全员禁言',
-            metaHTML: '<i class="fa-solid fa-user-group mr-1"></i>18 人 · 仅总控层高管可下达指令',
+            metaHTML: '<i class="fa-solid fa-user-group mr-1"></i>18 人 · 决策层与关键责任方协同群',
             inputPlaceholder: '输入 @ 唤起智能体，或者输入自然语言指令...'
         },
         'risk-control': {
@@ -31,10 +31,10 @@ window.AppState = {
             inputPlaceholder: '输入 @数据安全智能体，发起可信存证调阅或整改审查...'
         },
         'execution-layer': {
-            title: '子项目A-集成协同群组',
+            title: '南钢-鑫智链可信数据空间推进群',
             statusClass: 'text-[#B54708] bg-[#FFF7E8] border border-[#FFE1A6] text-[12px] px-2 py-0.5 rounded-sm flex items-center',
             statusHTML: '<i class="fa-solid fa-screwdriver-wrench mr-1"></i>一线作业与异常上报节点',
-            metaHTML: '<i class="fa-solid fa-user-group mr-1"></i>42 人 · 执行层联调、异常上报与现场协同',
+            metaHTML: '<i class="fa-solid fa-user-group mr-1"></i>42 人 · 外部机构推进与执行协同',
             inputPlaceholder: '输入 @执行辅助智能体，快速发起异常上报与跨域协作...'
         },
         'synergy-layer': {

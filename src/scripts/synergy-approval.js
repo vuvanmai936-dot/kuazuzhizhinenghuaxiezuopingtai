@@ -17,7 +17,7 @@ function renderSynergyApprovalResult() {
             <div class="ml-3 w-full">
                 <div class="flex items-center mb-1">
                     <span class="text-[13px] font-medium text-[#1F2329]">协同管控智能体</span>
-                    <span class="fs-tag-bot">BOT</span>
+                    <span class="wx-tag-bot">BOT</span>
                     <span class="text-xs text-[#8F959E] ml-2">${getNowClock()}</span>
                 </div>
                 <div class="bg-[#E4F5E9] border border-[#C5EACF] rounded-md px-4 py-3 text-[13px] text-[#1F2329]">
@@ -46,11 +46,11 @@ function renderSynergyRejectResult() {
             <div class="ml-3 w-full">
                 <div class="flex items-center mb-1">
                     <span class="text-[13px] font-medium text-[#1F2329]">协同管控智能体</span>
-                    <span class="fs-tag-bot">BOT</span>
+                    <span class="wx-tag-bot">BOT</span>
                     <span class="text-xs text-[#8F959E] ml-2">${getNowClock()}</span>
                 </div>
-                <div class="fs-card border-red-200">
-                    <div class="fs-card-header bg-red-50 border-b border-red-200">
+                <div class="bg-white rounded-md border border-red-200">
+                    <div class="px-4 py-3 bg-red-50 border-b border-red-200 flex items-center justify-between">
                         <div class="flex items-center font-semibold text-red-600">
                             <i class="fa-solid fa-xmark-circle mr-2"></i>【驳回确认】工单 TCK-8080-NW 审批结论
                         </div>
@@ -58,7 +58,7 @@ function renderSynergyRejectResult() {
                             <i class="fa-solid fa-ban mr-1"></i>已驳回
                         </span>
                     </div>
-                    <div class="fs-card-body space-y-3">
+                    <div class="px-4 py-3 space-y-3">
                         <div class="text-[13px]">
                             <div class="text-[#646A73] mb-1">驳回原因</div>
                             <div class="text-red-600 bg-red-50 border border-red-200 rounded p-2.5">
@@ -90,53 +90,18 @@ function renderSynergySettlementCard() {
             <div class="ml-3 w-full">
                 <div class="flex items-center mb-1">
                     <span class="text-[13px] font-medium text-[#1F2329]">协同管控智能体</span>
-                    <span class="fs-tag-bot">BOT</span>
+                    <span class="wx-tag-bot">BOT</span>
                     <span class="text-xs text-[#8F959E] ml-2">${getNowClock()}</span>
                 </div>
-                <div class="fs-card border-[#FFE1A6]">
-                    <div class="fs-card-header bg-[#FFF7E8] border-b border-[#FFE1A6]">
-                        <div class="flex items-center font-semibold text-[#B54708]">
-                            <i class="fa-solid fa-receipt mr-2"></i>🧾 跨组织协同效能与结算单 (自动生成)
-                        </div>
-                        <span class="inline-flex items-center text-[11px] px-2 py-0.5 rounded border border-[#FFE1A6] bg-white text-[#B54708]">自动核算</span>
-                    </div>
-                    <div class="fs-card-body space-y-4">
-                        <section class="border border-[#C5EACF] bg-[#E4F5E9] rounded-md p-3 flex items-center justify-between">
-                            <div class="text-[13px] text-[#1F2329]">SLA 履约分析：响应耗时 12 分钟</div>
-                            <span class="inline-flex items-center text-[12px] px-2 py-0.5 rounded border border-[#C5EACF] bg-white text-[#239C46]">
-                                <i class="fa-solid fa-circle-check mr-1"></i>评级：优秀
-                            </span>
-                        </section>
-
-                        <section class="border border-[#DEE0E3] bg-[#F8F9FA] rounded-md p-3">
-                            <div class="text-[12px] font-semibold text-[#646A73] mb-2 uppercase tracking-wide">资源消耗核算</div>
-                            <div class="grid grid-cols-[120px_1fr] gap-x-3 gap-y-2 text-[13px]">
-                                <div class="text-[#8F959E]">援助方</div>
-                                <div class="text-[#1F2329]">建设方 (网络与云环境实施组 - 李工)</div>
-                                <div class="text-[#8F959E]">资源折算</div>
-                                <div class="text-[#1F2329] font-semibold">1.5 人时 <span class="text-[#646A73] font-normal">(标准化基础算力)</span></div>
-                            </div>
-                        </section>
-
-                        <section class="border border-[#DEE0E3] rounded-md p-3 bg-white">
-                            <div class="text-[12px] font-semibold text-[#646A73] mb-2 uppercase tracking-wide">数字绩效流转</div>
-                            <div class="space-y-2 text-[13px]">
-                                <div class="flex items-center justify-between border border-[#C5EACF] bg-[#E4F5E9] rounded-md px-3 py-2">
-                                    <span class="text-[#1F2329]">[建设方] 本月协同贡献度</span>
-                                    <span class="font-semibold text-[#239C46]">+15 分</span>
-                                </div>
-                                <div class="flex items-center justify-between border border-[#FDC3C8] bg-[#FEECEE] rounded-md px-3 py-2">
-                                    <span class="text-[#1F2329]">[应用开发方] 本月协同配额扣减</span>
-                                    <span class="font-semibold text-[#D83931]">-15 分</span>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-                    <div class="fs-card-footer">
-                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center">
+                <div class="bg-white rounded-md px-4 py-3 text-[13px] text-[#1F2329] space-y-2">
+                    <p>同步一下这次跨组织协同的结论：从发起到放行一共 12 分钟，SLA 履约评级是「优秀」。</p>
+                    <p>资源侧已核算，建设方（网络与云环境实施组-李工）本次投入折算 1.5 人时。</p>
+                    <p>绩效流转已自动入账：建设方本月协同贡献度 <span class="text-[#239C46] font-semibold">+15 分</span>，应用开发方协同配额 <span class="text-[#D83931] font-semibold">-15 分</span>。</p>
+                    <div class="pt-2 flex gap-2 justify-end">
+                        <button class="px-3 py-1.5 rounded text-[13px] wx-btn-primary flex items-center">
                             <i class="fa-solid fa-file-pdf mr-1.5"></i>下载不可篡改结算凭证 (PDF)
                         </button>
-                        <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center">
+                        <button class="px-3 py-1.5 rounded text-[13px] wx-btn-default flex items-center">
                             <i class="fa-solid fa-ranking-star mr-1.5 text-[#8F959E]"></i>查看项目全局 SLA 排行榜
                         </button>
                     </div>
@@ -158,7 +123,7 @@ function setSynergyCardClosed() {
     const rejectBtn = document.getElementById('btn-reject-policy');
     if (approveBtn) {
         approveBtn.disabled = true;
-        approveBtn.classList.remove('fs-btn-primary');
+        approveBtn.classList.remove('wx-btn-primary');
         approveBtn.classList.add('bg-[#E4F5E9]', 'text-[#239C46]', 'border', 'border-[#C5EACF]', 'cursor-not-allowed');
         approveBtn.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i>策略已放行';
     }
@@ -183,7 +148,7 @@ function setSynergyCardRejected() {
     }
     if (rejectBtn) {
         rejectBtn.disabled = true;
-        rejectBtn.classList.remove('fs-btn-default');
+        rejectBtn.classList.remove('wx-btn-default');
         rejectBtn.classList.add('bg-red-50', 'text-red-600', 'border', 'border-red-200', 'cursor-not-allowed');
         rejectBtn.innerHTML = '<i class="fa-solid fa-ban mr-1.5"></i>已驳回并下发整改';
     }

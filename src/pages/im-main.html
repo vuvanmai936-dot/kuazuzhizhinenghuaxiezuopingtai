@@ -13,99 +13,136 @@
     <link rel="stylesheet" href="../styles/utilities/animations.css">
 </head>
 <body class="flex h-screen overflow-hidden">
-    <aside class="w-[68px] bg-[#1C1F2B] flex flex-col items-center py-4 z-20 shrink-0">
-        <div class="w-10 h-10 rounded-xl mb-6 overflow-hidden border border-slate-700">
-            <img src="https://ui-avatars.com/api/?name=DS&background=3370FF&color=fff&rounded=false&bold=true" alt="Logo">
+    <aside class="w-[64px] bg-[#2C2C2C] flex flex-col items-center py-4 z-20 shrink-0 border-r border-[#252525]">
+        <div class="w-10 h-10 rounded-full mb-6 overflow-hidden">
+            <img src="https://i.pravatar.cc/150?u=taolichun" alt="me">
         </div>
-        <div class="flex flex-col space-y-2 w-full px-2">
-            <div class="w-full h-12 flex flex-col items-center justify-center text-white bg-white/10 rounded-lg cursor-pointer">
-                <i class="fa-solid fa-message text-[20px] mb-1"></i><span class="text-[10px]">消息</span>
-            </div>
-            <div class="w-full h-12 flex flex-col items-center justify-center text-[#8F959E] hover:bg-white/5 rounded-lg cursor-pointer">
-                <i class="fa-regular fa-calendar text-[20px] mb-1"></i><span class="text-[10px]">日历</span>
-            </div>
-            <div class="w-full h-12 flex flex-col items-center justify-center text-[#8F959E] hover:bg-white/5 rounded-lg cursor-pointer">
-                <i class="fa-solid fa-folder-tree text-[20px] mb-1"></i><span class="text-[10px]">云文档</span>
-            </div>
-            <div class="w-full h-12 flex flex-col items-center justify-center text-[#8F959E] hover:bg-white/5 rounded-lg cursor-pointer">
-                <i class="fa-solid fa-table-cells-large text-[20px] mb-1"></i><span class="text-[10px]">工作台</span>
-            </div>
+        <div class="flex flex-col space-y-5 w-full items-center">
+            <i class="fa-solid fa-comment-dots text-[19px] text-[#07C160] cursor-pointer wx-touch-target flex items-center justify-center"></i>
+            <i class="fa-regular fa-address-book text-[19px] text-[#BFC3C8] cursor-pointer wx-touch-target flex items-center justify-center"></i>
+            <i class="fa-regular fa-compass text-[19px] text-[#BFC3C8] cursor-pointer wx-touch-target flex items-center justify-center"></i>
+            <i class="fa-solid fa-box-archive text-[18px] text-[#BFC3C8] cursor-pointer wx-touch-target flex items-center justify-center"></i>
+            <i class="fa-solid fa-link text-[17px] text-[#BFC3C8] cursor-pointer wx-touch-target flex items-center justify-center"></i>
         </div>
-        <div class="mt-auto relative cursor-pointer">
-            <img src="https://i.pravatar.cc/150?img=11" class="w-9 h-9 rounded-full border border-slate-600">
-            <div class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-[#1C1F2B] rounded-full"></div>
+        <div class="mt-auto mb-3 text-[#BFC3C8] text-[17px] cursor-pointer">
+            <i class="fa-solid fa-mobile-screen-button"></i>
+        </div>
+        <div class="text-[#BFC3C8] text-[18px] cursor-pointer">
+            <i class="fa-solid fa-bars"></i>
         </div>
     </aside>
 
-    <aside class="w-[280px] bg-[#FFFFFF] border-r border-[#dee0e3] flex flex-col z-10 shrink-0">
-        <div class="h-16 flex items-center px-4 justify-between">
-            <h2 class="text-xl font-medium text-[#1F2329]">消息</h2>
-            <div class="flex space-x-3 text-[#1F2329]"><i class="fa-solid fa-plus cursor-pointer p-1 rounded hover:bg-gray-100"></i></div>
-        </div>
-        <div class="px-4 mb-2">
-            <div class="bg-[#F2F3F5] rounded-md flex items-center px-3 py-1.5 border border-transparent focus-within:border-[#3370FF] focus-within:bg-white transition-colors">
+    <aside class="w-[282px] bg-[#EDEDED] border-r border-[#D9D9D9] flex flex-col z-10 shrink-0">
+        <div class="px-3 py-3 border-b border-[#D9D9D9]">
+            <div class="bg-[#DFDFDF] rounded-md flex items-center px-3 py-1.5 border border-transparent">
                 <i class="fa-solid fa-search text-[#8F959E] text-sm"></i>
-                <input type="text" placeholder="搜索" class="bg-transparent border-none outline-none text-sm ml-2 w-full text-[#1F2329] placeholder-[#8F959E]">
+                <input type="text" placeholder="搜索" class="bg-transparent border-none outline-none text-[14px] ml-2 w-full text-[#1F2329] placeholder-[#8F959E]">
             </div>
         </div>
         <div class="flex-1 overflow-y-auto">
-            <div class="chat-room-item flex items-center px-4 py-3 bg-[#EAF2FF] cursor-pointer active-room" data-room="global-control">
-                <div class="relative"><div class="w-12 h-12 bg-[#3370FF] rounded-lg flex items-center justify-center text-white font-bold text-sm">总控</div></div>
+            <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 bg-[#DCDCDC] cursor-pointer active-room" data-room="global-control">
+                <div class="relative"><div class="w-12 h-12 bg-[#D83931] rounded-md flex items-center justify-center text-white text-sm font-medium">群</div></div>
                 <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] font-medium text-[#1F2329] truncate">项目全域总控超级群组</span><span class="text-xs text-[#8F959E]">10:42</span></div>
-                    <p class="text-[13px] text-[#8F959E] truncate">全域管控智能体: 已生成深度归因报告...</p>
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] font-medium text-[#1F2329] truncate">可信数据空间项目决策群</span><span class="text-[12px] text-[#8F959E]">10:42</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">主智能体：外部审批进展已纳入跟踪...</p>
                 </div>
             </div>
-            <div class="chat-room-item flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="risk-control">
-                <div class="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center text-white text-lg"><i class="fa-solid fa-shield-halved"></i></div>
+            <div id="room-execution" class="chat-room-item wx-room-item hidden flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer" data-room="execution-layer">
+                <div class="w-12 h-12 bg-[#16A34A] rounded-md flex items-center justify-center text-white text-sm font-medium">群</div>
                 <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] text-[#1F2329] truncate">风险管控专项群</span><span class="text-xs text-[#8F959E]">昨天</span></div>
-                    <p class="text-[13px] text-[#8F959E] truncate">数据安全审计: 发现1起越权行为拦截</p>
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">南钢-鑫智链可信数据空间推进群</span><span class="text-[12px] text-[#8F959E]">10:45</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">主智能体：已在群内催办信通院与中信咨询...</p>
                 </div>
             </div>
-            <div id="room-execution" class="chat-room-item hidden flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="execution-layer">
-                <div class="w-12 h-12 bg-orange-400 rounded-lg flex items-center justify-center text-white font-bold text-sm">集成A</div>
+            <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
+                <div class="w-10 h-10 bg-[#A3A3A3] rounded-md flex items-center justify-center text-white text-xs">家</div>
                 <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] text-[#1F2329] truncate">子项目A-集成协同群组</span><span class="text-xs text-[#8F959E]">周二</span></div>
-                    <p class="text-[13px] text-[#3370FF] truncate">执行辅助智能体: 已生成调度建议，待授权下发...</p>
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">荣泽-何佩生</span><span class="text-[12px] text-[#8F959E]">15:26</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">[语音通话]</p>
                 </div>
             </div>
-            <div id="room-synergy" class="chat-room-item hidden flex items-center px-4 py-3 hover:bg-[#F2F3F5] cursor-pointer" data-room="synergy-layer">
-                <div class="w-12 h-12 bg-[#7C3AED] rounded-lg flex items-center justify-center text-white text-lg"><i class="fa-solid fa-people-arrows"></i></div>
+            <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
+                <div class="w-10 h-10 bg-[#6B7280] rounded-md flex items-center justify-center text-white text-xs">商</div>
                 <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[15px] text-[#1F2329] truncate">网络策略变更-临时协同群组</span><span class="text-xs text-[#8F959E]">14:20</span></div>
-                    <p class="text-[13px] text-[#3370FF] truncate">协同管控智能体: 【工单升级】待审批...</p>
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">南钢鑫智链-杨进</span><span class="text-[12px] text-[#8F959E]">10:43</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">[语音通话]</p>
+                </div>
+            </div>
+            <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
+                <div class="w-10 h-10 bg-[#64748B] rounded-md flex items-center justify-center text-white text-xs">确</div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">鑫智链-李旭</span><span class="text-[12px] text-[#8F959E]">12:30</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">[图片]</p>
+                </div>
+            </div>
+            <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
+                <div class="w-10 h-10 bg-[#64748B] rounded-md flex items-center justify-center text-white text-xs">协</div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">Tom</span><span class="text-[12px] text-[#8F959E]">10:42</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">[语音通话]</p>
+                </div>
+            </div>
+            <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
+                <div class="w-10 h-10 bg-[#22C55E] rounded-md flex items-center justify-center text-white text-xs">传</div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">文件传输助手</span><span class="text-[12px] text-[#8F959E]">昨天</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">AlzaSyD0Ns3gse7Le1c1pA...</p>
+                </div>
+            </div>
+            <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
+                <div class="w-10 h-10 bg-[#9CA3AF] rounded-md flex items-center justify-center text-white text-xs">蛋</div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">蛋总vip | 福利优先发</span><span class="text-[12px] text-[#8F959E]">15:17</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">[14条] Dan | 话费会员...</p>
+                </div>
+            </div>
+            <div id="room-synergy" class="chat-room-item wx-room-item hidden flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer" data-room="synergy-layer">
+                <div class="w-10 h-10 bg-[#7C3AED] rounded-md flex items-center justify-center text-white text-xs">协</div>
+                <div class="ml-3 flex-1 overflow-hidden">
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">网络策略变更-临时协同群组</span><span class="text-[12px] text-[#8F959E]">14:20</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">协同管控智能体：待审批...</p>
                 </div>
             </div>
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col bg-[#F4F5F7] relative h-full">
-        <header class="h-16 bg-[#FFFFFF] border-b border-[#DEE0E3] flex items-center justify-between px-6 shrink-0 z-10">
+    <main class="flex-1 flex bg-[#F5F5F5] relative h-full">
+        <section class="flex-1 flex flex-col min-w-0">
+        <header class="h-[64px] bg-[#F5F5F5] border-b border-[#DDDDDD] flex items-center justify-between px-6 shrink-0 z-10">
             <div>
                 <div class="flex items-center">
-                    <h1 id="chat-title" class="text-[18px] font-medium text-[#1F2329] mr-2">项目全域总控超级群组</h1>
+                    <h1 id="chat-title" class="text-[18px] font-medium text-[#1F2329] mr-2">可信数据空间项目决策群</h1>
                     <span id="chat-status-tag" class="text-[#D83931] bg-[#FEECEE] border border-[#FDC3C8] text-[12px] px-2 py-0.5 rounded-sm flex items-center"><i class="fa-solid fa-microphone-lines-slash mr-1"></i>全员禁言</span>
                 </div>
-                <div id="chat-meta" class="text-[13px] text-[#8F959E] mt-0.5"><i class="fa-solid fa-user-group mr-1"></i>18 人 · 仅总控层高管可下达指令</div>
+                <div id="chat-meta" class="text-[13px] text-[#8F959E] mt-0.5"><i class="fa-solid fa-user-group mr-1"></i>18 人 · 决策层与关键责任方协同群</div>
             </div>
             <div class="flex space-x-4 text-[#8F959E] text-lg">
+                <i class="fa-regular fa-message cursor-pointer hover:text-[#1F2329]"></i>
+                <i class="fa-solid fa-chevron-down text-[12px] mt-1 cursor-pointer hover:text-[#1F2329]"></i>
                 <i class="fa-solid fa-phone cursor-pointer hover:text-[#1F2329]"></i>
-                <i class="fa-solid fa-video cursor-pointer hover:text-[#1F2329]"></i>
-                <i class="fa-solid fa-tower-broadcast text-[#8F959E] bg-[#F2F3F5] cursor-pointer hover:bg-[#E4E6EA] transition-colors p-1.5 rounded flex items-center justify-center text-[15px] hidden" id="trigger-proactive-alert" title="支线：触发智能体主动风控"></i>
-                <i class="fa-solid fa-magnifying-glass cursor-pointer hover:text-[#1F2329]"></i>
-                <i class="fa-solid fa-ellipsis cursor-pointer hover:text-[#1F2329]"></i>
+                <i id="group-switch-trigger" class="fa-solid fa-tower-cell cursor-pointer hover:text-[#1F2329]" title="切换群聊"></i>
+                <i id="toggle-member-sidebar" class="fa-solid fa-ellipsis cursor-pointer hover:text-[#1F2329]"></i>
             </div>
         </header>
+        <div id="group-switch-panel" class="hidden absolute top-[64px] right-[70px] w-[340px] max-h-[540px] bg-white border border-[#E6E6E6] rounded-lg shadow-lg z-30 overflow-y-auto">
+            <div class="px-4 py-3 text-[24px] font-medium text-[#1F2329]">群聊</div>
+            <div class="space-y-1 px-2 pb-2">
+                <div class="flex items-center gap-3 px-2 py-2 hover:bg-[#F5F5F5] rounded-md"><img class="w-10 h-10 rounded-md" src="https://i.pravatar.cc/150?u=g1"><div><div class="text-[16px] text-[#1F2329]">鑫智链产品碳足迹数据服务系统群</div></div></div>
+                <div class="flex items-center gap-3 px-2 py-2 hover:bg-[#F5F5F5] rounded-md"><img class="w-10 h-10 rounded-md" src="https://i.pravatar.cc/150?u=g2"><div><div class="text-[16px] text-[#1F2329]">南钢 - 鑫智链 LCA边缘计算测试沟通</div></div></div>
+                <div class="flex items-center gap-3 px-2 py-2 bg-[#F2F2F2] rounded-md"><img class="w-10 h-10 rounded-md" src="https://i.pravatar.cc/150?u=g3"><div><div class="text-[16px] text-[#1F2329]">南钢 - 鑫智链可信数据空间推进群</div></div></div>
+                <div class="flex items-center gap-3 px-2 py-2 hover:bg-[#F5F5F5] rounded-md"><img class="w-10 h-10 rounded-md" src="https://i.pravatar.cc/150?u=g4"><div><div class="text-[16px] text-[#1F2329]">擎工互联 - 贺涛、南钢鑫智链 - 杨进</div></div></div>
+                <div class="flex items-center gap-3 px-2 py-2 hover:bg-[#F5F5F5] rounded-md"><img class="w-10 h-10 rounded-md" src="https://i.pravatar.cc/150?u=g5"><div><div class="text-[16px] text-[#1F2329]">0328-0329 南钢鑫智链碳足迹培训群</div></div></div>
+            </div>
+        </div>
 
         <div class="flex-1 overflow-y-auto p-6 space-y-6 chat-fade-in" id="chat-container">
             <div class="flex flex-col items-end">
                 <div class="flex items-center mb-1">
                     <span class="text-xs text-[#8F959E] mr-2">10:40</span>
-                    <span class="text-[13px] font-medium text-[#1F2329]">王总监 (业主方高层)</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">陶立春 (南钢鑫智链)</span>
                 </div>
                 <div class="flex items-start justify-end">
-                    <div class="fs-msg-user mr-3 shadow-sm"><span class="text-[#3370FF]">@主智能体</span> 请简报一下“可信数据空间二期项目”的整体健康度，按项目管理全生命周期阶段输出，并重点标出当前阶段的最大风险。</div>
+                    <div class="wx-msg-self mr-3 shadow-none"><span class="text-[#3370FF]">@主智能体</span> 3月底部署上线的大盘稳不稳？我这总有疑问。</div>
                     <img src="https://i.pravatar.cc/150?img=11" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
                 </div>
             </div>
@@ -114,52 +151,104 @@
                 <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
                 <div class="ml-3 w-full">
                     <div class="flex items-center mb-1">
-                        <span class="text-[13px] font-medium text-[#1F2329]">全域管控智能体</span>
-                        <span class="fs-tag-bot">BOT</span>
+                        <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                        <span class="wx-tag-bot">BOT</span>
                         <span class="text-xs text-[#8F959E] ml-2">10:41</span>
                     </div>
-                    <div class="fs-card">
-                        <div class="fs-card-header bg-[#F8F9FA]">
-                            <div class="flex items-center font-medium text-[#1F2329]"><i class="fa-solid fa-chart-pie text-[#3370FF] mr-2"></i>实时全局项目监控摘要 (PMP模型)</div>
-                            <span class="text-xs text-[#8F959E]">数据自动采集测算</span>
-                        </div>
-                        <div class="fs-card-body space-y-4">
-                            <div class="bg-gray-50 p-3 rounded-md border border-gray-100">
-                                <div class="text-[13px] font-medium text-[#1F2329] mb-1.5">启动与规划阶段 (Initiating & Planning)</div>
-                                <div class="flex justify-between text-[13px] text-[#646A73]">
-                                    <span>计划基准复核: <span class="text-[#239C46] font-medium"><i class="fa-solid fa-check-circle mr-1"></i>健康 (100%)</span></span>
-                                    <span>关键路径偏差: 0天</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="text-[13px] font-bold text-[#1F2329] mb-1.5"><i class="fa-solid fa-triangle-exclamation text-[#F54A45] mr-1.5"></i>当前最大风险点</div>
-                                <div class="p-2.5 fs-tag-red rounded-md text-[13px]"><span class="font-bold">【数据共享阻断】</span> 子系统A接口联调停滞。监测到跨组织数据流转请求未通过脱敏合规校验。</div>
-                            </div>
-                        </div>
-                        <div class="fs-card-footer">
-                            <button class="px-3 py-1.5 rounded text-[13px] fs-btn-primary flex items-center" onclick="triggerScenarioTwo()"><i class="fa-solid fa-microscope mr-1.5"></i>一键穿透归因</button>
-                            <button class="px-3 py-1.5 rounded text-[13px] fs-btn-default flex items-center" onclick="showMacroToast(this)"><i class="fa-solid fa-bolt mr-1.5 text-[#8F959E]"></i>宏观督办（支线）</button>
-                        </div>
+                    <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                        陶总您好，从目前底层代码提交来看，荣泽科技负责的系统开发进度已经达到 95%，按期交付问题不大。但这种跨机构项目，真正的风险在外部协调上。目前系统监测到有两个流程还没有闭环：1. 省数据局的合规批复；2. 中信集团总部的法务审批。这两块不落听，系统开发完了也上不了线。
                     </div>
                 </div>
+            </div>
+
+            <div class="flex items-start">
+                <img src="https://i.pravatar.cc/150?u=zx" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                <div class="ml-3">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">钟晓</span>
+                        <span class="text-xs text-[#8F959E] ml-2">10:42</span>
+                    </div>
+                    <div class="wx-msg-other shadow-none">荣泽这边的代码月底前封版没问题。</div>
+                </div>
+            </div>
+
+            <div class="flex flex-col items-end">
+                <div class="flex items-center mb-1">
+                    <span class="text-xs text-[#8F959E] mr-2">10:43</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">陶立春 (南钢鑫智链)</span>
+                </div>
+                <div class="flex items-start justify-end">
+                    <div class="wx-msg-self mr-3 shadow-none">耿总，商务合同那块有风险吗？服务器资源呢？</div>
+                    <img src="https://i.pravatar.cc/150?u=tlc" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                </div>
+            </div>
+
+            <div class="flex items-start">
+                <img src="https://i.pravatar.cc/150?u=gengxueyu" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                <div class="ml-3 bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                    商务合同和服务器资源我已经安排鞠鹏跟进了，本周四前能齐套，风险可控。现在的焦点都在外部合规审批和中信集团的审批上。
+                </div>
+            </div>
+            <div class="flex flex-col items-end">
+                <div class="flex items-center mb-1">
+                    <span class="text-xs text-[#8F959E] mr-2">10:43</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">陶立春 (南钢鑫智链)</span>
+                </div>
+                <div class="flex items-start justify-end">
+                    <div class="wx-msg-self mr-3 shadow-none">合规和审批具体卡在哪了？需要拉集团领导资源吗？</div>
+                    <img src="https://i.pravatar.cc/150?u=tlc2" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                </div>
+            </div>
+            <div class="flex items-start">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3 w-full">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                        <span class="wx-tag-bot">BOT</span>
+                        <span class="text-xs text-[#8F959E] ml-2">10:43</span>
+                    </div>
+                    <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                        目前这两个流程都在外部机构，系统抓不到状态。我这就去【推进群】里跟进一下信通院的魏强老师和咨询公司的傅毅明老师，一有结果马上向您汇报。
+                    </div>
+                </div>
+            </div>
+            <div class="wx-system-note">系统提示：主智能体 已前往“南钢-鑫智链可信数据空间推进群”催办跟进</div>
+            <div class="wx-system-note">
+                <button id="btn-trigger-proactive-risk" class="text-[#576B95] hover:underline">发起主动巡检</button>
             </div>
             <div id="dynamic-content"></div>
         </div>
 
-        <div class="h-[120px] bg-[#FFFFFF] border-t border-[#DEE0E3] p-4 shrink-0 flex flex-col">
-            <div class="flex items-center space-x-4 text-[#8F959E] mb-2 px-2 text-lg">
-                <i class="fa-solid fa-font cursor-pointer hover:text-[#1F2329]"></i>
-                <i class="fa-regular fa-face-smile cursor-pointer hover:text-[#1F2329]"></i>
-                <i class="fa-solid fa-paperclip cursor-pointer hover:text-[#1F2329]"></i>
-                <i class="fa-regular fa-image cursor-pointer hover:text-[#1F2329]"></i>
-                <div class="w-px h-4 bg-[#DEE0E3]"></div>
-                <div class="flex items-center text-[13px] bg-[#F2F3F5] text-[#1F2329] px-2 py-0.5 rounded cursor-pointer hover:bg-[#E4E6EA]"><i class="fa-solid fa-robot mr-1 text-[#3370FF]"></i> 智能体快捷指令</div>
+        <div class="h-[128px] bg-[#F5F5F5] border-t border-[#DDDDDD] px-4 pt-3 pb-2 shrink-0 flex flex-col">
+            <div class="flex items-center gap-5 text-[#70757D] text-[20px] px-1">
+                <i class="fa-regular fa-face-smile"></i>
+                <i class="fa-solid fa-cube"></i>
+                <i class="fa-regular fa-folder"></i>
+                <i class="fa-solid fa-scissors"></i>
+                <i class="fa-solid fa-chevron-down text-[12px]"></i>
             </div>
-            <div class="flex-1 flex items-end">
-                <textarea class="w-full h-full resize-none border-none outline-none text-[14px] text-[#1F2329] placeholder-[#8F959E] px-2" placeholder="输入 @ 唤起智能体，或者输入自然语言指令..."></textarea>
-                <button class="w-8 h-8 rounded shrink-0 flex items-center justify-center bg-[#F2F3F5] text-[#BBBEC4] mb-1"><i class="fa-solid fa-paper-plane text-sm"></i></button>
-            </div>
+            <textarea class="mt-2 w-full flex-1 resize-none border-none outline-none text-[15px] leading-6 text-[#1F2329] placeholder-[#A0A4AA] bg-transparent px-1" placeholder="输入消息..."></textarea>
         </div>
+        </section>
+        <aside id="member-sidebar" class="w-[300px] bg-[#F5F5F5] border-l border-[#D9D9D9] shrink-0 flex flex-col hidden">
+            <div class="px-4 py-4 border-b border-[#E5E5E5]">
+                <div class="bg-[#EAEAEA] rounded px-2 py-1.5 flex items-center text-[13px] text-[#8F959E]">
+                    <i class="fa-solid fa-magnifying-glass mr-2"></i>
+                    <input id="member-search" placeholder="搜索群成员" class="bg-transparent border-none outline-none w-full text-[#1F2329] placeholder-[#8F959E]">
+                </div>
+            </div>
+            <div id="member-grid" class="grid grid-cols-4 gap-3 px-4 pt-4"></div>
+            <div class="text-center text-[14px] text-[#646A73] py-2 border-b border-[#E5E5E5]">查看更多 <i class="fa-solid fa-chevron-down text-[11px]"></i></div>
+            <div class="px-4 py-3 text-[15px] font-medium text-[#1F2329]">群聊名称</div>
+            <div id="member-group-name" class="px-4 pb-3 text-[14px] text-[#646A73] border-b border-[#E5E5E5]">可信数据空间项目决策群</div>
+            <div class="px-4 py-3 text-[15px] font-medium text-[#1F2329]">群公告</div>
+            <div id="member-group-notice" class="px-4 pb-3 text-[14px] text-[#8F959E] border-b border-[#E5E5E5]">群主未设置</div>
+            <div class="px-4 py-3 text-[15px] font-medium text-[#1F2329]">我在本群的昵称</div>
+            <div id="member-my-alias" class="px-4 pb-3 text-[14px] text-[#646A73] border-b border-[#E5E5E5]">陶立春</div>
+            <div class="px-4 py-3 text-[15px] font-medium text-[#1F2329]">查找聊天内容</div>
+            <div class="px-4 pb-4 text-[14px] text-[#646A73]"><i class="fa-solid fa-chevron-right text-[12px]"></i></div>
+            <div id="member-empty" class="hidden text-[12px] text-[#8F959E] px-4 py-2">当前群未配置成员列表</div>
+        </aside>
     </main>
 
     <script src="../scripts/state.js"></script>
