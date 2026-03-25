@@ -1,92 +1,72 @@
+/** 与 `message-renderer.js` 中 `getPromotionGroupScriptHtml()` 内容保持一致，便于复用与对照。 */
 function getExecutionLayerMessageTemplate() {
+    if (typeof window !== 'undefined' && typeof window.getPromotionGroupScriptHtml === 'function') {
+        return window.getPromotionGroupScriptHtml();
+    }
     return `
         <div class="flex items-start fade-in">
-            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
-            <div class="ml-3 w-full">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
                 <div class="flex items-center mb-1">
                     <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
                     <span class="wx-tag-bot">BOT</span>
                     <span class="text-xs text-[#8F959E] ml-2">14:13</span>
                 </div>
-                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
-                    @魏强 @傅毅明 两位领导好，决策群的陶总非常关注咱们月底上线进度。想请教一下，目前省局的合规批复和中信集团审批，大概什么时间能下来？有没有需要决策层协调的卡点？
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    <span class="text-[#3370FF]">@魏强</span> <span class="text-[#3370FF]">@傅毅明</span> 两位老师好，决策群的陶总非常关注咱们月底上线的进度。想请教一下，目前省局的合规批复和中信集团的法务审批，大概什么时间能下来？有没有需要决策层协调的卡点？
                 </div>
             </div>
         </div>
 
-        <div class="flex items-start fade-in">
-            <img src="https://i.pravatar.cc/150?u=weiqiang" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
-            <div class="ml-3">
+        <div class="flex items-start fade-in mt-4">
+            <img src="https://i.pravatar.cc/150?u=caict-wq" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
                 <div class="flex items-center mb-1">
-                    <span class="text-[13px] font-medium text-[#1F2329]">魏强</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">中国信通院-魏强</span>
                     <span class="text-xs text-[#8F959E] ml-2">14:15</span>
                 </div>
-                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
                     省局那边材料已经交上去了，正在排队走流程，没有大问题，估计这周五能拿到批文。
                 </div>
             </div>
         </div>
 
-        <div class="flex items-start fade-in">
-            <img src="https://i.pravatar.cc/150?u=fym" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
-            <div class="ml-3">
+        <div class="flex items-start fade-in mt-4">
+            <img src="https://i.pravatar.cc/150?u=citic-fym" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
                 <div class="flex items-center mb-1">
-                    <span class="text-[13px] font-medium text-[#1F2329]">傅毅明</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">中信咨询-傅毅明</span>
                     <span class="text-xs text-[#8F959E] ml-2">14:16</span>
                 </div>
-                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
-                    集团这边有点卡壳。法务部对数据确权的几条细则有疑问，流程退回了。需要补充一份《联合运营权责声明》，不然月底肯定走不完。
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    集团这边有点卡壳。法务部对数据确权的几条细则有疑问，流程退回了。需要补充一份《联合运营权责声明》重新走签，不然月底肯定走不完。
                 </div>
             </div>
         </div>
 
-        <div class="flex items-start fade-in">
-            <img src="https://i.pravatar.cc/150?u=jp" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
-            <div class="ml-3">
+        <div class="flex items-start fade-in mt-4">
+            <img src="https://i.pravatar.cc/150?u=xzl-jp" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
                 <div class="flex items-center mb-1">
-                    <span class="text-[13px] font-medium text-[#1F2329]">鞠鹏</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">鑫智链-架构师鞠鹏</span>
                     <span class="text-xs text-[#8F959E] ml-2">14:17</span>
                 </div>
-                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
-                    这个声明的技术细节我可以提供，但最终得南钢和荣泽盖章才行。
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    这个声明的技术细节和系统架构边界我可以提供，但最终得南钢和荣泽两家盖公章才行。
                 </div>
             </div>
         </div>
 
-        <div class="flex items-start fade-in">
-            <img src="https://i.pravatar.cc/150?u=fym-doc" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
-            <div class="ml-3">
-                <div class="flex items-center mb-1">
-                    <span class="text-[13px] font-medium text-[#1F2329]">傅毅明</span>
-                    <span class="text-xs text-[#8F959E] ml-2">14:19</span>
-                </div>
-                <div class="wx-file-bubble">
-                    <div class="wx-file-row">
-                        <div class="min-w-0">
-                            <div class="wx-file-name">联合运营权责声明.docx</div>
-                            <div class="wx-file-size">75.9K</div>
-                        </div>
-                        <div class="w-10 h-10 rounded bg-[#2B579A] text-white text-[12px] flex items-center justify-center shrink-0">W</div>
-                    </div>
-                    <div class="wx-file-tag">微信电脑端</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex items-start fade-in" style="animation-delay: 0.2s;">
-            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
-            <div class="ml-3 w-full">
+        <div class="flex items-start fade-in mt-4">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
                 <div class="flex items-center mb-1">
                     <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
                     <span class="wx-tag-bot">BOT</span>
-                    <span class="text-xs text-[#8F959E] ml-2">14:18</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:20</span>
                 </div>
-                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
-                    收到，情况已记录。我马上把这个风险和《权责声明》这个前置条件汇总回决策群，请陶总协调。
-                </div>
-                <div class="mt-3 flex flex-wrap gap-2">
-                    <button class="text-[#3370FF] border border-[#3370FF]/30 hover:bg-[#EAF2FF] px-3 py-1 rounded-full text-[13px] transition-colors" data-action="open-proactive-risk-review">去风险管控群发起授权</button>
-                    <button class="text-[#3370FF] border border-[#3370FF]/30 hover:bg-[#EAF2FF] px-3 py-1 rounded-full text-[13px] transition-colors" data-action="report-proactive-global">回决策群同步进展</button>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    收到，情况已记录。我已经根据前期技术方案，由底层大模型辅助草拟了一份《联合运营权责声明》草案大纲。我马上将该唯一风险点和草案同步至决策群，供陶总批复决策。大家辛苦！
                 </div>
             </div>
         </div>

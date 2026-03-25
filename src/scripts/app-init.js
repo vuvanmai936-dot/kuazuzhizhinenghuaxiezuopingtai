@@ -110,6 +110,15 @@ function syncRoomPreviewByStatus(status) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const chatContainer = document.getElementById('chat-container');
+    if (window.injectGlobalDecisionClosureBlock) {
+        window.injectGlobalDecisionClosureBlock();
+    }
+    if (chatContainer && window.applyWechatMessageGrouping) {
+        window.applyWechatMessageGrouping(chatContainer);
+    }
+    if (chatContainer && window.applySegmentTimeSeparators) {
+        window.applySegmentTimeSeparators(chatContainer);
+    }
     window.AppState.globalControlMessages = chatContainer ? chatContainer.innerHTML : '';
     syncExecutionRoomVisibility();
     syncSynergyRoomVisibility();

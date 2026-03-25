@@ -25,6 +25,108 @@ function applyWechatMessageGrouping(container) {
     });
 }
 
+function getPromotionGroupScriptHtml() {
+    return `
+        <div class="flex items-start fade-in">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                    <span class="wx-tag-bot">BOT</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:13</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    <span class="text-[#3370FF]">@魏强</span> <span class="text-[#3370FF]">@傅毅明</span> 两位老师好，决策群的陶总非常关注咱们月底上线的进度。想请教一下，目前省局的合规批复和中信集团的法务审批，大概什么时间能下来？有没有需要决策层协调的卡点？
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-start fade-in mt-4">
+            <img src="https://i.pravatar.cc/150?u=caict-wq" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">中国信通院-魏强</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:15</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    省局那边材料已经交上去了，正在排队走流程，没有大问题，估计这周五能拿到批文。
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-start fade-in mt-4">
+            <img src="https://i.pravatar.cc/150?u=citic-fym" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">中信咨询-傅毅明</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:16</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    集团这边有点卡壳。法务部对数据确权的几条细则有疑问，流程退回了。需要补充一份《联合运营权责声明》重新走签，不然月底肯定走不完。
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-start fade-in mt-4">
+            <img src="https://i.pravatar.cc/150?u=xzl-jp" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">鑫智链-架构师鞠鹏</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:17</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    这个声明的技术细节和系统架构边界我可以提供，但最终得南钢和荣泽两家盖公章才行。
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-start fade-in mt-4">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                    <span class="wx-tag-bot">BOT</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:20</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    收到，情况已记录。我已经根据前期技术方案，由底层大模型辅助草拟了一份《联合运营权责声明》草案大纲。我马上将该唯一风险点和草案同步至决策群，供陶总批复决策。大家辛苦！
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function getGlobalDecisionClosureAppendHtml() {
+    return `
+        <div id="global-decision-closure-wrap" class="flex items-start fade-in mt-4">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                    <span class="wx-tag-bot">BOT</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:21</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    <span class="text-[#3370FF]">@陶立春</span> 陶总，推进群的进度已经摸底完毕：<br><br>
+                    🟢 信通院-魏强：省局合规批复预计本周五拿单，风险可控。<br>
+                    🔴 中信咨询-傅毅明：集团审批被法务部退回，要求补充《联合运营权责声明》。这是导致月底无法上线的唯一卡点。<br><br>
+                    解决方案：我已经基于咱们系统内的架构文档，自动草拟了这份声明。您看是直接发给荣泽和咱们的法务盖章，还是开个短会过一下？
+                </div>
+                <div class="mt-2 flex flex-wrap items-center">
+                    <span class="text-[#3370FF] cursor-pointer hover:underline text-[13px] mr-4" onclick="alert('已打开Word预览区')">📄 预览声明草稿(Word)</span>
+                    <span class="text-[#3370FF] cursor-pointer hover:underline text-[13px]" onclick="alert('已向相关方发送日历邀请')">📅 拉取紧急对齐会议</span>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function injectGlobalDecisionClosureBlock() {
+    const note = document.getElementById('global-promotion-system-note');
+    if (!note || document.getElementById('global-decision-closure-wrap')) return;
+    note.insertAdjacentHTML('afterend', getGlobalDecisionClosureAppendHtml());
+}
+
 function applySegmentTimeSeparators(container) {
     if (!container) return;
     const blocks = Array.from(container.children).filter((node) => node instanceof HTMLElement);
@@ -44,15 +146,11 @@ function applySegmentTimeSeparators(container) {
 
 function renderExecutionLayerMessages() {
     const chatContainer = document.getElementById('chat-container');
-    chatContainer.innerHTML = window.ExecutionScenario.templates.getExecutionLayerMessageTemplate();
-    renderExecutionReverseFlowCard();
-    renderProactiveExecutionThread(chatContainer);
-    bindExecutionReworkAction();
-    bindExecutionEscalationAction();
-    bindExecutionResolutionReportAction();
+    if (!chatContainer) return;
+    chatContainer.innerHTML = getPromotionGroupScriptHtml();
     applyWechatMessageGrouping(chatContainer);
     applySegmentTimeSeparators(chatContainer);
-    window.startSlaCountdown();
+    window.scrollToBottom && window.scrollToBottom();
 }
 
 function renderExecutionReverseFlowCard() {
@@ -791,6 +889,8 @@ function scrollToBottom() {
 }
 
 window.bindExecutionResolutionReportAction = bindExecutionResolutionReportAction;
+window.injectGlobalDecisionClosureBlock = injectGlobalDecisionClosureBlock;
+window.getPromotionGroupScriptHtml = getPromotionGroupScriptHtml;
 window.renderExecutionLayerMessages = renderExecutionLayerMessages;
 window.renderRiskControlMessages = renderRiskControlMessages;
 window.renderSynergyLayerMessages = renderSynergyLayerMessages;
