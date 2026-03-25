@@ -6,3 +6,6 @@ dist/
 .vite/
 .vscode/
 *.log
+
+# Tauri / Rust（含嵌套目录下的编译产物）
+src-tauri/**/target/

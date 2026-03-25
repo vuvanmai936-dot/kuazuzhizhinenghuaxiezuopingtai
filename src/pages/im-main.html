@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>跨组织智能化协作平台 - 飞书IM内嵌智能体原型</title>
+    <title>微信协同客户端原型</title>
     <meta name="im-baseline-entry" content="src/pages/im-main.html">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -47,53 +47,46 @@
                     <p class="text-[14px] text-[#8F959E] truncate">主智能体：外部审批进展已纳入跟踪...</p>
                 </div>
             </div>
-            <div id="room-execution" class="chat-room-item wx-room-item hidden flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer" data-room="execution-layer">
+            <div id="room-execution" class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer" data-room="execution-layer">
                 <div class="w-12 h-12 bg-[#16A34A] rounded-md flex items-center justify-center text-white text-sm font-medium">群</div>
                 <div class="ml-3 flex-1 overflow-hidden">
                     <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">南钢-鑫智链可信数据空间推进群</span><span class="text-[12px] text-[#8F959E]">10:45</span></div>
                     <p class="text-[14px] text-[#8F959E] truncate">主智能体：已在群内催办信通院与中信咨询...</p>
                 </div>
             </div>
-            <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
-                <div class="w-10 h-10 bg-[#A3A3A3] rounded-md flex items-center justify-center text-white text-xs">家</div>
+            <div id="room-carbon-service" class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer" data-room="execution-layer">
+                <img src="https://i.pravatar.cc/150?u=carbon-service-group" class="w-11 h-11 rounded-md object-cover shrink-0">
                 <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">荣泽-何佩生</span><span class="text-[12px] text-[#8F959E]">15:26</span></div>
-                    <p class="text-[14px] text-[#8F959E] truncate">[语音通话]</p>
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">鑫智链产品碳足迹数据服务系统群</span><span class="text-[12px] text-[#8F959E]">11:26</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">包含: 鑫智链 - 毛鑫雨</p>
                 </div>
             </div>
             <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
-                <div class="w-10 h-10 bg-[#6B7280] rounded-md flex items-center justify-center text-white text-xs">商</div>
+                <img src="https://i.pravatar.cc/150?u=lca-edge-test-group" class="w-11 h-11 rounded-md object-cover shrink-0">
                 <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">南钢鑫智链-杨进</span><span class="text-[12px] text-[#8F959E]">10:43</span></div>
-                    <p class="text-[14px] text-[#8F959E] truncate">[语音通话]</p>
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">南钢 - 鑫智链 LCA边缘计算测试沟通</span><span class="text-[12px] text-[#8F959E]">10:43</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">包含: 鑫智链 - 杨进</p>
                 </div>
             </div>
             <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
-                <div class="w-10 h-10 bg-[#64748B] rounded-md flex items-center justify-center text-white text-xs">确</div>
+                <img src="https://i.pravatar.cc/150?u=hetao-yangjin-group" class="w-11 h-11 rounded-md object-cover shrink-0">
                 <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">鑫智链-李旭</span><span class="text-[12px] text-[#8F959E]">12:30</span></div>
-                    <p class="text-[14px] text-[#8F959E] truncate">[图片]</p>
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">擎工互联 - 贺涛、南钢鑫智链 - 杨进</span><span class="text-[12px] text-[#8F959E]">09:58</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">贺涛: 下午给你确认跨域策略表。</p>
                 </div>
             </div>
             <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
-                <div class="w-10 h-10 bg-[#64748B] rounded-md flex items-center justify-center text-white text-xs">协</div>
+                <img src="https://i.pravatar.cc/150?u=training-group" class="w-11 h-11 rounded-md object-cover shrink-0">
                 <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">Tom</span><span class="text-[12px] text-[#8F959E]">10:42</span></div>
-                    <p class="text-[14px] text-[#8F959E] truncate">[语音通话]</p>
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">0328-0329 南钢鑫智链碳足迹培训群</span><span class="text-[12px] text-[#8F959E]">昨天</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">包含: 鑫智链 - 毛鑫雨</p>
                 </div>
             </div>
             <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
-                <div class="w-10 h-10 bg-[#22C55E] rounded-md flex items-center justify-center text-white text-xs">传</div>
+                <img src="https://i.pravatar.cc/150?u=asset-management-group" class="w-11 h-11 rounded-md object-cover shrink-0">
                 <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">文件传输助手</span><span class="text-[12px] text-[#8F959E]">昨天</span></div>
-                    <p class="text-[14px] text-[#8F959E] truncate">AlzaSyD0Ns3gse7Le1c1pA...</p>
-                </div>
-            </div>
-            <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
-                <div class="w-10 h-10 bg-[#9CA3AF] rounded-md flex items-center justify-center text-white text-xs">蛋</div>
-                <div class="ml-3 flex-1 overflow-hidden">
-                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">蛋总vip | 福利优先发</span><span class="text-[12px] text-[#8F959E]">15:17</span></div>
-                    <p class="text-[14px] text-[#8F959E] truncate">[14条] Dan | 话费会员...</p>
+                    <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">鑫智链可信数据空间 - 碳资产管理</span><span class="text-[12px] text-[#8F959E]">周一</span></div>
+                    <p class="text-[14px] text-[#8F959E] truncate">Pike: 六库 ERP 系统维护通知。</p>
                 </div>
             </div>
             <div id="room-synergy" class="chat-room-item wx-room-item hidden flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer" data-room="synergy-layer">
@@ -120,20 +113,9 @@
                 <i class="fa-regular fa-message cursor-pointer hover:text-[#1F2329]"></i>
                 <i class="fa-solid fa-chevron-down text-[12px] mt-1 cursor-pointer hover:text-[#1F2329]"></i>
                 <i class="fa-solid fa-phone cursor-pointer hover:text-[#1F2329]"></i>
-                <i id="group-switch-trigger" class="fa-solid fa-tower-cell cursor-pointer hover:text-[#1F2329]" title="切换群聊"></i>
                 <i id="toggle-member-sidebar" class="fa-solid fa-ellipsis cursor-pointer hover:text-[#1F2329]"></i>
             </div>
         </header>
-        <div id="group-switch-panel" class="hidden absolute top-[64px] right-[70px] w-[340px] max-h-[540px] bg-white border border-[#E6E6E6] rounded-lg shadow-lg z-30 overflow-y-auto">
-            <div class="px-4 py-3 text-[24px] font-medium text-[#1F2329]">群聊</div>
-            <div class="space-y-1 px-2 pb-2">
-                <div class="flex items-center gap-3 px-2 py-2 hover:bg-[#F5F5F5] rounded-md"><img class="w-10 h-10 rounded-md" src="https://i.pravatar.cc/150?u=g1"><div><div class="text-[16px] text-[#1F2329]">鑫智链产品碳足迹数据服务系统群</div></div></div>
-                <div class="flex items-center gap-3 px-2 py-2 hover:bg-[#F5F5F5] rounded-md"><img class="w-10 h-10 rounded-md" src="https://i.pravatar.cc/150?u=g2"><div><div class="text-[16px] text-[#1F2329]">南钢 - 鑫智链 LCA边缘计算测试沟通</div></div></div>
-                <div class="flex items-center gap-3 px-2 py-2 bg-[#F2F2F2] rounded-md"><img class="w-10 h-10 rounded-md" src="https://i.pravatar.cc/150?u=g3"><div><div class="text-[16px] text-[#1F2329]">南钢 - 鑫智链可信数据空间推进群</div></div></div>
-                <div class="flex items-center gap-3 px-2 py-2 hover:bg-[#F5F5F5] rounded-md"><img class="w-10 h-10 rounded-md" src="https://i.pravatar.cc/150?u=g4"><div><div class="text-[16px] text-[#1F2329]">擎工互联 - 贺涛、南钢鑫智链 - 杨进</div></div></div>
-                <div class="flex items-center gap-3 px-2 py-2 hover:bg-[#F5F5F5] rounded-md"><img class="w-10 h-10 rounded-md" src="https://i.pravatar.cc/150?u=g5"><div><div class="text-[16px] text-[#1F2329]">0328-0329 南钢鑫智链碳足迹培训群</div></div></div>
-            </div>
-        </div>
 
         <div class="flex-1 overflow-y-auto p-6 space-y-6 chat-fade-in" id="chat-container">
             <div class="flex flex-col items-end">

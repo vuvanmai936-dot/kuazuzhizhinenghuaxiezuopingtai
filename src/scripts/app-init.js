@@ -1,21 +1,13 @@
 function bindRoomEvents() {
-    const riskRoom = document.querySelector('[data-room="risk-control"]');
-    const executionRoom = document.getElementById('room-execution');
-    const synergyRoom = document.getElementById('room-synergy');
-    const globalRoom = document.querySelector('[data-room="global-control"]');
-
-    if (riskRoom) {
-        riskRoom.addEventListener('click', () => window.switchChatRoom('risk-control'));
-    }
-    if (executionRoom) {
-        executionRoom.addEventListener('click', () => window.switchChatRoom('execution-layer'));
-    }
-    if (globalRoom) {
-        globalRoom.addEventListener('click', () => window.switchChatRoom('global-control'));
-    }
-    if (synergyRoom) {
-        synergyRoom.addEventListener('click', () => window.switchChatRoom('synergy-layer'));
-    }
+    const roomItems = Array.from(document.querySelectorAll('.chat-room-item[data-room]'));
+    roomItems.forEach((item) => {
+        if (!(item instanceof HTMLElement)) return;
+        if (item.dataset.bound === '1') return;
+        const room = item.dataset.room;
+        if (!room) return;
+        item.dataset.bound = '1';
+        item.addEventListener('click', () => window.switchChatRoom(room));
+    });
 }
 
 function toClockLabel(isoString) {
@@ -53,16 +45,16 @@ function syncExecutionRoomVisibility() {
     const executionRoom = document.getElementById('room-execution');
     if (!executionRoom) return;
 
-    if (window.AppState.executionRoom.created) {
-        executionRoom.classList.remove('hidden');
-        const timeEl = executionRoom.querySelector('.text-xs');
-        const clockLabel = toClockLabel(window.AppState.executionRoom.createdAt);
-        if (timeEl && clockLabel) {
-            timeEl.textContent = clockLabel;
-        }
+    executionRoom.classList.remove('hidden');
+    if (!window.AppState.executionRoom.created) {
         return;
     }
-    executionRoom.classList.add('hidden');
+
+    const timeEl = executionRoom.querySelector('.text-xs');
+    const clockLabel = toClockLabel(window.AppState.executionRoom.createdAt);
+    if (timeEl && clockLabel) {
+        timeEl.textContent = clockLabel;
+    }
 }
 
 function getBootRoomFromQuery() {
@@ -174,9 +166,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (proactiveTriggerBtn) {
         proactiveTriggerBtn.addEventListener('click', triggerProactiveRisk);
     }
+    const persistedUi = window.getPersistedUiState ? window.getPersistedUiState() : {};
+    const memberSidebar = document.getElementById('member-sidebar');
+    const memberSidebarToggle = document.getElementById('toggle-member-sidebar');
+    const groupSwitchPanel = document.getElementById('group-switch-panel');
+    if (memberSidebar && persistedUi.memberSidebarOpen) {
+        memberSidebar.classList.remove('hidden');
+        if (memberSidebarToggle) memberSidebarToggle.classList.add('text-[#1F2329]');
+    }
+    if (groupSwitchPanel && persistedUi.groupSwitchOpen) {
+        groupSwitchPanel.classList.remove('hidden');
+    }
     const bootRoom = getBootRoomFromQuery();
     if (bootRoom && bootRoom !== 'global-control') {
         window.switchChatRoom(bootRoom);
+    } else if (persistedUi.lastRoom && persistedUi.lastRoom !== 'global-control') {
+        window.switchChatRoom(persistedUi.lastRoom);
     } else {
         window.switchChatRoom('global-control');
     }

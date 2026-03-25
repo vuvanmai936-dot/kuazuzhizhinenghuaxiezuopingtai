@@ -58,7 +58,7 @@ window.AppState = {
     ticketResubmitMessage: '',
     dispatchAuthorized: false,
     executionRoom: {
-        created: false,
+        created: true,
         createdAt: ''
     },
     proactiveRisk: {
@@ -84,6 +84,85 @@ window.AppState = {
     resolutionBroadcasted: false
 };
 
+const APP_PERSISTENCE_KEY = 'wx-desktop-client-state-v1';
+
+function hydratePersistedAppState() {
+    try {
+        const raw = localStorage.getItem(APP_PERSISTENCE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== 'object') return;
+        const next = parsed.appState || {};
+
+        if (typeof next.currentRoom === 'string') window.AppState.currentRoom = next.currentRoom;
+        if (typeof next.dispatchAuthorized === 'boolean') window.AppState.dispatchAuthorized = next.dispatchAuthorized;
+        if (typeof next.resolutionBroadcasted === 'boolean') window.AppState.resolutionBroadcasted = next.resolutionBroadcasted;
+        if (next.executionRoom && typeof next.executionRoom.created === 'boolean') {
+            window.AppState.executionRoom.created = next.executionRoom.created;
+            window.AppState.executionRoom.createdAt = next.executionRoom.createdAt || '';
+        }
+        if (next.synergyRoom && typeof next.synergyRoom.created === 'boolean') {
+            window.AppState.synergyRoom.created = next.synergyRoom.created;
+            window.AppState.synergyRoom.createdAt = next.synergyRoom.createdAt || '';
+        }
+        if (next.proactiveRisk && typeof next.proactiveRisk === 'object') {
+            window.AppState.proactiveRisk.status = next.proactiveRisk.status || window.AppState.proactiveRisk.status;
+            window.AppState.proactiveRisk.supervisionIssued = !!next.proactiveRisk.supervisionIssued;
+            window.AppState.proactiveRisk.warningPushed = !!next.proactiveRisk.warningPushed;
+            window.AppState.proactiveRisk.reviewDecision = next.proactiveRisk.reviewDecision || '';
+            window.AppState.proactiveRisk.closureSummary = next.proactiveRisk.closureSummary || '';
+        }
+    } catch (error) {
+        console.warn('[persist] hydrate failed', error);
+    }
+}
+
+function persistClientState(uiState) {
+    try {
+        const payload = {
+            appState: {
+                currentRoom: window.AppState.currentRoom,
+                dispatchAuthorized: window.AppState.dispatchAuthorized,
+                resolutionBroadcasted: window.AppState.resolutionBroadcasted,
+                executionRoom: {
+                    created: window.AppState.executionRoom.created,
+                    createdAt: window.AppState.executionRoom.createdAt
+                },
+                synergyRoom: {
+                    created: window.AppState.synergyRoom.created,
+                    createdAt: window.AppState.synergyRoom.createdAt
+                },
+                proactiveRisk: {
+                    status: window.AppState.proactiveRisk.status,
+                    supervisionIssued: window.AppState.proactiveRisk.supervisionIssued,
+                    warningPushed: window.AppState.proactiveRisk.warningPushed,
+                    reviewDecision: window.AppState.proactiveRisk.reviewDecision,
+                    closureSummary: window.AppState.proactiveRisk.closureSummary
+                }
+            },
+            uiState: uiState || {}
+        };
+        localStorage.setItem(APP_PERSISTENCE_KEY, JSON.stringify(payload));
+    } catch (error) {
+        console.warn('[persist] save failed', error);
+    }
+}
+
+function getPersistedUiState() {
+    try {
+        const raw = localStorage.getItem(APP_PERSISTENCE_KEY);
+        if (!raw) return {};
+        const parsed = JSON.parse(raw);
+        if (!parsed || typeof parsed !== 'object') return {};
+        return parsed.uiState || {};
+    } catch (error) {
+        console.warn('[persist] read ui failed', error);
+        return {};
+    }
+}
+
+hydratePersistedAppState();
+
 window.AppEvents = new EventTarget();
 
 function updateTicketStatus(nextStatus, payload) {
@@ -101,6 +180,7 @@ function updateTicketStatus(nextStatus, payload) {
             resubmitMessage: window.AppState.ticketResubmitMessage
         }
     }));
+    persistClientState(getPersistedUiState());
 }
 
 window.updateTicketStatus = updateTicketStatus;
@@ -125,6 +205,9 @@ function updateProactiveRiskStatus(nextStatus, payload) {
             closedAt: state.closedAt
         }
     }));
+    persistClientState(getPersistedUiState());
 }
 
 window.updateProactiveRiskStatus = updateProactiveRiskStatus;
+window.persistClientState = persistClientState;
+window.getPersistedUiState = getPersistedUiState;

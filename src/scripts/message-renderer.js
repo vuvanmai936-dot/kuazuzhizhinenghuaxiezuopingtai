@@ -433,6 +433,7 @@ function triggerProactiveRiskWarning() {
     }
     window.AppState.proactiveRisk.warningPushed = true;
     window.AppState.globalControlMessages = chatContainer.innerHTML;
+    window.persistClientState && window.persistClientState(window.getPersistedUiState ? window.getPersistedUiState() : {});
     scrollToBottom();
 }
 
@@ -473,6 +474,7 @@ function bindProactiveRiskActions() {
                     scrollToBottom();
                 }
                 trigger.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i>督办单已下发';
+                window.persistClientState && window.persistClientState(window.getPersistedUiState ? window.getPersistedUiState() : {});
                 setTimeout(() => {
                     window.switchChatRoom && window.switchChatRoom('execution-layer');
                 }, 300);
@@ -683,6 +685,7 @@ function bindExecutionEscalationAction() {
         btn.classList.remove('wx-btn-primary');
         btn.classList.add('wx-btn-default', 'opacity-60', 'cursor-not-allowed');
         btn.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i>已升级至临时协同群';
+        window.persistClientState && window.persistClientState(window.getPersistedUiState ? window.getPersistedUiState() : {});
         setTimeout(() => {
             window.switchChatRoom && window.switchChatRoom('synergy-layer');
         }, 300);
@@ -716,6 +719,7 @@ function bindExecutionResolutionReportAction() {
         btn.classList.remove('wx-btn-primary');
         btn.classList.add('wx-btn-default', 'opacity-60', 'cursor-not-allowed');
         btn.innerHTML = '<i class="fa-solid fa-circle-check mr-1.5"></i>已回传总控群';
+        window.persistClientState && window.persistClientState(window.getPersistedUiState ? window.getPersistedUiState() : {});
         appendGlobalResolutionReply();
         setTimeout(() => {
             window.switchChatRoom && window.switchChatRoom('global-control');
@@ -753,6 +757,7 @@ function approveDispatch(buttonEl) {
     window.AppState.dispatchAuthorized = true;
     window.AppState.executionRoom.created = true;
     window.AppState.executionRoom.createdAt = new Date().toISOString();
+    window.persistClientState && window.persistClientState(window.getPersistedUiState ? window.getPersistedUiState() : {});
     revealExecutionRoomFromDispatch();
 
     const container = document.getElementById('dynamic-content') || document.getElementById('chat-container');
