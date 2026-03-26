@@ -48,17 +48,17 @@
                 </div>
             </div>
             <div id="room-execution" class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer" data-room="execution-layer">
-                <div class="w-12 h-12 bg-[#16A34A] rounded-md flex items-center justify-center text-white text-sm font-medium">群</div>
+                <img src="../assets/avatars/taolichun.png" class="w-11 h-11 rounded-md object-cover shrink-0">
                 <div class="ml-3 flex-1 overflow-hidden">
                     <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">南钢-鑫智链可信数据空间推进群</span><span class="text-[12px] text-[#8F959E]">10:45</span></div>
-                    <p class="text-[14px] text-[#8F959E] truncate">主智能体：已在群内催办信通院与中信咨询...</p>
+                    <p class="text-[14px] text-[#8F959E] truncate">主智能体：正在跟进智慧中心8楼大屏意见征集...</p>
                 </div>
             </div>
-            <div id="room-carbon-service" class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer" data-room="execution-layer">
-                <img src="https://i.pravatar.cc/150?u=carbon-service-group" class="w-11 h-11 rounded-md object-cover shrink-0">
+            <div id="room-carbon-service" class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer" data-room="carbon-service">
+                <img src="../assets/avatars/yangjin.png" class="w-11 h-11 rounded-md object-cover shrink-0">
                 <div class="ml-3 flex-1 overflow-hidden">
                     <div class="flex justify-between items-center mb-0.5"><span class="text-[16px] text-[#1F2329] truncate">鑫智链产品碳足迹数据服务系统群</span><span class="text-[12px] text-[#8F959E]">11:26</span></div>
-                    <p class="text-[14px] text-[#8F959E] truncate">包含: 鑫智链 - 毛鑫雨</p>
+                    <p class="text-[14px] text-[#8F959E] truncate">包含: 鑫智链 - 杨进</p>
                 </div>
             </div>
             <div class="chat-room-item wx-room-item flex items-center px-3 py-2.5 hover:bg-[#E4E4E4] cursor-pointer">
@@ -106,6 +106,10 @@
                 <div class="flex items-center">
                     <h1 id="chat-title" class="text-[18px] font-medium text-[#1F2329] mr-2">可信数据空间项目决策群</h1>
                     <span id="chat-status-tag" class="text-[#D83931] bg-[#FEECEE] border border-[#FDC3C8] text-[12px] px-2 py-0.5 rounded-sm flex items-center"><i class="fa-solid fa-microphone-lines-slash mr-1"></i>全员禁言</span>
+                    <div id="playbook-switcher" class="ml-2 inline-flex items-center border border-[#D8D8D8] rounded-md overflow-hidden opacity-20 hover:opacity-100 transition-opacity" title="演示开关：A=第一套，B=第二套">
+                        <button type="button" data-playbook="playbookA" class="px-1.5 py-0.5 text-[10px] text-[#646A73] bg-white">A</button>
+                        <button type="button" data-playbook="playbookB" class="px-1.5 py-0.5 text-[10px] text-[#646A73] bg-white border-l border-[#D8D8D8]">B</button>
+                    </div>
                 </div>
                 <div id="chat-meta" class="text-[13px] text-[#8F959E] mt-0.5"><i class="fa-solid fa-user-group mr-1"></i>18 人 · 决策层与关键责任方协同群</div>
             </div>
@@ -118,85 +122,8 @@
         </header>
 
         <div class="flex-1 overflow-y-auto p-6 space-y-6 chat-fade-in" id="chat-container">
-            <div class="flex flex-col items-end">
-                <div class="flex items-center mb-1">
-                    <span class="text-xs text-[#8F959E] mr-2">10:40</span>
-                    <span class="text-[13px] font-medium text-[#1F2329]">陶立春 (南钢鑫智链)</span>
-                </div>
-                <div class="flex items-start justify-end">
-                    <div class="wx-msg-self mr-3 shadow-none"><span class="text-[#3370FF]">@主智能体</span> 3月底部署上线的大盘稳不稳？我这总有疑问。</div>
-                    <img src="https://i.pravatar.cc/150?img=11" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
-                </div>
-            </div>
-
-            <div class="flex items-start">
-                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
-                <div class="ml-3 w-full">
-                    <div class="flex items-center mb-1">
-                        <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
-                        <span class="wx-tag-bot">BOT</span>
-                        <span class="text-xs text-[#8F959E] ml-2">10:41</span>
-                    </div>
-                    <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
-                        陶总您好，从目前底层代码提交来看，荣泽科技负责的系统开发进度已经达到 95%，按期交付问题不大。但这种跨机构项目，真正的风险在外部协调上。目前系统监测到有两个流程还没有闭环：1. 省数据局的合规批复；2. 中信集团总部的法务审批。这两块不落听，系统开发完了也上不了线。
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex items-start">
-                <img src="https://i.pravatar.cc/150?u=zx" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
-                <div class="ml-3">
-                    <div class="flex items-center mb-1">
-                        <span class="text-[13px] font-medium text-[#1F2329]">钟晓</span>
-                        <span class="text-xs text-[#8F959E] ml-2">10:42</span>
-                    </div>
-                    <div class="wx-msg-other shadow-none">荣泽这边的代码月底前封版没问题。</div>
-                </div>
-            </div>
-
-            <div class="flex flex-col items-end">
-                <div class="flex items-center mb-1">
-                    <span class="text-xs text-[#8F959E] mr-2">10:43</span>
-                    <span class="text-[13px] font-medium text-[#1F2329]">陶立春 (南钢鑫智链)</span>
-                </div>
-                <div class="flex items-start justify-end">
-                    <div class="wx-msg-self mr-3 shadow-none">耿总，商务合同那块有风险吗？服务器资源呢？</div>
-                    <img src="https://i.pravatar.cc/150?u=tlc" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
-                </div>
-            </div>
-
-            <div class="flex items-start">
-                <img src="https://i.pravatar.cc/150?u=gengxueyu" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
-                <div class="ml-3 bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
-                    商务合同和服务器资源我已经安排鞠鹏跟进了，本周四前能齐套，风险可控。现在的焦点都在外部合规审批和中信集团的审批上。
-                </div>
-            </div>
-            <div class="flex flex-col items-end">
-                <div class="flex items-center mb-1">
-                    <span class="text-xs text-[#8F959E] mr-2">10:43</span>
-                    <span class="text-[13px] font-medium text-[#1F2329]">陶立春 (南钢鑫智链)</span>
-                </div>
-                <div class="flex items-start justify-end">
-                    <div class="wx-msg-self mr-3 shadow-none">合规和审批具体卡在哪了？需要拉集团领导资源吗？</div>
-                    <img src="https://i.pravatar.cc/150?u=tlc2" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
-                </div>
-            </div>
-            <div class="flex items-start">
-                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
-                <div class="ml-3 w-full">
-                    <div class="flex items-center mb-1">
-                        <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
-                        <span class="wx-tag-bot">BOT</span>
-                        <span class="text-xs text-[#8F959E] ml-2">10:43</span>
-                    </div>
-                    <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
-                        目前这两个流程都在外部机构，系统抓不到状态。我这就去【推进群】里跟进一下信通院的魏强老师和咨询公司的傅毅明老师，一有结果马上向您汇报。
-                    </div>
-                </div>
-            </div>
-            <div class="wx-system-note" id="global-promotion-system-note">系统提示：主智能体 已前往“南钢-鑫智链可信数据空间推进群”催办跟进</div>
-            <div class="wx-system-note">
-                <button id="btn-trigger-proactive-risk" class="text-[#576B95] hover:underline">发起主动巡检</button>
+            <div class="flex justify-center py-1">
+                <span class="text-[12px] text-[#B3B5B9]">10:40</span>
             </div>
             <div id="dynamic-content"></div>
         </div>
@@ -209,7 +136,12 @@
                 <i class="fa-solid fa-scissors"></i>
                 <i class="fa-solid fa-chevron-down text-[12px]"></i>
             </div>
-            <textarea class="mt-2 w-full flex-1 resize-none border-none outline-none text-[15px] leading-6 text-[#1F2329] placeholder-[#A0A4AA] bg-transparent px-1" placeholder="输入消息..."></textarea>
+            <div class="flex items-end gap-2 mt-2 flex-1 min-h-0">
+                <textarea id="chat-input" class="w-full flex-1 min-h-[56px] resize-none border-none outline-none text-[15px] leading-6 text-[#1F2329] placeholder-[#A0A4AA] bg-transparent px-1" placeholder="输入消息..."></textarea>
+                <button type="button" id="chat-send-btn" class="shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-[#3370FF] hover:bg-[#E8F0FF] transition-colors" title="发送" aria-label="发送">
+                    <i class="fa-solid fa-paper-plane text-[16px]"></i>
+                </button>
+            </div>
         </div>
         </section>
         <aside id="member-sidebar" class="w-[300px] bg-[#F5F5F5] border-l border-[#D9D9D9] shrink-0 flex flex-col hidden">
@@ -232,6 +164,49 @@
             <div id="member-empty" class="hidden text-[12px] text-[#8F959E] px-4 py-2">当前群未配置成员列表</div>
         </aside>
     </main>
+
+    <div id="doc-preview-modal" class="fixed inset-0 bg-black/50 z-[100] hidden flex items-center justify-center backdrop-blur-sm transition-opacity" onclick="if (event.target === this) window.closeDocPreviewModal && window.closeDocPreviewModal()">
+        <div class="bg-[#F3F4F6] w-[800px] h-[90%] rounded-xl shadow-2xl flex flex-col overflow-hidden relative border border-gray-300" onclick="event.stopPropagation()">
+            <div class="h-12 bg-white flex justify-between items-center px-5 border-b border-gray-200 shrink-0">
+                <div class="flex items-center text-[14px] text-[#1F2329] font-medium min-w-0">
+                    <i class="fa-solid fa-file-word text-[#2B579A] text-lg mr-2 shrink-0"></i>
+                    <span class="truncate">联合运营权责声明_AI草案_v1.docx</span>
+                </div>
+                <div class="flex space-x-4 text-gray-400 shrink-0">
+                    <i class="fa-solid fa-download cursor-pointer hover:text-gray-800 transition-colors" title="下载附件"></i>
+                    <i class="fa-solid fa-xmark cursor-pointer hover:text-[#D83931] text-lg transition-colors" title="关闭预览" role="button" onclick="window.closeDocPreviewModal && window.closeDocPreviewModal()"></i>
+                </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto p-8 flex justify-center bg-[#EBEDF0]">
+                <div class="bg-white w-[650px] min-h-[850px] shadow-sm border border-gray-300 p-12 relative">
+                    <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none select-none">
+                        <span class="text-6xl font-bold transform -rotate-45 text-gray-900">AI GENERATED</span>
+                    </div>
+                    <h1 class="text-center text-xl font-bold mb-8 tracking-wider text-black">南钢-荣泽可信数据空间<br>联合运营权责声明 (草案)</h1>
+                    <div class="space-y-5 text-[14px] text-gray-800 leading-relaxed font-serif">
+                        <p><strong>甲方：</strong>南京钢铁股份有限公司（数据提供方）</p>
+                        <p><strong>乙方：</strong>江苏荣泽信息科技股份有限公司（建设方与平台运营方）</p>
+                        <p class="indent-8 mt-4">鉴于甲方拥有合法的数据资源，乙方具备可信数据空间底座技术与运营能力。双方经友好协商，针对系统核心数据接口的调用与管控，达成如下安全底线共识：</p>
+                        <h3 class="font-bold mt-6 mb-2 text-[15px]">一、 数据调用最小化与脱敏原则</h3>
+                        <p class="indent-8">1.1 乙方在进行系统联调及后续运营时，对甲方核心域的访问，必须遵循“最小权限”原则。</p>
+                        <p class="indent-8 text-[#D83931] bg-[#FEECEE] inline-block px-1 rounded">1.2 (AI 风险阻断项填充)：针对昨日被合规系统拦截的调用行为，乙方承诺在今日完成全局哈希脱敏插件的挂载验证。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-16 bg-white border-t border-gray-200 flex items-center justify-end px-5 space-x-3 shrink-0 rounded-b-xl">
+                <button type="button" class="px-4 py-2 rounded text-[13px] border border-gray-300 text-gray-700 hover:bg-gray-50 transition-colors" onclick="window.closeDocPreviewModal && window.closeDocPreviewModal()">取消</button>
+                <button type="button" class="px-4 py-2 rounded text-[13px] bg-[#2B579A] text-white hover:bg-[#1e3f73] shadow-sm transition-colors flex items-center" onclick="window.openDocStampPushToast && window.openDocStampPushToast()">
+                    <i class="fa-solid fa-stamp mr-1.5"></i> 一键推送信通院与法务签章
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="calendar-invite-toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[110] hidden px-4 py-2.5 bg-[#1F2329]/90 text-white text-[13px] rounded-lg shadow-lg max-w-[90vw] text-center" role="status">已向相关方发送日历邀请（演示）</div>
+
+    <div id="doc-stamp-toast" class="fixed bottom-24 left-1/2 -translate-x-1/2 z-[110] hidden px-4 py-2.5 bg-[#1F2329]/90 text-white text-[13px] rounded-lg shadow-lg max-w-[90vw] text-center" role="status">已将该草案推送至信通院魏强与中信法务部进行在线电子签章（演示）</div>
 
     <script src="../scripts/state.js"></script>
     <script src="../features/scenario-execution-layer/templates.js"></script>

@@ -67,6 +67,16 @@ function getBootRoomFromQuery() {
     return room;
 }
 
+function getBootPlaybookFromQuery() {
+    const params = new URLSearchParams(window.location.search);
+    const raw = (params.get('playbook') || '').trim().toLowerCase();
+    if (!raw) return null;
+
+    if (raw === 'a' || raw === '1' || raw === 'playbooka') return 'playbookA';
+    if (raw === 'b' || raw === '2' || raw === 'playbookb') return 'playbookB';
+    return null;
+}
+
 function syncRoomPreviewByStatus(status) {
     const executionPreview = document.querySelector('#room-execution p');
     const synergyPreview = document.querySelector('#room-synergy p');
@@ -108,10 +118,72 @@ function syncRoomPreviewByStatus(status) {
     }
 }
 
+function syncPlaybookSwitcherUi() {
+    const switcher = document.getElementById('playbook-switcher');
+    if (!switcher) return;
+    const buttons = Array.from(switcher.querySelectorAll('button[data-playbook]'));
+    buttons.forEach(btn => {
+        if (!(btn instanceof HTMLButtonElement)) return;
+        const active = btn.dataset.playbook === window.AppState.activePlaybook;
+        btn.classList.toggle('bg-[#3370FF]', active);
+        btn.classList.toggle('text-white', active);
+        btn.classList.toggle('bg-white', !active);
+        btn.classList.toggle('text-[#646A73]', !active);
+    });
+}
+
+function resetGlobalControlTimeline() {
+    const chatContainer = document.getElementById('chat-container');
+    if (!chatContainer) return;
+    chatContainer.innerHTML = `
+        <div class="flex justify-center py-1">
+            <span class="text-[12px] text-[#B3B5B9]">10:40</span>
+        </div>
+        <div id="dynamic-content"></div>
+    `;
+    if (window.applyWechatMessageGrouping) {
+        window.applyWechatMessageGrouping(chatContainer);
+    }
+    if (window.applySegmentTimeSeparators) {
+        window.applySegmentTimeSeparators(chatContainer);
+    }
+    window.AppState.decisionActOneFinished = false;
+    window.AppState.globalControlMessages = chatContainer.innerHTML;
+    window.scrollToBottom && window.scrollToBottom();
+}
+
+function bindPlaybookSwitcher() {
+    const switcher = document.getElementById('playbook-switcher');
+    if (!switcher || switcher.dataset.bound === '1') return;
+    switcher.dataset.bound = '1';
+    syncPlaybookSwitcherUi();
+
+    switcher.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof HTMLElement)) return;
+        const button = target.closest('button[data-playbook]');
+        if (!(button instanceof HTMLButtonElement)) return;
+
+        const nextPlaybook = button.dataset.playbook;
+        if (nextPlaybook !== 'playbookA' && nextPlaybook !== 'playbookB') return;
+        if (window.AppState.activePlaybook === nextPlaybook) return;
+
+        window.AppState.activePlaybook = nextPlaybook;
+        syncPlaybookSwitcherUi();
+        if (window.AppState.currentRoom === 'global-control') {
+            resetGlobalControlTimeline();
+        }
+        if (window.persistClientState && window.getPersistedUiState) {
+            window.persistClientState(window.getPersistedUiState());
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const chatContainer = document.getElementById('chat-container');
-    if (window.injectGlobalDecisionClosureBlock) {
-        window.injectGlobalDecisionClosureBlock();
+    const playbookFromQuery = getBootPlaybookFromQuery();
+    if (playbookFromQuery) {
+        window.AppState.activePlaybook = playbookFromQuery;
     }
     if (chatContainer && window.applyWechatMessageGrouping) {
         window.applyWechatMessageGrouping(chatContainer);
@@ -120,6 +192,10 @@ document.addEventListener('DOMContentLoaded', () => {
         window.applySegmentTimeSeparators(chatContainer);
     }
     window.AppState.globalControlMessages = chatContainer ? chatContainer.innerHTML : '';
+    if (window.initDecisionActOnePlayback) {
+        window.initDecisionActOnePlayback();
+    }
+    bindPlaybookSwitcher();
     syncExecutionRoomVisibility();
     syncSynergyRoomVisibility();
     bindRoomEvents();
@@ -166,15 +242,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.bindProactiveRiskActions) {
         window.bindProactiveRiskActions();
     }
-    const proactiveTriggerBtn = document.getElementById('btn-trigger-proactive-risk');
-    const triggerProactiveRisk = () => {
-        if (window.triggerProactiveRiskWarning) {
-            window.triggerProactiveRiskWarning();
-        }
-    };
-    if (proactiveTriggerBtn) {
-        proactiveTriggerBtn.addEventListener('click', triggerProactiveRisk);
-    }
     const persistedUi = window.getPersistedUiState ? window.getPersistedUiState() : {};
     const memberSidebar = document.getElementById('member-sidebar');
     const memberSidebarToggle = document.getElementById('toggle-member-sidebar');
@@ -194,4 +261,8 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         window.switchChatRoom('global-control');
     }
+    if (playbookFromQuery && window.persistClientState && window.getPersistedUiState) {
+        window.persistClientState(window.getPersistedUiState());
+    }
+    syncPlaybookSwitcherUi();
 });

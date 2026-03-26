@@ -27,69 +27,340 @@ function applyWechatMessageGrouping(container) {
 
 function getPromotionGroupScriptHtml() {
     return `
-        <div class="flex items-start fade-in">
+        <div class="flex justify-center py-1">
+            <span class="text-[12px] text-[#B3B5B9]">16:00</span>
+        </div>
+        <div id="dynamic-content"></div>
+    `;
+}
+
+function scrollExecutionChatToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+    window.scrollToBottom && window.scrollToBottom();
+}
+
+function safeInsertAroundDynamic(chatContainer, html) {
+    const dynamicContent = document.getElementById('dynamic-content');
+    if (dynamicContent && dynamicContent.parentElement) {
+        dynamicContent.insertAdjacentHTML('beforebegin', html);
+        return;
+    }
+    if (chatContainer) {
+        chatContainer.insertAdjacentHTML('beforeend', html);
+    }
+}
+
+function appendCarbonServiceConsensusScript() {
+    const chatContainer = document.getElementById('chat-container');
+    if (!chatContainer) return;
+
+    const appendAndRefresh = (html) => {
+        safeInsertAroundDynamic(chatContainer, html);
+        applyWechatMessageGrouping(chatContainer);
+        applySegmentTimeSeparators(chatContainer);
+        scrollExecutionChatToBottom();
+    };
+
+    const aiReviewHtml = `
+        <div id="execution-consensus-1" class="flex items-start justify-end flex-row-reverse fade-in mt-4">
+            <img src="../assets/avatars/yangjin.png" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="mr-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">鑫智链-杨进</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:20</span>
+                </div>
+                <div class="wx-msg-self mr-3 shadow-none text-left">
+                    <span class="text-[#3370FF]">@荣泽-孙康峰</span> 康峰，陶总问咱们碳足迹3月份MVP能不能跟大盘同步上线？目前开发和测试进度怎么样？
+                </div>
+            </div>
+        </div>
+    `;
+
+    const rzReplyHtml = `
+        <div id="execution-consensus-5" class="flex items-start fade-in mt-4">
+            <img src="../assets/avatars/sunkangfeng.png" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">荣泽-孙康峰</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:22</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    目前整体进度90%。可以确保本阶段“从订单到报告”的闭环流程上线。但是缺几个前置条件需要你补齐：<br>
+                    1. 缺平台整体名称和Logo信息，导致前端无法封版。<br>
+                    2. 下周UAT测试，缺真实的供应商和核查机构账号。<br>
+                    另外，鑫采商城和空间节点集成还不完善，但属于4月二期规划，不影响本月MVP。
+                </div>
+            </div>
+        </div>
+    `;
+
+    const aiAssistHtml = `
+        <div id="execution-consensus-3" class="flex items-start fade-in mt-4">
             <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
             <div class="ml-3 w-full max-w-[min(100%,640px)]">
                 <div class="flex items-center mb-1">
                     <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
                     <span class="wx-tag-bot">BOT</span>
-                    <span class="text-xs text-[#8F959E] ml-2">14:13</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:24</span>
                 </div>
                 <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
-                    <span class="text-[#3370FF]">@魏强</span> <span class="text-[#3370FF]">@傅毅明</span> 两位老师好，决策群的陶总非常关注咱们月底上线的进度。想请教一下，目前省局的合规批复和中信集团的法务审批，大概什么时间能下来？有没有需要决策层协调的卡点？
+                    <span class="text-[#3370FF]">@鑫智链-杨进</span> 监测到碳足迹项目关键进度更新。是否需要我为您和孙总梳理一份《碳足迹MVP上线进度与依赖确认单》，以便向上汇报？
                 </div>
             </div>
         </div>
+    `;
 
-        <div class="flex items-start fade-in mt-4">
-            <img src="https://i.pravatar.cc/150?u=caict-wq" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+    const yangNeedHtml = `
+        <div id="execution-consensus-4" class="flex items-start justify-end flex-row-reverse fade-in mt-4">
+            <img src="../assets/avatars/yangjin.png" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="mr-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">鑫智链-杨进</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:25</span>
+                </div>
+                <div class="wx-msg-self mr-3 shadow-none text-left">
+                    需要，抓紧生成。
+                </div>
+            </div>
+        </div>
+    `;
+
+    const aiDocHtml = `
+        <div id="execution-consensus-6" class="flex items-start fade-in mt-4">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
             <div class="ml-3 w-full max-w-[min(100%,640px)]">
                 <div class="flex items-center mb-1">
-                    <span class="text-[13px] font-medium text-[#1F2329]">中国信通院-魏强</span>
-                    <span class="text-xs text-[#8F959E] ml-2">14:15</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                    <span class="wx-tag-bot">BOT</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:27</span>
                 </div>
                 <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
-                    省局那边材料已经交上去了，正在排队走流程，没有大问题，估计这周五能拿到批文。
+                    报告已自动生成。请两位确认风险项与解决时效。<br>
+                    <div class="mt-2 p-2 bg-gray-100 rounded border border-gray-200 text-[12px] flex items-center w-fit cursor-pointer">
+                        <i class="fa-solid fa-file-word text-[#2B579A] mr-2"></i>碳足迹MVP上线进度确认单.docx
+                    </div>
                 </div>
             </div>
         </div>
+    `;
 
-        <div class="flex items-start fade-in mt-4">
+    const rzConfirmHtml = `
+        <div id="execution-consensus-7" class="flex items-start fade-in mt-4">
+            <img src="../assets/avatars/sunkangfeng.png" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">荣泽-孙康峰</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:28</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    报告内容属实，没问题。
+                </div>
+            </div>
+        </div>
+    `;
+
+    const yangConfirmHtml = `
+        <div id="execution-consensus-8" class="flex items-start justify-end flex-row-reverse fade-in mt-4">
+            <img src="../assets/avatars/yangjin.png" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="mr-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">鑫智链-杨进</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:29</span>
+                </div>
+                <div class="wx-msg-self mr-3 shadow-none text-left">
+                    我也确认。测试账号和Logo今天下班前我发群里。
+                </div>
+            </div>
+        </div>
+    `;
+
+    const aiDoneHtml = `
+        <div id="execution-consensus-9" class="flex items-start fade-in mt-4">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                    <span class="wx-tag-bot">BOT</span>
+                    <span class="text-xs text-[#8F959E] ml-2">14:30</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    ✅ 推进层共识已达成。我这就自动将包含解决方案的报告推送至决策群。大家辛苦！
+                </div>
+            </div>
+        </div>
+    `;
+
+    setTimeout(() => appendAndRefresh(aiReviewHtml), 500);
+    setTimeout(() => appendAndRefresh(rzReplyHtml), 2000);
+    setTimeout(() => appendAndRefresh(aiAssistHtml), 4000);
+    setTimeout(() => appendAndRefresh(yangNeedHtml), 5500);
+    setTimeout(() => appendAndRefresh(aiDocHtml), 7000);
+    setTimeout(() => appendAndRefresh(rzConfirmHtml), 8500);
+    setTimeout(() => appendAndRefresh(yangConfirmHtml), 10000);
+    setTimeout(() => appendAndRefresh(aiDoneHtml), 11000);
+}
+
+function appendExecutionPlaybookAScript() {
+    const chatContainer = document.getElementById('chat-container');
+    if (!chatContainer) return;
+
+    const appendAndRefresh = (html) => {
+        safeInsertAroundDynamic(chatContainer, html);
+        applyWechatMessageGrouping(chatContainer);
+        applySegmentTimeSeparators(chatContainer);
+        scrollExecutionChatToBottom();
+    };
+
+    const aiStartHtml = `
+        <div id="execution-a-1" class="flex items-start fade-in mt-4">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                    <span class="wx-tag-bot">BOT</span>
+                    <span class="text-xs text-[#8F959E] ml-2">16:01</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    <span class="text-[#3370FF]">@中信咨询-傅毅明</span> <span class="text-[#3370FF]">@数研院-张琳</span> <span class="text-[#3370FF]">@金恒-乐婷婷</span> 几位老师好，关于智慧中心8楼大屏的设计初稿意见，耿总要求今天下午 5 点前提交给陈海萍。目前没有看到各位的反馈，请问目前的进度是？
+                </div>
+            </div>
+        </div>
+    `;
+
+    const fymReplyHtml = `
+        <div id="execution-a-2" class="flex items-start fade-in mt-4">
             <img src="https://i.pravatar.cc/150?u=citic-fym" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
             <div class="ml-3 w-full max-w-[min(100%,640px)]">
                 <div class="flex items-center mb-1">
                     <span class="text-[13px] font-medium text-[#1F2329]">中信咨询-傅毅明</span>
-                    <span class="text-xs text-[#8F959E] ml-2">14:16</span>
+                    <span class="text-xs text-[#8F959E] ml-2">16:02</span>
                 </div>
                 <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
-                    集团这边有点卡壳。法务部对数据确权的几条细则有疑问，流程退回了。需要补充一份《联合运营权责声明》重新走签，不然月底肯定走不完。
+                    我们内部已经汇总完了，大概 12 条意见，正在走内部脱敏审批，4点半准时发给海萍。
                 </div>
             </div>
         </div>
+    `;
 
-        <div class="flex items-start fade-in mt-4">
-            <img src="https://i.pravatar.cc/150?u=xzl-jp" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+    const zlReplyHtml = `
+        <div id="execution-a-3" class="flex items-start fade-in mt-4">
+            <img src="https://i.pravatar.cc/150?u=zhanglin" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
             <div class="ml-3 w-full max-w-[min(100%,640px)]">
                 <div class="flex items-center mb-1">
-                    <span class="text-[13px] font-medium text-[#1F2329]">鑫智链-架构师鞠鹏</span>
-                    <span class="text-xs text-[#8F959E] ml-2">14:17</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">数研院-张琳</span>
+                    <span class="text-xs text-[#8F959E] ml-2">16:03</span>
                 </div>
                 <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
-                    这个声明的技术细节和系统架构边界我可以提供，但最终得南钢和荣泽两家盖公章才行。
+                    鞠鹏上周五发的那个 大屏.zip 包，我这边下载后解压报错文件损坏，没办法看呀。
                 </div>
             </div>
         </div>
+    `;
 
-        <div class="flex items-start fade-in mt-4">
+    const aiPingHtml = `
+        <div id="execution-a-4" class="flex items-start fade-in mt-4">
             <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
             <div class="ml-3 w-full max-w-[min(100%,640px)]">
                 <div class="flex items-center mb-1">
                     <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
                     <span class="wx-tag-bot">BOT</span>
-                    <span class="text-xs text-[#8F959E] ml-2">14:20</span>
+                    <span class="text-xs text-[#8F959E] ml-2">16:04</span>
                 </div>
                 <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
-                    收到，情况已记录。我已经根据前期技术方案，由底层大模型辅助草拟了一份《联合运营权责声明》草案大纲。我马上将该唯一风险点和草案同步至决策群，供陶总批复决策。大家辛苦！
+                    收到张老师的反馈。<span class="text-[#3370FF]">@鑫智链-架构师鞠鹏</span> 张老师这边反馈压缩包解压报错，麻烦重新发一份，或者直接发一个不限速的微盘链接，以免影响数研院提意见的进度。
+                </div>
+            </div>
+        </div>
+    `;
+
+    const jpReplyHtml = `
+        <div id="execution-a-5" class="flex items-start fade-in mt-4">
+            <img src="../assets/avatars/jupeng.png" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">鑫智链-架构师鞠鹏</span>
+                    <span class="text-xs text-[#8F959E] ml-2">16:05</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    不好意思，可能周五传的时候网络断了。新的微盘链接在此：<span class="text-[#3370FF]">https://weipan.com/link/8x9k2m</span>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const aiDoneHtml = `
+        <div id="execution-a-6" class="flex items-start fade-in mt-4">
+            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
+            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                    <span class="wx-tag-bot">BOT</span>
+                    <span class="text-xs text-[#8F959E] ml-2">16:06</span>
+                </div>
+                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                    <span class="text-[#3370FF]">@数研院-张琳</span> 张老师，新链接已就位，麻烦抓紧看一下。进度我先同步给陶总。大家辛苦！
+                </div>
+            </div>
+        </div>
+    `;
+
+    setTimeout(() => appendAndRefresh(aiStartHtml), 500);
+    setTimeout(() => appendAndRefresh(fymReplyHtml), 1500);
+    setTimeout(() => appendAndRefresh(zlReplyHtml), 2500);
+    setTimeout(() => appendAndRefresh(aiPingHtml), 3500);
+    setTimeout(() => appendAndRefresh(jpReplyHtml), 4500);
+    setTimeout(() => appendAndRefresh(aiDoneHtml), 5500);
+}
+
+function getGlobalDecisionClosureAppendHtmlPlaybookB() {
+    return `
+        <div id="finale-report-block" class="hidden w-full mb-4 fade-in">
+            <div class="flex items-start">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
+                <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                        <span class="wx-tag-bot">BOT</span>
+                        <span class="text-xs text-[#8F959E] ml-2">14:21</span>
+                    </div>
+                    <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                        <span class="text-[#3370FF]">@陶立春</span> <span class="text-[#3370FF]">@鑫智链-杨进</span> 陶总，杨总与荣泽科技已在碳足迹群达成共识。<strong>碳足迹3月MVP（订单到报告闭环）具备同步上线条件</strong>。核心结论如下：<br><br>
+                        🟢 整体进度：开发与测试均达 90%。<br>
+                        🟢 依赖卡点已解决：缺失的 Logo 和 UAT 测试账号，杨总已承诺今日下班前提供。<br>
+                        🟢 外部风险排除：鑫采商城等未集成项已确认归入4月二期（分润与结算）规划，不影响本月上线。<br><br>
+                        《碳足迹MVP上线进度确认单》已归档，请陶总审阅。
+                    </div>
+                    <div class="mt-2 flex flex-wrap items-center">
+                        <span class="text-[#3370FF] cursor-pointer hover:underline text-[13px] mr-4" role="button" tabindex="0" onclick="window.openDocPreviewModal()">📄 预览上线进度确认单(Word)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function getGlobalDecisionClosureAppendHtmlPlaybookA() {
+    return `
+        <div id="finale-report-block" class="hidden w-full mb-4 fade-in">
+            <div class="flex items-start">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
+                <div class="ml-3 w-full max-w-[min(100%,640px)]">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                        <span class="wx-tag-bot">BOT</span>
+                        <span class="text-xs text-[#8F959E] ml-2">16:10</span>
+                    </div>
+                    <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
+                        <span class="text-[#3370FF]">@陶立春</span> 陶总，大屏意见征集的事项我已经追问完毕：<br><br>
+                        🟢 中信咨询：已汇总12条意见，内部走完审批后 16:30 提交，进度可控。<br>
+                        🟡 数研院：遇到文件损坏卡点，我已在群内协调鞠鹏补发了新链接，目前正在加急看。<br>
+                        🔴 金恒：群内依然无回复。<br><br>
+                        建议：是否需要我自动生成一张催办督办单，直接通过电话语音外呼给金恒的负责人？
+                    </div>
+                    <div class="mt-2 flex flex-wrap items-center">
+                        <span class="text-[#3370FF] cursor-pointer hover:underline text-[13px] mr-4" role="button" tabindex="0" onclick="window.openDocPreviewModal()">📄 预览自动生成的督办单</span>
+                        <span class="text-[#3370FF] cursor-pointer hover:underline text-[13px]" role="button" tabindex="0" onclick="window.openCalendarInviteToast && window.openCalendarInviteToast()">📞 一键语音外呼金恒负责人</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -97,34 +368,318 @@ function getPromotionGroupScriptHtml() {
 }
 
 function getGlobalDecisionClosureAppendHtml() {
-    return `
-        <div id="global-decision-closure-wrap" class="flex items-start fade-in mt-4">
-            <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm" alt="">
-            <div class="ml-3 w-full max-w-[min(100%,640px)]">
+    const mode = window.AppState && window.AppState.activePlaybook;
+    return mode === 'playbookB'
+        ? getGlobalDecisionClosureAppendHtmlPlaybookB()
+        : getGlobalDecisionClosureAppendHtmlPlaybookA();
+}
+
+/**
+ * 决策群第一幕：气泡 HTML 片段（按播放顺序），最后一段含主智能体收尾 + 灰色系统提示（暗门 onclick 勿改）。
+ */
+function getDecisionActOneFragmentsPlaybookB() {
+    const systemNoteHtml =
+        '<div id="global-promotion-system-note" class="text-center text-[12px] text-gray-400 my-4 cursor-pointer select-none" onclick="window.revealFinaleReportBlock && window.revealFinaleReportBlock()">系统提示：主智能体 已跟随杨进前往“南钢-鑫智链碳足迹项目群”</div>';
+    return [
+        `
+            <div class="flex flex-col items-end">
                 <div class="flex items-center mb-1">
-                    <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
-                    <span class="wx-tag-bot">BOT</span>
-                    <span class="text-xs text-[#8F959E] ml-2">14:21</span>
+                    <span class="text-xs text-[#8F959E] mr-2">10:40</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">陶立春 (南钢鑫智链)</span>
                 </div>
-                <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] leading-relaxed shadow-none">
-                    <span class="text-[#3370FF]">@陶立春</span> 陶总，推进群的进度已经摸底完毕：<br><br>
-                    🟢 信通院-魏强：省局合规批复预计本周五拿单，风险可控。<br>
-                    🔴 中信咨询-傅毅明：集团审批被法务部退回，要求补充《联合运营权责声明》。这是导致月底无法上线的唯一卡点。<br><br>
-                    解决方案：我已经基于咱们系统内的架构文档，自动草拟了这份声明。您看是直接发给荣泽和咱们的法务盖章，还是开个短会过一下？
-                </div>
-                <div class="mt-2 flex flex-wrap items-center">
-                    <span class="text-[#3370FF] cursor-pointer hover:underline text-[13px] mr-4" onclick="alert('已打开Word预览区')">📄 预览声明草稿(Word)</span>
-                    <span class="text-[#3370FF] cursor-pointer hover:underline text-[13px]" onclick="alert('已向相关方发送日历邀请')">📅 拉取紧急对齐会议</span>
+                <div class="flex items-start justify-end flex-row-reverse">
+                    <div class="wx-msg-self mr-3 shadow-none"><span class="text-[#3370FF]">@鑫智链-杨进</span> 杨进，碳足迹项目下周能不能跟随可信数据空间项目同步上线MVP？</div>
+                    <img src="https://i.pravatar.cc/150?img=11" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
                 </div>
             </div>
-        </div>
-    `;
+        `,
+        `
+            <div class="flex items-start">
+                <img src="../assets/avatars/yangjin.png" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                <div class="ml-3 w-full">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">鑫智链-杨进</span>
+                        <span class="text-xs text-[#8F959E] ml-2">10:41</span>
+                    </div>
+                    <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                        陶总，我这就去跟荣泽的孙康峰确认一下具体的进度指标和依赖项。<span class="text-[#3370FF]">@主智能体</span> 帮我在静默状态下盯一下这个事情的后续情况。
+                    </div>
+                </div>
+            </div>
+        `,
+        `
+            <div class="flex items-start">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3 w-full">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                        <span class="wx-tag-bot">BOT</span>
+                        <span class="text-xs text-[#8F959E] ml-2">10:42</span>
+                    </div>
+                    <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                        收到杨总。我已开启静默跟进模式，随时准备协助梳理进度。
+                    </div>
+                </div>
+            </div>
+        `,
+        systemNoteHtml
+    ];
+}
+
+function getDecisionActOneFragmentsPlaybookA() {
+    const systemNoteHtml =
+        '<div id="global-promotion-system-note" class="text-center text-[12px] text-gray-400 my-4 cursor-pointer select-none" title="演示：点击展开后续汇报" onclick="window.revealFinaleReportBlock && window.revealFinaleReportBlock()">系统提示：主智能体 已前往“南钢-鑫智链可信数据空间推进群”发起协同跟进</div>';
+    return [
+        `
+            <div class="flex flex-col items-end">
+                <div class="flex items-center mb-1">
+                    <span class="text-xs text-[#8F959E] mr-2">10:40</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">陶立春 (南钢鑫智链)</span>
+                </div>
+                <div class="flex items-start justify-end flex-row-reverse">
+                    <div class="wx-msg-self mr-3 shadow-none"><span class="text-[#3370FF]">@主智能体</span> 帮我过一下目前推进群里几项重点工作的进度，挑有风险的说。</div>
+                    <img src="../assets/avatars/taolichun.png" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                </div>
+            </div>
+        `,
+        `
+            <div class="flex items-start">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3 w-full">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                        <span class="wx-tag-bot">BOT</span>
+                        <span class="text-xs text-[#8F959E] ml-2">10:41</span>
+                    </div>
+                    <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                        陶总您好，根据本周推进群任务提取，目前梳理出 5 项核心任务。3 项正常，有 1 项存在延期风险（无反馈）：<br>
+                        🟢 正常：探足迹系统UAT准备、碳因子库建设方案...<br>
+                        🔴 无反馈风险：【智慧中心8楼大屏初稿意见征集】<br>
+                        风险详情：上周五耿总要求各单位在今天下午5点前提交意见给陈海萍。信通院已确认，但中信咨询、数研院、金恒在群内无进展反馈。距截止仅剩1小时。您需要我去群里追问一下吗？
+                    </div>
+                </div>
+            </div>
+        `,
+        `
+            <div class="flex flex-col items-end">
+                <div class="flex items-center mb-1">
+                    <span class="text-xs text-[#8F959E] mr-2">10:42</span>
+                    <span class="text-[13px] font-medium text-[#1F2329]">陶立春 (南钢鑫智链)</span>
+                </div>
+                <div class="flex items-start justify-end flex-row-reverse">
+                    <div class="wx-msg-self mr-3 shadow-none">去问一下，盯紧点。</div>
+                    <img src="../assets/avatars/taolichun.png" class="w-10 h-10 rounded-full border border-gray-200 shrink-0">
+                </div>
+            </div>
+        `,
+        `
+            <div class="flex items-start">
+                <img src="https://ui-avatars.com/api/?name=AI&background=3370FF&color=fff&rounded=true" class="w-10 h-10 rounded-full shrink-0 shadow-sm">
+                <div class="ml-3 w-full">
+                    <div class="flex items-center mb-1">
+                        <span class="text-[13px] font-medium text-[#1F2329]">主智能体</span>
+                        <span class="wx-tag-bot">BOT</span>
+                        <span class="text-xs text-[#8F959E] ml-2">10:43</span>
+                    </div>
+                    <div class="bg-white rounded-md px-3 py-2 text-[13px] text-[#1F2329] shadow-none">
+                        好的，我这就去【推进群】跟进这几家单位的进度，一有结果马上向您汇报。
+                    </div>
+                </div>
+            </div>
+        ` + systemNoteHtml
+    ];
+}
+
+function getDecisionActOneFragments() {
+    const mode = window.AppState && window.AppState.activePlaybook;
+    return mode === 'playbookB' ? getDecisionActOneFragmentsPlaybookB() : getDecisionActOneFragmentsPlaybookA();
+}
+
+function scrollDecisionChatToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
+    scrollToBottom();
+}
+
+function initDecisionActOnePlayback() {
+    const input = document.getElementById('chat-input');
+    const btn = document.getElementById('chat-send-btn');
+    if (!input || !btn || input.dataset.decisionActBound === '1') return;
+    input.dataset.decisionActBound = '1';
+
+    const run = () => {
+        input.value = '';
+        if (window.AppState.currentRoom !== 'global-control') return;
+        if (window.AppState.decisionActOneFinished) return;
+        if (window.__decisionActOneRunning) return;
+
+        const chatContainer = document.getElementById('chat-container');
+        const dynamicContent = document.getElementById('dynamic-content');
+        if (!chatContainer || !dynamicContent) return;
+
+        window.__decisionActOneRunning = true;
+        const fragments = getDecisionActOneFragments();
+
+        const appendAndRefresh = (html) => {
+            dynamicContent.insertAdjacentHTML('beforebegin', html);
+            applyWechatMessageGrouping(chatContainer);
+            applySegmentTimeSeparators(chatContainer);
+            scrollDecisionChatToBottom();
+        };
+
+        const finishActOne = () => {
+            injectGlobalDecisionClosureBlock();
+            applyWechatMessageGrouping(chatContainer);
+            applySegmentTimeSeparators(chatContainer);
+            scrollDecisionChatToBottom();
+            window.AppState.decisionActOneFinished = true;
+            window.AppState.globalControlMessages = chatContainer.innerHTML;
+            window.__decisionActOneRunning = false;
+        };
+
+        appendAndRefresh(fragments[0]);
+
+        const delays = window.AppState.activePlaybook === 'playbookB'
+            ? [1200, 2400, 3400]
+            : [1000, 2500, 3500];
+        for (let i = 0; i < delays.length; i++) {
+            const idx = i + 1;
+            const delay = delays[i];
+            setTimeout(() => {
+                appendAndRefresh(fragments[idx]);
+                if (idx === fragments.length - 1) {
+                    finishActOne();
+                }
+            }, delay);
+        }
+    };
+
+    input.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter' || e.shiftKey) return;
+        if (window.AppState.currentRoom !== 'global-control') return;
+        e.preventDefault();
+        run();
+    });
+
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (window.AppState.currentRoom !== 'global-control') return;
+        run();
+    });
 }
 
 function injectGlobalDecisionClosureBlock() {
     const note = document.getElementById('global-promotion-system-note');
-    if (!note || document.getElementById('global-decision-closure-wrap')) return;
+    if (!note || document.getElementById('finale-report-block')) return;
     note.insertAdjacentHTML('afterend', getGlobalDecisionClosureAppendHtml());
+}
+
+/**
+ * 演示暗门：展开决策群最终收尾汇报，并滚动到底部。
+ */
+window.revealFinaleReportBlock = function () {
+    const block = document.getElementById('finale-report-block');
+    if (block) {
+        block.classList.remove('hidden');
+    }
+    window.scrollTo(0, document.body.scrollHeight);
+    const chat = document.getElementById('chat-container');
+    if (chat) {
+        chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' });
+    }
+    if (chat && window.applyWechatMessageGrouping) {
+        window.applyWechatMessageGrouping(chat);
+    }
+    if (chat && window.applySegmentTimeSeparators) {
+        window.applySegmentTimeSeparators(chat);
+    }
+
+    if (!chat || window.AppState.activePlaybook !== 'playbookB' || document.getElementById('global-closure-followup-yangjin')) return;
+
+    const appendAndRefresh = (html) => {
+        safeInsertAroundDynamic(chat, html);
+        if (window.applyWechatMessageGrouping) {
+            window.applyWechatMessageGrouping(chat);
+        }
+        if (window.applySegmentTimeSeparators) {
+            window.applySegmentTimeSeparators(chat);
+        }
+        window.scrollTo(0, document.body.scrollHeight);
+        chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' });
+    };
+
+    const yangFollowupHtml = `
+        <div id="global-closure-followup-yangjin" class="flex items-start fade-in mt-4">
+            <img src="../assets/avatars/yangjin.png" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            <div class="ml-3">
+                <div class="flex items-center mb-1">
+                    <span class="text-[13px] font-medium text-[#1F2329]">鑫智链-杨进</span>
+                    <span class="text-xs text-[#8F959E] ml-2">10:45</span>
+                </div>
+                <div class="wx-msg-other shadow-none">陶总，已确认无误。欠缺的资料我今天闭环。</div>
+            </div>
+        </div>
+    `;
+
+    const taoFollowupHtml = `
+        <div id="global-closure-followup-taolichun" class="flex flex-col items-end fade-in mt-4">
+            <div class="flex items-center mb-1">
+                <span class="text-xs text-[#8F959E] mr-2">10:46</span>
+                <span class="text-[13px] font-medium text-[#1F2329]">陶立春 (南钢鑫智链)</span>
+            </div>
+            <div class="flex items-start justify-end flex-row-reverse">
+                <div class="wx-msg-self mr-3 shadow-none">收到，辛苦大家。</div>
+                <img src="../assets/avatars/taolichun.png" class="w-10 h-10 rounded-full border border-gray-200 shrink-0" alt="">
+            </div>
+        </div>
+    `;
+
+    setTimeout(() => appendAndRefresh(yangFollowupHtml), 1000);
+    setTimeout(() => appendAndRefresh(taoFollowupHtml), 2000);
+};
+
+/**
+ * Opens the Word preview modal and locks the background scroll.
+ * Bound to the "Preview Draft" action in the Decision Group closure block.
+ */
+window.openDocPreviewModal = function () {
+    const modal = document.getElementById('doc-preview-modal');
+    if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+};
+
+/**
+ * Closes the Word preview modal and unlocks the background scroll.
+ * Bound to 'X' icon, 'Cancel' button, and 'Stamp' button in the modal.
+ */
+window.closeDocPreviewModal = function () {
+    const modal = document.getElementById('doc-preview-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+};
+
+function openCalendarInviteToast() {
+    const el = document.getElementById('calendar-invite-toast');
+    if (!el) return;
+    el.classList.remove('hidden');
+    window.clearTimeout(openCalendarInviteToast._t);
+    openCalendarInviteToast._t = window.setTimeout(() => {
+        el.classList.add('hidden');
+    }, 2600);
+}
+
+function openDocStampPushToast() {
+    window.closeDocPreviewModal();
+    const el = document.getElementById('doc-stamp-toast');
+    if (!el) return;
+    el.classList.remove('hidden');
+    window.clearTimeout(openDocStampPushToast._t);
+    openDocStampPushToast._t = window.setTimeout(() => {
+        el.classList.add('hidden');
+    }, 2800);
 }
 
 function applySegmentTimeSeparators(container) {
@@ -151,6 +706,26 @@ function renderExecutionLayerMessages() {
     applyWechatMessageGrouping(chatContainer);
     applySegmentTimeSeparators(chatContainer);
     window.scrollToBottom && window.scrollToBottom();
+    appendExecutionPlaybookAScript();
+}
+
+function renderCarbonServiceMessages() {
+    const chatContainer = document.getElementById('chat-container');
+    if (!chatContainer) return;
+
+    chatContainer.innerHTML = getPromotionGroupScriptHtml();
+    applyWechatMessageGrouping(chatContainer);
+    applySegmentTimeSeparators(chatContainer);
+    window.scrollToBottom && window.scrollToBottom();
+    appendCarbonServiceConsensusScript();
+}
+
+function renderExecutionLayerMessagesPlaybookA() {
+    renderExecutionLayerMessages();
+}
+
+function renderCarbonServiceMessagesPlaybookB() {
+    renderCarbonServiceMessages();
 }
 
 function renderExecutionReverseFlowCard() {
@@ -889,9 +1464,15 @@ function scrollToBottom() {
 }
 
 window.bindExecutionResolutionReportAction = bindExecutionResolutionReportAction;
+window.initDecisionActOnePlayback = initDecisionActOnePlayback;
 window.injectGlobalDecisionClosureBlock = injectGlobalDecisionClosureBlock;
+window.openCalendarInviteToast = openCalendarInviteToast;
+window.openDocStampPushToast = openDocStampPushToast;
 window.getPromotionGroupScriptHtml = getPromotionGroupScriptHtml;
 window.renderExecutionLayerMessages = renderExecutionLayerMessages;
+window.renderExecutionLayerMessagesPlaybookA = renderExecutionLayerMessagesPlaybookA;
+window.renderCarbonServiceMessages = renderCarbonServiceMessages;
+window.renderCarbonServiceMessagesPlaybookB = renderCarbonServiceMessagesPlaybookB;
 window.renderRiskControlMessages = renderRiskControlMessages;
 window.renderSynergyLayerMessages = renderSynergyLayerMessages;
 window.applyWechatMessageGrouping = applyWechatMessageGrouping;

@@ -4,14 +4,24 @@ function applyRoomConfig(roomKey, chatTitle, chatStatusTag, chatMeta, chatInput)
     chatStatusTag.className = config.statusClass;
     chatStatusTag.innerHTML = config.statusHTML;
     chatMeta.innerHTML = config.metaHTML;
-    chatInput.placeholder = config.inputPlaceholder;
+    if (chatInput) {
+        chatInput.placeholder = config.inputPlaceholder;
+    }
 }
 
 const DEFAULT_VISIBLE_ROOMS = new Set(['global-control', 'execution-layer']);
+const AVATAR_SRC_MAP = {
+    '陶立春': '../assets/avatars/taolichun.png',
+    '杨进': '../assets/avatars/yangjin.png',
+    '孙康峰': '../assets/avatars/sunkangfeng.png',
+    '鞠鹏': '../assets/avatars/jupeng.png',
+    '耿学玉': '../assets/avatars/gengxueyu.png'
+};
 
 const ROOM_MEMBER_MAP = {
     'global-control': ['陶立春', '钟晓', '耿学玉', '王剑', '邹莹莹', '鞠鹏', '杨进', '陈海萍', '魏强', '傅毅明', '袁晓东', '毛鑫雨', '张琳', '朱真龙', '谢钻鳌', '何熙', '王婧', '追梦', '左同学', 'wzx'],
-    'execution-layer': ['陶立春', '钟晓', '耿学玉', '王剑', '邹莹莹', '鞠鹏', '杨进', '陈海萍', '魏强', '傅毅明', '袁晓东', '毛鑫雨', '张琳', '朱真龙', '谢钻鳌', '何熙', '王婧', '追梦', '左同学', 'wzx']
+    'execution-layer': ['陶立春', '钟晓', '耿学玉', '王剑', '邹莹莹', '鞠鹏', '杨进', '陈海萍', '魏强', '傅毅明', '袁晓东', '毛鑫雨', '张琳', '朱真龙', '谢钻鳌', '何熙', '王婧', '追梦', '左同学', 'wzx'],
+    'carbon-service': ['毛鑫雨', '杨进', '鞠鹏', '钟晓', '耿学玉', '王剑', '邹莹莹', '陈海萍', '袁晓东', '张琳', '朱真龙', '谢钻鳌', '何熙', '王婧', '追梦', '左同学', 'wzx']
 };
 
 const ROOM_DETAIL_MAP = {
@@ -23,6 +33,11 @@ const ROOM_DETAIL_MAP = {
     'execution-layer': {
         groupName: '南钢-鑫智链可信数据空间推进群',
         notice: '外部审批与联调进度请按小时回报。',
+        alias: '孙康峰'
+    },
+    'carbon-service': {
+        groupName: '鑫智链产品碳足迹数据服务系统群',
+        notice: '本群用于碳足迹数据服务对接与核算协同；具体业务剧本待场景启用后补充。',
         alias: '孙康峰'
     },
     'synergy-layer': {
@@ -124,7 +139,7 @@ function renderMemberSidebar(roomKey) {
     empty.classList.add('hidden');
     grid.innerHTML = filtered.map(name => `
         <div class="flex flex-col items-center">
-            <img src="https://i.pravatar.cc/150?u=${encodeURIComponent(name)}" class="w-12 h-12 rounded-md object-cover">
+            <img src="${AVATAR_SRC_MAP[name] || `https://i.pravatar.cc/150?u=${encodeURIComponent(name)}`}" class="w-12 h-12 rounded-md object-cover">
             <span class="text-[11px] text-[#646A73] mt-1 w-full text-center truncate">${name}</span>
         </div>
     `).join('');
@@ -155,7 +170,7 @@ function switchChatRoom(roomKey) {
     const chatTitle = document.getElementById('chat-title');
     const chatStatusTag = document.getElementById('chat-status-tag');
     const chatMeta = document.getElementById('chat-meta');
-    const chatInput = document.querySelector('textarea');
+    const chatInput = document.getElementById('chat-input');
 
     document.querySelectorAll('.chat-room-item').forEach(item => item.classList.remove('active-room'));
     const activeRooms = Array.from(document.querySelectorAll(`[data-room="${roomKey}"]`));
@@ -175,16 +190,29 @@ function switchChatRoom(roomKey) {
     setTimeout(() => {
         applyRoomConfig(roomKey, chatTitle, chatStatusTag, chatMeta, chatInput);
         window.AppState.currentRoom = roomKey;
+        if (roomKey === 'execution-layer') {
+            window.AppState.activePlaybook = 'playbookA';
+        } else if (roomKey === 'carbon-service') {
+            window.AppState.activePlaybook = 'playbookB';
+        }
         bindMemberSidebarToggle();
         bindGroupSwitcher();
         bindMemberSearch();
         renderMemberSidebar(roomKey);
         if (roomKey === 'execution-layer') {
-            window.renderExecutionLayerMessages();
+            window.renderExecutionLayerMessagesPlaybookA
+                ? window.renderExecutionLayerMessagesPlaybookA()
+                : window.renderExecutionLayerMessages();
         } else if (roomKey === 'risk-control') {
             window.renderRiskControlMessages();
         } else if (roomKey === 'synergy-layer') {
             window.renderSynergyLayerMessages();
+        } else if (roomKey === 'carbon-service') {
+            if (window.renderCarbonServiceMessagesPlaybookB) {
+                window.renderCarbonServiceMessagesPlaybookB();
+            } else if (window.renderCarbonServiceMessages) {
+                window.renderCarbonServiceMessages();
+            }
         } else {
             chatContainer.innerHTML = window.AppState.globalControlMessages;
         }

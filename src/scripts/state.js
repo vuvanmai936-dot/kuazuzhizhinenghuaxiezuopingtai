@@ -1,6 +1,7 @@
 window.AppState = {
     globalControlMessages: '',
     currentRoom: 'global-control',
+    activePlaybook: 'playbookA',
     CHAT_SWITCH_ANIMATION_MS: 220,
     countdownTimer: null,
     slaDeadlineTs: Date.now() + 2 * 60 * 60 * 1000,
@@ -36,6 +37,13 @@ window.AppState = {
             statusHTML: '<i class="fa-solid fa-screwdriver-wrench mr-1"></i>一线作业与异常上报节点',
             metaHTML: '<i class="fa-solid fa-user-group mr-1"></i>42 人 · 外部机构推进与执行协同',
             inputPlaceholder: '输入 @执行辅助智能体，快速发起异常上报与跨域协作...'
+        },
+        'carbon-service': {
+            title: '鑫智链产品碳足迹数据服务系统群',
+            statusClass: 'text-[#166534] bg-[#ECFDF3] border border-[#BBF7D0] text-[12px] px-2 py-0.5 rounded-sm flex items-center',
+            statusHTML: '<i class="fa-solid fa-leaf mr-1"></i>系统服务群',
+            metaHTML: '<i class="fa-solid fa-user-group mr-1"></i>（占位）人 · 碳足迹数据服务与对接协同',
+            inputPlaceholder: '输入 @碳足迹智能体，发起核算、对账、对接、报告导出等需求...'
         },
         'synergy-layer': {
             title: '网络策略变更-临时协同群组',
@@ -81,7 +89,9 @@ window.AppState = {
         createdAt: '',
         ticketCode: 'TCK-8080-NW'
     },
-    resolutionBroadcasted: false
+    resolutionBroadcasted: false,
+    /** 决策群第一幕剧本是否已按 Enter/发送完整播放（用于避免重复插入气泡） */
+    decisionActOneFinished: false
 };
 
 const APP_PERSISTENCE_KEY = 'wx-desktop-client-state-v1';
@@ -95,6 +105,9 @@ function hydratePersistedAppState() {
         const next = parsed.appState || {};
 
         if (typeof next.currentRoom === 'string') window.AppState.currentRoom = next.currentRoom;
+        if (next.activePlaybook === 'playbookA' || next.activePlaybook === 'playbookB') {
+            window.AppState.activePlaybook = next.activePlaybook;
+        }
         if (typeof next.dispatchAuthorized === 'boolean') window.AppState.dispatchAuthorized = next.dispatchAuthorized;
         if (typeof next.resolutionBroadcasted === 'boolean') window.AppState.resolutionBroadcasted = next.resolutionBroadcasted;
         if (next.executionRoom && typeof next.executionRoom.created === 'boolean') {
@@ -122,6 +135,7 @@ function persistClientState(uiState) {
         const payload = {
             appState: {
                 currentRoom: window.AppState.currentRoom,
+                activePlaybook: window.AppState.activePlaybook,
                 dispatchAuthorized: window.AppState.dispatchAuthorized,
                 resolutionBroadcasted: window.AppState.resolutionBroadcasted,
                 executionRoom: {
